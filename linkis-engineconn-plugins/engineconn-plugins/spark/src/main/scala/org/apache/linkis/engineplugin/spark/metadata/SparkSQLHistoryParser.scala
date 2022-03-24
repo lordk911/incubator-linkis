@@ -36,9 +36,7 @@ import org.apache.spark.sql.types.{StructField, StructType}
 
 import scala.collection.JavaConverters._
 
-/**
- *
- */
+
 object SparkSQLHistoryParser {
 
   /**
@@ -172,7 +170,7 @@ object SparkSQLHistoryParser {
       case l: LogicalRelation if l.catalogTable.nonEmpty => mergeProjection(l.catalogTable.get)
 
       case u: UnresolvedRelation =>
-        addTableOrViewLevelObjs(TableIdentifier(u.tableName), sparkHiveObjects)
+        addTableOrViewLevelObjs(new TableIdentifier(u.tableName), sparkHiveObjects)
 
       case p =>
         for (child <- p.children) {
@@ -194,7 +192,7 @@ object SparkSQLHistoryParser {
     plan match {
 
       case c: CreateDataSourceTableAsSelectCommand =>
-        val columnList =  toCSColumns(c.table.schema)
+        val columnList = toCSColumns(c.table.schema)
         addTableOrViewLevelObjs(c.table.identifier, outputObjects, columns = columnList, actionType = TableOperationType.CREATE)
         ParseQuery(c.query, inputObjects)
 
@@ -215,7 +213,7 @@ object SparkSQLHistoryParser {
 
       case c: CreateViewCommand =>
         addTableOrViewLevelObjs(c.name, outputObjects, columns = toCSColumnsByNamed(c.output), actionType = TableOperationType.CREATE)
-        ParseQuery(c.child, inputObjects)
+        ParseQuery(c.plan, inputObjects)
 
       case l: LoadDataCommand => addTableOrViewLevelObjs(l.table, outputObjects)
 

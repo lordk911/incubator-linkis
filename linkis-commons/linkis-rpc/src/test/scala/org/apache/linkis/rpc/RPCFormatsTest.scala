@@ -77,6 +77,7 @@ object RPCFormatsTest {
   }
 
   def main(args: Array[String]): Unit = {
+    testRPC1(args)
     testRPC2(args)
   }
 }

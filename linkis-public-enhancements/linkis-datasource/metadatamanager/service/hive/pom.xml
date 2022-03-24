@@ -28,8 +28,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hive.version>1.2.1</hive.version>
-    <hadoop.version>2.7.2</hadoop.version>
+    <hive.version>3.1.0</hive.version>
+    <hadoop.version>3.1.1</hadoop.version>
   </properties>
 
   <dependencies>
@@ -47,7 +47,7 @@
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
-      <version>${hadoop.version}</version>
+      <version>${hadoop.version}.${hdp.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -66,7 +66,7 @@
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-exec</artifactId>
-      <version>${hive.version}</version>
+      <version>${hive.version}.${hdp.version}</version>
       <exclusions>
         <exclusion>
           <artifactId>slf4j-log4j12</artifactId>

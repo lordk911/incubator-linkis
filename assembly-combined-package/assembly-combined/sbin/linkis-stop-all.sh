@@ -18,8 +18,8 @@
 #
 # Modified for Linkis 1.0.0
 #Actively load user env
-source /etc/profile
-source ~/.bash_profile
+#source /etc/profile
+#source ~/.bash_profile
 
 cd `dirname $0`
 cd ..
