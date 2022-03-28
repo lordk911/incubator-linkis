@@ -102,7 +102,7 @@
     <properties>
         <hdp.version>3.1.4.0-315</hdp.version>
         <linkis.version>1.0.3</linkis.version>
-        <hadoop.version>3.1.1</hadoop.version>
+        <hadoop.version>3.3.1</hadoop.version>
         <hive.version>3.1.0</hive.version>
         <spring.eureka.version>2.2.1.RELEASE</spring.eureka.version>
         <spring.feign.version>2.2.1.RELEASE</spring.feign.version>
