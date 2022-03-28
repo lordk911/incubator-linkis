@@ -29,7 +29,7 @@
 
     <artifactId>linkis-engineplugin-python</artifactId>
     <properties>
-        <python.version>python2</python.version>
+        <python.version>python3</python.version>
     </properties>
 
     <dependencies>
