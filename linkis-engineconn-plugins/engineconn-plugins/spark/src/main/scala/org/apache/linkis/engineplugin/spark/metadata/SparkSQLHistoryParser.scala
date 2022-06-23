@@ -14,16 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.engineplugin.spark.metadata
 
-import java.util.{ArrayList => JAList, List => JList}
-
+import org.apache.hadoop.hive.ql.security.authorization.plugin.HivePrivilegeObject.HivePrivilegeObjectType
 import org.apache.linkis.common.utils.ClassUtils._
 import org.apache.linkis.cs.common.entity.history.metadata.TableOperationType
 import org.apache.linkis.cs.common.entity.metadata.CSColumn
 import org.apache.linkis.engineplugin.spark.metadata.{SparkHiveObject => HPO}
-import org.apache.hadoop.hive.ql.security.authorization.plugin.HivePrivilegeObject.HivePrivilegeObjectType
 import org.apache.spark.sql.catalyst.TableIdentifier
 import org.apache.spark.sql.catalyst.analysis.UnresolvedRelation
 import org.apache.spark.sql.catalyst.catalog.CatalogTable
@@ -34,6 +32,7 @@ import org.apache.spark.sql.execution.datasources._
 import org.apache.spark.sql.hive.execution.CreateHiveTableAsSelectCommand
 import org.apache.spark.sql.types.{StructField, StructType}
 
+import java.util.{ArrayList => JAList, List => JList}
 import scala.collection.JavaConverters._
 
 /**
@@ -194,7 +193,7 @@ object SparkSQLHistoryParser {
     plan match {
 
       case c: CreateDataSourceTableAsSelectCommand =>
-        val columnList =  toCSColumns(c.table.schema)
+        val columnList = toCSColumns(c.table.schema)
         addTableOrViewLevelObjs(c.table.identifier, outputObjects, columns = columnList, actionType = TableOperationType.CREATE)
         ParseQuery(c.query, inputObjects)
 
@@ -215,7 +214,7 @@ object SparkSQLHistoryParser {
 
       case c: CreateViewCommand =>
         addTableOrViewLevelObjs(c.name, outputObjects, columns = toCSColumnsByNamed(c.output), actionType = TableOperationType.CREATE)
-        ParseQuery(c.child, inputObjects)
+        ParseQuery(c.plan, inputObjects)
 
       case l: LoadDataCommand => addTableOrViewLevelObjs(l.table, outputObjects)
 
