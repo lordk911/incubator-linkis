@@ -19,7 +19,7 @@ package org.apache.linkis.engineplugin.spark.metadata
 
 
 import org.apache.linkis.common.utils.Logging
-import org.apache.spark.sql.{DataFrame, Dataset, SQLContext, SparkLogicalPlanHelper}
+import org.apache.spark.sql.{DataFrame, SQLContext, SparkLogicalPlanHelper}
 
 /**
   *

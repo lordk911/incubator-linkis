@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.filesystem.service
+
 
 import java.lang.Long
 import java.util.concurrent.{Callable, FutureTask, TimeUnit}
@@ -69,7 +70,7 @@ class FsService extends Logging {
   }
 
   def getFileSystem(user: String, fsPath: FsPath): FileSystem = {
-    var fs:FileSystem = null
+    var fs: FileSystem = null
     val start = System.currentTimeMillis()
     val task: FutureTask[FileSystem] = new FutureTask[FileSystem](new Callable[FileSystem] {
       override def call(): FileSystem = {
@@ -89,7 +90,7 @@ class FsService extends Logging {
       val end = System.currentTimeMillis()
       info(s"${user} gets the ${fsPath.getFsType} type filesystem using a total of ${end - start} milliseconds(${user}获取${fsPath.getFsType}类型的filesystem一共使用了${end - start}毫秒)")
     }
-    if(fs == null) throw WorkspaceExceptionManager.createException(80002,timeout,timeout)
+    if (fs == null) throw WorkspaceExceptionManager.createException(80002, timeout, timeout)
     fs
   }
 
@@ -97,7 +98,7 @@ class FsService extends Logging {
   def produceFSInfo(user: String, fsPath: FsPath): FSInfo = {
     try {
       //todo to compatible proxy user(后续将兼容代理用户权限)
-      val fs = FSFactory.getFsByProxyUser(fsPath,user).asInstanceOf[FileSystem]
+      val fs = FSFactory.getFsByProxyUser(fsPath, user).asInstanceOf[FileSystem]
       //val fs = FSFactory.getFs(fsPath).asInstanceOf[FileSystem]
       fs.init(null)
       new FSInfo(user, fs, System.currentTimeMillis())

@@ -17,18 +17,17 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream
 
-import java.util
-import java.util.Collections
-import java.util.concurrent.{ConcurrentHashMap, ScheduledThreadPoolExecutor, TimeUnit}
-
+import org.apache.commons.lang3.concurrent.BasicThreadFactory
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.exception.EngineConnException
-import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
 import org.apache.linkis.engineconn.computation.executor.upstream.access.{ConnectionInfoAccess, ConnectionInfoAccessRequest}
 import org.apache.linkis.engineconn.computation.executor.upstream.handler.{MonitorHandler, MonitorHandlerRequest}
 import org.apache.linkis.engineconn.computation.executor.upstream.wrapper.ConnectionInfoWrapper
 import org.apache.linkis.engineconn.computation.executor.utlis.ComputationErrorCode
-import org.apache.commons.lang3.concurrent.BasicThreadFactory
+
+import java.util
+import java.util.Collections
+import java.util.concurrent.{ConcurrentHashMap, ScheduledThreadPoolExecutor, TimeUnit}
 
 abstract class SingleThreadUpstreamConnectionMonitor(name: String, infoAccess: ConnectionInfoAccess, handler: MonitorHandler) extends UpstreamConnectionMonitor with Logging {
 

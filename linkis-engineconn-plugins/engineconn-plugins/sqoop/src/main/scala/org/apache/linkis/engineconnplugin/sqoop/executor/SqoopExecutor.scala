@@ -19,14 +19,13 @@ package org.apache.linkis.engineconnplugin.sqoop.executor
 
 import org.apache.linkis.engineconn.executor.entity.{LabelExecutor, ResourceExecutor, YarnExecutor}
 import org.apache.linkis.engineconnplugin.sqoop.client.Sqoop
+import org.apache.linkis.engineconnplugin.sqoop.client.exception.JobExecutionException
+import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEngineConnContext
 import org.apache.linkis.engineconnplugin.sqoop.context.SqoopResourceConfiguration.LINKIS_QUEUE_NAME
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.label.entity.Label
-import java.util
 
-import org.apache.linkis.engineconnplugin.sqoop.client.Sqoop
-import org.apache.linkis.engineconnplugin.sqoop.client.exception.JobExecutionException
-import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEngineConnContext
+import java.util
 
 trait SqoopExecutor extends YarnExecutor with LabelExecutor with ResourceExecutor{
   private var yarnMode: String = "Client"

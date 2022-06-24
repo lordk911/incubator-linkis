@@ -18,7 +18,6 @@
 package org.apache.linkis.storage.script
 
 import java.util
-
 import scala.collection.mutable.ArrayBuffer
 
 object VariableParser {

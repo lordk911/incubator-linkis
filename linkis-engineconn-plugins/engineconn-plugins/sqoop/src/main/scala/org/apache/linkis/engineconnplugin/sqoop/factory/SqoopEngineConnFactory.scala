@@ -24,8 +24,6 @@ import org.apache.linkis.engineconnplugin.sqoop.util.ClassUtil
 import org.apache.linkis.manager.engineplugin.common.creation.{ExecutorFactory, MultiExecutorEngineConnFactory}
 import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
-import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEngineConnContext
-import org.apache.linkis.engineconnplugin.sqoop.util.ClassUtil
 
 class SqoopEngineConnFactory extends MultiExecutorEngineConnFactory with Logging{
   override def getExecutorFactories: Array[ExecutorFactory] = executorFactoryArray

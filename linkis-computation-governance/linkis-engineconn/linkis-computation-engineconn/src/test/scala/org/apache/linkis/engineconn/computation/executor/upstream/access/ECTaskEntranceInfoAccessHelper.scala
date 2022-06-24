@@ -31,9 +31,8 @@ import org.apache.linkis.manager.engineplugin.common.launch.process.Environment
 import org.apache.linkis.manager.label.builder.factory.{LabelBuilderFactory, LabelBuilderFactoryContext}
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.server.conf.ServerConfiguration
-import java.util
 
-import scala.collection.mutable.ArrayBuffer
+import java.util
 
 
 object ECTaskEntranceInfoAccessHelper {

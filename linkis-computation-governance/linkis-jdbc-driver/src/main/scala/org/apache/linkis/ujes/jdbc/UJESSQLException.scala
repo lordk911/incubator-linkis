@@ -17,8 +17,6 @@
  
 package org.apache.linkis.ujes.jdbc
 
-import org.apache.linkis.common.exception.ErrorException
-
 
 class UJESSQLException (errorCode: UJESSQLErrorCode) extends ErrorException(errorCode.getCode,errorCode.getMsg) {
   def this(errorCode: UJESSQLErrorCode, msg: String) {

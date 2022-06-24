@@ -20,9 +20,10 @@ package org.apache.linkis.variable.receiver
 import org.apache.linkis.protocol.variable.VariableProtocol
 import org.apache.linkis.rpc.{RPCMessageEvent, Receiver, ReceiverChooser}
 import org.apache.linkis.variable.service.VariableService
-import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+
+import javax.annotation.PostConstruct
 
 @Component
 class VariableReceiverChooser extends ReceiverChooser {

@@ -18,14 +18,13 @@
 package org.apache.linkis.udf
 
 
+import org.apache.commons.collections.CollectionUtils
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.udf.api.rpc.{RequestUdfTree, ResponseUdfTree}
-import org.apache.linkis.udf.entity.{UDFInfo, UDFTree}
+import org.apache.linkis.udf.entity.UDFTree
 import org.apache.linkis.udf.utils.ConstantVar
 import org.apache.linkis.udf.vo.UDFInfoVo
-import org.apache.commons.collections.CollectionUtils
 
-import scala.collection.mutable
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 

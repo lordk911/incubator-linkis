@@ -17,12 +17,12 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.wrapper
 
+import org.apache.commons.lang3.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
 import org.apache.linkis.engineconn.computation.executor.entity.EngineConnTask
 import org.apache.linkis.engineconn.computation.executor.execute.ComputationExecutor
 import org.apache.linkis.engineconn.computation.executor.upstream.entity.{ECTaskEntranceConnection, UpstreamConnection}
-import org.apache.commons.lang3.StringUtils
 
 class ECTaskEntranceConnectionWrapper(taskID: String, engineConnTask: EngineConnTask, executor: ComputationExecutor) extends ConnectionInfoWrapper with Logging {
   /* delete if time for any entry being in map exceeds threshold*/

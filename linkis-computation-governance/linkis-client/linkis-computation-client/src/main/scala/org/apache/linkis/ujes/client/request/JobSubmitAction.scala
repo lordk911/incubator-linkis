@@ -17,13 +17,13 @@
  
 package org.apache.linkis.ujes.client.request
 
-import java.util
-
 import org.apache.linkis.httpclient.dws.DWSHttpClient
 import org.apache.linkis.httpclient.request.POSTAction
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.ujes.client.exception.UJESClientBuilderException
+
+import java.util
 
 class JobSubmitAction private() extends POSTAction with UJESJobAction {
   override def suffixURLs: Array[String] = Array("entrance", "submit")

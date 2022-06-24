@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.engineplugin.common.launch.process
 
-import java.util
-
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.common.protocol.bml.BmlResource
 import org.apache.linkis.manager.engineplugin.common.launch.entity.{EngineConnCreationDesc, EngineConnLaunchRequest}
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait ProcessEngineConnLaunchRequest extends EngineConnLaunchRequest {

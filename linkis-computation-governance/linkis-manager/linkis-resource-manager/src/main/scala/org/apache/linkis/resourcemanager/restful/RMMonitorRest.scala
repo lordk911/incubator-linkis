@@ -49,7 +49,7 @@ import org.apache.linkis.server.{BDPJettyServerHelper, Message}
 import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization.write
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.{RequestBody, RequestMapping, RequestMethod, RequestParam, RestController}
+import org.springframework.web.bind.annotation._
 
 import java.text.SimpleDateFormat
 import java.util

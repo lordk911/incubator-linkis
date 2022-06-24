@@ -17,9 +17,6 @@
  
 package org.apache.linkis.computation.client.once.simple
 
-import java.io.ByteArrayInputStream
-import java.util
-
 import org.apache.linkis.bml.client.{BmlClient, BmlClientFactory}
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.computation.client.LinkisJobBuilder
@@ -35,6 +32,8 @@ import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.ujes.client.exception.UJESJobException
 
+import java.io.ByteArrayInputStream
+import java.util
 import scala.collection.convert.WrapAsJava._
 import scala.collection.convert.WrapAsScala._
 

@@ -17,8 +17,6 @@
  
 package org.apache.linkis.engineplugin.spark
 
-import java.util
-
 import org.apache.linkis.engineplugin.spark.factory.{SparkEngineConnFactory, SparkEngineConnResourceFactory}
 import org.apache.linkis.engineplugin.spark.launch.SparkSubmitProcessEngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
@@ -26,8 +24,10 @@ import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.resource.EngineResourceFactory
 import org.apache.linkis.manager.label.entity.Label
-import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel}
+import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
+
+import java.util
 
 
 class SparkEngineConnPlugin extends EngineConnPlugin {

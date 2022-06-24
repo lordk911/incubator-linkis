@@ -17,11 +17,10 @@
  
 package org.apache.linkis.rpc.sender
 
-import org.apache.linkis.DataWorkCloudApplication
-import org.apache.linkis.rpc.{RPCReceiveRestful, Receiver}
 import feign.codec.{Decoder, Encoder}
 import feign.{Client, Contract}
-import javax.annotation.PostConstruct
+import org.apache.linkis.DataWorkCloudApplication
+import org.apache.linkis.rpc.{RPCReceiveRestful, Receiver}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
 import org.springframework.cloud.client.discovery.DiscoveryClient
@@ -29,6 +28,8 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancedRetryFactory
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory
 import org.springframework.cloud.openfeign.FeignClientsConfiguration
 import org.springframework.context.annotation.{Configuration, Import}
+
+import javax.annotation.PostConstruct
 
 
 @Import(Array(classOf[FeignClientsConfiguration]))

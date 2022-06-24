@@ -17,7 +17,6 @@
  
 package org.apache.linkis.configuration.util
 
-import java.util
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.configuration.exception.ConfigurationException
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
@@ -26,6 +25,7 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel, UserCreatorLabel}
 import org.springframework.util.CollectionUtils
 
+import java.util
 import scala.collection.JavaConverters._
 
 object LabelParameterParser {

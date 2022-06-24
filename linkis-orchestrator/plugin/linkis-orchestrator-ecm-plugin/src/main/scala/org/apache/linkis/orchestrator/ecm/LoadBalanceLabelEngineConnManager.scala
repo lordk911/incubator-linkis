@@ -17,9 +17,6 @@
  
 package org.apache.linkis.orchestrator.ecm
 
-import java.util
-import java.util.Random
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
@@ -30,8 +27,9 @@ import org.apache.linkis.orchestrator.ecm.entity._
 import org.apache.linkis.orchestrator.ecm.exception.ECMPluginErrorException
 import org.apache.linkis.orchestrator.ecm.service.EngineConnExecutor
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.collections.CollectionUtils
 
+import java.util
+import java.util.Random
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 

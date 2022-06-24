@@ -17,9 +17,9 @@
  
 package org.apache.linkis.httpclient.dws.config
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.httpclient.config.ClientConfigBuilder
 import org.apache.linkis.httpclient.dws.exception.UnknownVersionException
-import org.apache.commons.lang.StringUtils
 
 class DWSClientConfigBuilder private() extends ClientConfigBuilder {
 

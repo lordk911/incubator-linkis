@@ -17,6 +17,7 @@
  
 package org.apache.linkis.gateway.parser
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
@@ -25,7 +26,6 @@ import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.rpc.interceptor.ServiceInstanceUtils
 import org.apache.linkis.server.Message
 import org.apache.linkis.server.conf.ServerConfiguration
-import org.apache.commons.lang.StringUtils
 
 trait GatewayParser {
 

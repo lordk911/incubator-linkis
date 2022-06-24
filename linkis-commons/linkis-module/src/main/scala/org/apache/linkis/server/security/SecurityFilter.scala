@@ -17,18 +17,18 @@
  
 package org.apache.linkis.server.security
 
-import java.text.DateFormat
-import java.util.{Date, Locale}
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, RSAUtils, Utils}
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.exception.{IllegalUserTicketException, LoginExpireException, NonLoginException}
 import org.apache.linkis.server.security.SSOUtils.sslEnable
 import org.apache.linkis.server.{Message, _}
+
+import java.text.DateFormat
+import java.util.{Date, Locale}
 import javax.servlet._
 import javax.servlet.http.{Cookie, HttpServletRequest, HttpServletResponse}
-import org.apache.commons.lang.StringUtils
 
 
 class SecurityFilter extends Filter {

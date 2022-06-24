@@ -17,7 +17,7 @@
 package org.apache.linkis.scheduler.queue.fifoqueue
 
 import org.apache.linkis.scheduler.queue.GroupStatus
-import org.junit.jupiter.api.Assertions.{assertEquals, assertNotNull}
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class FIFOGroupTest {

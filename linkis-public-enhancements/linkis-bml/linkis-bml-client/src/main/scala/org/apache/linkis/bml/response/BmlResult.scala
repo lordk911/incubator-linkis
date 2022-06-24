@@ -17,11 +17,11 @@
  
 package org.apache.linkis.bml.response
 
-import java.io.InputStream
-
 import org.apache.linkis.bml.protocol.ResourceVersions
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
+
+import java.io.InputStream
 
 abstract class BmlResult extends DWSResult{
   private var resourceId:String = _

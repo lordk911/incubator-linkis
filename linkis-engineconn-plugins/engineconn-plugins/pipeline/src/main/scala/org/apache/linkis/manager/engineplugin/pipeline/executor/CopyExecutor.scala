@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.engineplugin.pipeline.executor
 
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.FsPath
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.manager.engineplugin.pipeline.conf.PipelineEngineConfiguration.PIPELINE_OUTPUT_ISOVERWRITE_SWITCH
 import org.apache.linkis.scheduler.executer.ExecuteResponse
 import org.apache.linkis.storage.FSFactory
-import org.apache.commons.io.IOUtils
 
 class CopyExecutor extends PipeLineExecutor {
   override def execute(sourcePath: String, destPath: String, engineExecutionContext: EngineExecutionContext): ExecuteResponse = {

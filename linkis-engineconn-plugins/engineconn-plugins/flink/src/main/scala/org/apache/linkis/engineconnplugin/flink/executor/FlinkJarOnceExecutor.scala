@@ -17,12 +17,12 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
+import org.apache.commons.lang3.StringUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.once.executor.OnceExecutorExecutionContext
 import org.apache.linkis.engineconnplugin.flink.client.deployment.YarnApplicationClusterDescriptorAdapter
 import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration._
 import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext
-import org.apache.commons.lang3.StringUtils
 
 import scala.concurrent.duration.Duration
 

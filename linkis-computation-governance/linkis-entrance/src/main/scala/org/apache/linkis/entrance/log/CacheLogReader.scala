@@ -17,12 +17,12 @@
 
 package org.apache.linkis.entrance.log
 
-import java.io.{IOException, InputStream}
-import java.util
-
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.storage.FSFactory
+
+import java.io.{IOException, InputStream}
+import java.util
 
 class CacheLogReader(logPath: String, charset: String, sharedCache: Cache, user: String) extends LogReader(charset: String) {
 

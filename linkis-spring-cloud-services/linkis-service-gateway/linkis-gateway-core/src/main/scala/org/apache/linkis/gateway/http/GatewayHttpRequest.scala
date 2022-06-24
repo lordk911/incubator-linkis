@@ -17,9 +17,9 @@
  
 package org.apache.linkis.gateway.http
 
-import java.net.{InetSocketAddress, URI}
-
 import org.apache.linkis.server.JMap
+
+import java.net.{InetSocketAddress, URI}
 import javax.servlet.http.Cookie
 
 trait GatewayHttpRequest {

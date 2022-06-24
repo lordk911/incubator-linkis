@@ -18,11 +18,8 @@
 package org.apache.linkis.ujes.jdbc
 
 
-import java.sql.{ResultSetMetaData, SQLException, Types}
+import java.sql.{ResultSetMetaData, SQLException}
 import java.util
-
-import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.ujes.jdbc.entity.JdbcColumn
 
 class UJESSQLResultSetMetaData extends ResultSetMetaData with Logging {
   private val columnNameProperties: util.HashMap[Int, String] = new util.HashMap[Int, String]()

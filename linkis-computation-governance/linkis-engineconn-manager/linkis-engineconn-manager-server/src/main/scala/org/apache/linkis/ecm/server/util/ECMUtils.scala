@@ -17,17 +17,16 @@
  
 package org.apache.linkis.ecm.server.util
 
-import java.io.{File, InputStream}
-import java.util
-
+import org.apache.commons.io.{FileUtils, IOUtils}
 import org.apache.linkis.bml.client.{BmlClient, BmlClientFactory}
 import org.apache.linkis.bml.protocol.BmlDownloadResponse
 import org.apache.linkis.ecm.server.exception.ECMErrorException
 import org.apache.linkis.manager.common.protocol.bml.BmlResource
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.storage.fs.FileSystem
-import org.apache.commons.io.{FileUtils, IOUtils}
 
+import java.io.{File, InputStream}
+import java.util
 import scala.collection.JavaConversions._
 
 

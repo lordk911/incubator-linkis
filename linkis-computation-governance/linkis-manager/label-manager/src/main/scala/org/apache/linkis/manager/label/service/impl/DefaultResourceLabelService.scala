@@ -17,21 +17,21 @@
  
 package org.apache.linkis.manager.label.service.impl
 
-import java.util
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.common.entity.label.LabelKeyValue
 import org.apache.linkis.manager.common.entity.persistence.{PersistenceLabel, PersistenceResource}
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.common.utils.ResourceUtils
+import org.apache.linkis.manager.label.LabelManagerUtils
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineInstanceLabel
-import org.apache.linkis.manager.label.LabelManagerUtils
 import org.apache.linkis.manager.label.service.ResourceLabelService
 import org.apache.linkis.manager.persistence.ResourceLabelPersistence
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConversions._
 
 

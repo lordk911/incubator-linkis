@@ -17,8 +17,10 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
-import java.util
-
+import org.apache.commons.io.IOUtils
+import org.apache.flink.configuration.{CoreOptions, JobManagerOptions, TaskManagerOptions}
+import org.apache.flink.types.Row
+import org.apache.flink.yarn.configuration.YarnConfigOptions
 import org.apache.linkis.common.io.resultset.ResultSetWriter
 import org.apache.linkis.common.io.{MetaData, Record}
 import org.apache.linkis.common.utils.{OverloadUtils, Utils}
@@ -36,10 +38,8 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.storage.domain.{Column, DataType}
 import org.apache.linkis.storage.resultset.ResultSetFactory
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
-import org.apache.commons.io.IOUtils
-import org.apache.flink.configuration.{CoreOptions, JobManagerOptions, TaskManagerOptions}
-import org.apache.flink.types.Row
-import org.apache.flink.yarn.configuration.YarnConfigOptions
+
+import java.util
 
 
 trait FlinkExecutor extends YarnExecutor with LabelExecutor with ResourceExecutor {

@@ -17,11 +17,7 @@
  
 package org.apache.linkis.orchestrator.ecm
 
-import java.net.{ConnectException, SocketException, SocketTimeoutException}
-import java.util
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
-
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -37,9 +33,11 @@ import org.apache.linkis.orchestrator.ecm.exception.ECMPluginErrorException
 import org.apache.linkis.orchestrator.ecm.service.EngineConnExecutor
 import org.apache.linkis.orchestrator.ecm.service.impl.{ComputationConcurrentEngineConnExecutor, ComputationEngineConnExecutor}
 import org.apache.linkis.rpc.Sender
-import org.apache.linkis.rpc.exception.DWCRPCRetryException
-import org.apache.commons.lang.exception.ExceptionUtils
 
+import java.net.{ConnectException, SocketException, SocketTimeoutException}
+import java.util
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import scala.collection.JavaConversions._
 import scala.concurrent.duration.Duration
 

@@ -17,8 +17,6 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
-import java.util.concurrent.{Future, TimeUnit}
-
 import org.apache.flink.api.common.JobStatus
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.once.executor.{ManageableOnceExecutor, OnceExecutorExecutionContext}
@@ -27,6 +25,7 @@ import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration.{FL
 import org.apache.linkis.engineconnplugin.flink.exception.ExecutorInitException
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 
+import java.util.concurrent.{Future, TimeUnit}
 import scala.collection.convert.WrapAsScala._
 
 

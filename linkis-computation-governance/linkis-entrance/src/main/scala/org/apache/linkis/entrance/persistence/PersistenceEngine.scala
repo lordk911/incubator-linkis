@@ -17,10 +17,11 @@
 
 package org.apache.linkis.entrance.persistence
 
-import java.io.{Closeable, Flushable}
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.governance.common.entity.job.{JobRequest, SubJobDetail, SubJobInfo}
 import org.apache.linkis.protocol.task.Task
+
+import java.io.{Closeable, Flushable}
 
 
 trait PersistenceEngine extends Closeable with Flushable {

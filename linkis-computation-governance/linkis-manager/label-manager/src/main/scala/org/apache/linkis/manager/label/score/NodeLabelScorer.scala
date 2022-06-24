@@ -17,11 +17,11 @@
  
 package org.apache.linkis.manager.label.score
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.manager.common.entity.node.ScoreServiceInstance
 import org.apache.linkis.manager.common.entity.persistence.PersistenceLabel
+
+import java.util
 
 
 trait NodeLabelScorer {

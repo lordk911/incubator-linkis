@@ -23,7 +23,6 @@ import org.apache.linkis.orchestrator.computation.physical.CodeLogicalUnitExecTa
 import org.apache.linkis.orchestrator.computation.utils.TaskTreeUtil
 import org.apache.linkis.orchestrator.listener.task.TaskRunningInfoEvent
 import org.apache.linkis.orchestrator.plans.physical.ExecTask
-import org.apache.linkis.protocol.constants.TaskConstant
 
 import java.util
 import java.util.concurrent.ConcurrentHashMap

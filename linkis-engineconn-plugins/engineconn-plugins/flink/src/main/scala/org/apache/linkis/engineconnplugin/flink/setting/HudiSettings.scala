@@ -16,8 +16,6 @@
  */
 
 package org.apache.linkis.engineconnplugin.flink.setting
-import java.io.File
-import java.util
 import com.google.common.collect.Lists
 import org.apache.commons.collections.CollectionUtils
 import org.apache.commons.lang3.StringUtils
@@ -31,7 +29,8 @@ import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconnplugin.flink.context.{EnvironmentContext, FlinkEngineConnContext}
 import org.apache.linkis.engineconnplugin.flink.exception.FlinkInitFailedException
 
-import java.net.{URI, URL}
+import java.io.File
+import java.util
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 

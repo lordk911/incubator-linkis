@@ -17,7 +17,7 @@
  
 package org.apache.linkis.ecm.server.service.impl
 
-import java.util.concurrent.TimeUnit
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.ecm.core.engineconn.{EngineConn, EngineConnInfo}
@@ -25,22 +25,20 @@ import org.apache.linkis.ecm.core.launch._
 import org.apache.linkis.ecm.server.LinkisECMApplication
 import org.apache.linkis.ecm.server.conf.ECMConfiguration._
 import org.apache.linkis.ecm.server.engineConn.DefaultEngineConn
-import org.apache.linkis.ecm.server.hook.{ECMHook, JarUDFLoadECMHook}
+import org.apache.linkis.ecm.server.hook.ECMHook
 import org.apache.linkis.ecm.server.listener.{EngineConnAddEvent, EngineConnStatusChangeEvent}
 import org.apache.linkis.ecm.server.service.{EngineConnLaunchService, ResourceLocalizationService}
 import org.apache.linkis.ecm.server.util.ECMUtils
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
+import org.apache.linkis.governance.common.utils.JobUtils
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus.Failed
 import org.apache.linkis.manager.common.entity.node.{AMEngineNode, EngineNode}
 import org.apache.linkis.manager.common.protocol.engine.EngineConnStatusCallbackToAM
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnLaunchRequest
 import org.apache.linkis.rpc.Sender
-import org.apache.commons.lang.exception.ExceptionUtils
-import org.apache.linkis.governance.common.utils.JobUtils
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContextExecutorService, Future}
+import scala.concurrent.{ExecutionContextExecutorService, Future}
 import scala.util.{Failure, Success}
 
 

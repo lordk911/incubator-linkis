@@ -17,8 +17,7 @@
  
 package org.apache.linkis.gateway.ujes.route
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.cs.common.entity.source.{ContextID, ContextIDParser}
 import org.apache.linkis.cs.common.protocol.ContextHTTPConstant
@@ -27,10 +26,10 @@ import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.gateway.route.AbstractGatewayRouter
 import org.apache.linkis.gateway.springcloud.SpringCloudGatewayConfiguration.{API_URL_PREFIX, normalPath}
 import org.apache.linkis.rpc.interceptor.ServiceInstanceUtils
-import org.apache.commons.lang.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConversions._
 import scala.util.Random
 import scala.util.matching.Regex

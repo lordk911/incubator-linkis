@@ -17,10 +17,10 @@
  
 package org.apache.linkis.ecm.core.launch
 
+import org.apache.linkis.common.utils.Logging
+
 import java.io.File
 import java.util
-
-import org.apache.linkis.common.utils.Logging
 
 
 trait ProcessEngineCommandExec {

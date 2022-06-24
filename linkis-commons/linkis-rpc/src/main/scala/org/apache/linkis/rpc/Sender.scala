@@ -17,13 +17,12 @@
  
 package org.apache.linkis.rpc
 
-import java.util
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.rpc.conf.RPCConfiguration
-import org.apache.linkis.rpc.sender.SpringMVCRPCSender
 import org.apache.linkis.rpc.utils.RPCUtils
 
+import java.util
 import scala.concurrent.duration.Duration
 
 

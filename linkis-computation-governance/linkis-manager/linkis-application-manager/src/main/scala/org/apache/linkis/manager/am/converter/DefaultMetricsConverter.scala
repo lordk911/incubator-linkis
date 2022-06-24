@@ -17,13 +17,13 @@
  
 package org.apache.linkis.manager.am.converter
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.metrics.{NodeHealthyInfo, NodeMetrics, NodeOverLoadInfo, NodeTaskInfo}
 import org.apache.linkis.manager.common.entity.node.AMNode
 import org.apache.linkis.manager.service.common.metrics.MetricsConverter
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 
 

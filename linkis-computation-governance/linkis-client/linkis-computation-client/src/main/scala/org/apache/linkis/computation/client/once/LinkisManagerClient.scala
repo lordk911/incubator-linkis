@@ -17,13 +17,13 @@
  
 package org.apache.linkis.computation.client.once
 
-import java.io.Closeable
-
-import org.apache.linkis.computation.client.once.action.{CreateEngineConnAction, EngineConnOperateAction, GetEngineConnAction, KillEngineConnAction, LinkisManagerAction}
-import org.apache.linkis.computation.client.once.result.{CreateEngineConnResult, EngineConnOperateResult, GetEngineConnResult, KillEngineConnResult, LinkisManagerResult}
+import org.apache.linkis.computation.client.once.action._
+import org.apache.linkis.computation.client.once.result._
 import org.apache.linkis.httpclient.dws.DWSHttpClient
 import org.apache.linkis.httpclient.request.Action
 import org.apache.linkis.ujes.client.{UJESClient, UJESClientImpl}
+
+import java.io.Closeable
 
 
 trait LinkisManagerClient extends Closeable {

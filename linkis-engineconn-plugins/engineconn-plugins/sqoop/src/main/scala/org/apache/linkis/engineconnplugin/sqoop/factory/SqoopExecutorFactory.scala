@@ -25,8 +25,6 @@ import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEngineConnContext
 import org.apache.linkis.engineconnplugin.sqoop.executor.SqoopOnceCodeExecutor
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.RunType.{APPCONN, RunType}
-import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEngineConnContext
-import org.apache.linkis.engineconnplugin.sqoop.executor.SqoopOnceCodeExecutor
 
 class SqoopExecutorFactory extends OnceExecutorFactory{
 

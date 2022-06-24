@@ -17,9 +17,9 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.access
 
-import java.util
-
 import org.apache.linkis.engineconn.computation.executor.upstream.wrapper.ConnectionInfoWrapper
+
+import java.util
 
 
 class ECTaskEntranceInfoAccessRequest(wrappers: util.List[ConnectionInfoWrapper]) extends ConnectionInfoAccessRequest {

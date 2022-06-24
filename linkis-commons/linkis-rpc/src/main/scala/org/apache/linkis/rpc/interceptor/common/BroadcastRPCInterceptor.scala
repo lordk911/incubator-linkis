@@ -17,8 +17,6 @@
  
 package org.apache.linkis.rpc.interceptor.common
 
-import java.util.concurrent.atomic.AtomicInteger
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.protocol.BroadcastProtocol
@@ -28,6 +26,7 @@ import org.apache.linkis.rpc.sender.SpringMVCRPCSender
 import org.apache.linkis.rpc.{BaseRPCSender, RPCSpringBeanCache, Sender}
 import org.springframework.stereotype.Component
 
+import java.util.concurrent.atomic.AtomicInteger
 import scala.concurrent.Future
 
 

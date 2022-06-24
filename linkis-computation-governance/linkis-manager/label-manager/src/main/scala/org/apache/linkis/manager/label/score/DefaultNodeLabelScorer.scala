@@ -16,9 +16,6 @@
  */
  
 package org.apache.linkis.manager.label.score
-import java.util
-import java.util.function.BiFunction
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.manager.common.entity.node.ScoreServiceInstance
 import org.apache.linkis.manager.common.entity.persistence.PersistenceLabel
@@ -26,6 +23,8 @@ import org.apache.linkis.manager.label.conf.LabelCommonConfig
 import org.apache.linkis.manager.label.entity.Feature
 import org.springframework.stereotype.Component
 
+import java.util
+import java.util.function.BiFunction
 import scala.collection.JavaConversions._
 
 /**

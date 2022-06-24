@@ -17,8 +17,8 @@
  
 package org.apache.linkis.instance.label.service
 
-import org.apache.linkis.rpc.Sender
 import org.apache.linkis.protocol.label._
+import org.apache.linkis.rpc.Sender
 
 
 trait InsLabelRpcService {

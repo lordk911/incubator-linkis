@@ -17,11 +17,10 @@
  
 package org.apache.linkis.orchestrator.core
 
-import java.util.concurrent.atomic.AtomicReference
-
 import org.apache.linkis.orchestrator.conf.OrchestratorConfiguration
 import org.apache.linkis.orchestrator.{Orchestrator, OrchestratorContext, OrchestratorSession}
 
+import java.util.concurrent.atomic.AtomicReference
 import scala.collection.JavaConversions.mapAsScalaMap
 
 /**

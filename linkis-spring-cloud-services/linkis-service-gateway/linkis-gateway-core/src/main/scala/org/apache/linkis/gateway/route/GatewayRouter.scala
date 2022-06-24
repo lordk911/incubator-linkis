@@ -17,8 +17,8 @@
  
 package org.apache.linkis.gateway.route
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.gateway.config.GatewayConfiguration
@@ -28,8 +28,8 @@ import org.apache.linkis.rpc.interceptor.ServiceInstanceUtils
 import org.apache.linkis.rpc.sender.SpringCloudFeignConfigurationCache
 import org.apache.linkis.server.Message
 import org.apache.linkis.server.exception.NoApplicationExistsException
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.exception.ExceptionUtils
+
+import java.util
 
 trait GatewayRouter {
 

@@ -17,10 +17,10 @@
 
 package org.apache.linkis.computation.client.operator.impl
 
-import java.util
-
 import org.apache.linkis.computation.client.once.result.EngineConnOperateResult
 import org.apache.linkis.computation.client.operator.OnceJobOperator
+
+import java.util
 
 class EngineConnDiagnosisOperator extends OnceJobOperator[util.Map[String, Object]] {
   override protected def resultToObject(result: EngineConnOperateResult): util.Map[String, Object] =

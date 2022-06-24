@@ -17,12 +17,12 @@
 
 package org.apache.linkis.gateway.authentication.bo.impl
 
-import java.util.Date
-import org.apache.linkis.gateway.authentication.bo.Token
 import org.apache.commons.lang3.StringUtils
 import org.apache.linkis.gateway.authentication.bo.{Token, User}
 import org.apache.linkis.gateway.authentication.conf.TokenConfiguration
 import org.apache.linkis.gateway.authentication.entity.TokenEntity
+
+import java.util.Date
 
 
 class TokenImpl extends Token {

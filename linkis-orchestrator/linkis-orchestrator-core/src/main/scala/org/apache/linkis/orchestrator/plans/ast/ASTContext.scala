@@ -17,11 +17,11 @@
  
 package org.apache.linkis.orchestrator.plans.ast
 
+import com.google.common.collect.Lists
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.orchestrator.plans.{PlanContext, SimplifyPlanContext}
-import java.util
 
-import com.google.common.collect.Lists
+import java.util
 
 /**
   *

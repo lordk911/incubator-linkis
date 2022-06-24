@@ -17,11 +17,11 @@
  
 package org.apache.linkis.manager.label.service
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.manager.common.entity.node.ScoreServiceInstance
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait NodeLabelService {

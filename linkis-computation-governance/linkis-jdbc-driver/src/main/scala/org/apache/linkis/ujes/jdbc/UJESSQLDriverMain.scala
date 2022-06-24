@@ -17,15 +17,9 @@
  
 package org.apache.linkis.ujes.jdbc
 
-import java.sql.{Connection, Driver, DriverManager, DriverPropertyInfo, SQLFeatureNotSupportedException}
+import java.sql._
 import java.util.Properties
 import java.util.logging.Logger
-
-import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.ujes.jdbc.UJESSQLDriverMain._
-import org.apache.commons.lang.StringUtils
-
-import scala.collection.JavaConversions
 
 
 class UJESSQLDriverMain extends Driver with Logging{

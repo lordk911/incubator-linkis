@@ -17,7 +17,6 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.service
 
-import javax.annotation.PostConstruct
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
@@ -28,6 +27,8 @@ import org.apache.linkis.engineconn.executor.listener.ExecutorListenerBusContext
 import org.apache.linkis.engineconn.executor.listener.event.EngineConnSyncEvent
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.springframework.stereotype.Component
+
+import javax.annotation.PostConstruct
 
 @Component
 class ECTaskEntranceMonitorService extends TaskStatusChangedForUpstreamMonitorListener with Logging {

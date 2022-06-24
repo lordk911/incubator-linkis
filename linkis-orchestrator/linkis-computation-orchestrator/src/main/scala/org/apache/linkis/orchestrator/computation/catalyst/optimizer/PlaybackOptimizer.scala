@@ -19,7 +19,7 @@ package org.apache.linkis.orchestrator.computation.catalyst.optimizer
 
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.orchestrator.extensions.catalyst.OptimizerTransform
-import org.apache.linkis.orchestrator.plans.logical.{LogicalContext, LogicalOrchestration, Task}
+import org.apache.linkis.orchestrator.plans.logical.{LogicalContext, Task}
 
 /**
  *

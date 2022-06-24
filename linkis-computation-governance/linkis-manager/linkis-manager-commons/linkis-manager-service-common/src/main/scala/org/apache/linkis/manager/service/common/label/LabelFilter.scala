@@ -17,9 +17,9 @@
  
 package org.apache.linkis.manager.service.common.label
 
-import java.util
-
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait LabelFilter {

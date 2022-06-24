@@ -18,11 +18,9 @@
 package org.apache.linkis.engineconnplugin.sqoop.executor
 
 import org.apache.linkis.common.utils.Utils
-import org.apache.linkis.engineconn.core.hook.ShutdownHook
 import org.apache.linkis.engineconn.once.executor.{ManageableOnceExecutor, OnceExecutorExecutionContext}
-import org.apache.linkis.engineconnplugin.sqoop.client.LinkisSqoopClient
-import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.engineconnplugin.sqoop.client.{LinkisSqoopClient, Sqoop}
+import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 
 import scala.collection.convert.WrapAsScala._
 

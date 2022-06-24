@@ -17,9 +17,9 @@
  
 package org.apache.linkis.engineconnplugin.flink.util
 
-import java.text.NumberFormat
-
 import org.apache.linkis.common.conf.CommonVars
+
+import java.text.NumberFormat
 
 
 object FlinkValueFormatUtil {

@@ -18,7 +18,7 @@ package org.apache.linkis.scheduler
 
 import org.apache.linkis.scheduler.queue.UserJob
 import org.apache.linkis.scheduler.queue.fifoqueue.{FIFOScheduler, FIFOSchedulerContextImpl}
-import org.junit.jupiter.api.Assertions.{assertEquals, assertNotNull, assertTrue}
+import org.junit.jupiter.api.Assertions.{assertNotNull, assertTrue}
 import org.junit.jupiter.api.Test
 
 class AbstractSchedulerTest {

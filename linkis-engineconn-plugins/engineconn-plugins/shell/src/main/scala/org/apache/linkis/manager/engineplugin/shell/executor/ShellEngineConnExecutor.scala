@@ -17,11 +17,9 @@
  
 package org.apache.linkis.manager.engineplugin.shell.executor
 
-import java.io.{BufferedReader, File, InputStreamReader}
-import java.lang.reflect.Field
-import java.util
-import java.util.concurrent.atomic.AtomicBoolean
-
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.hadoop.util.Shell
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.acessible.executor.log.LogHelper
 import org.apache.linkis.engineconn.common.conf.EngineConnConf
@@ -36,10 +34,10 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.executer.{ErrorExecuteResponse, ExecuteResponse, SuccessExecuteResponse}
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringUtils
-import org.apache.hadoop.util.Shell
 
+import java.io.{BufferedReader, File, InputStreamReader}
+import java.util
+import java.util.concurrent.atomic.AtomicBoolean
 import scala.collection.mutable.ArrayBuffer
 
 class ShellEngineConnExecutor(id: Int) extends ComputationExecutor with Logging {

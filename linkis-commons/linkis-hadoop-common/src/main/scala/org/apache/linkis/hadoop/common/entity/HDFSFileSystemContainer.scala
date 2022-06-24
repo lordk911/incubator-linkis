@@ -17,8 +17,8 @@
  
 package org.apache.linkis.hadoop.common.entity
 
-import org.apache.linkis.hadoop.common.conf.HadoopConf
 import org.apache.hadoop.fs.FileSystem
+import org.apache.linkis.hadoop.common.conf.HadoopConf
 
 class HDFSFileSystemContainer(fs: FileSystem, user: String) {
 

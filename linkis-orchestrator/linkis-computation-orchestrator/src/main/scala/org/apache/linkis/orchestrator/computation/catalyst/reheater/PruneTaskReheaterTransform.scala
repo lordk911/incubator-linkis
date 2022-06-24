@@ -20,18 +20,13 @@ package org.apache.linkis.orchestrator.computation.catalyst.reheater
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.orchestrator.computation.conf.ComputationOrchestratorConf
 import org.apache.linkis.orchestrator.computation.utils.TreeNodeUtil
 import org.apache.linkis.orchestrator.conf.OrchestratorConfiguration
 import org.apache.linkis.orchestrator.core.FailedOrchestrationResponse
 import org.apache.linkis.orchestrator.execution.FailedTaskResponse
 import org.apache.linkis.orchestrator.extensions.catalyst.ReheaterTransform
 import org.apache.linkis.orchestrator.listener.task.TaskLogEvent
-import org.apache.linkis.orchestrator.plans.physical.{ExecTask, PhysicalContext, PhysicalOrchestration, ReheatableExecTask, RetryExecTask}
-import org.apache.linkis.orchestrator.strategy.ExecTaskStatusInfo
-
-import java.util
-import scala.collection.JavaConverters.mapAsScalaMapConverter
+import org.apache.linkis.orchestrator.plans.physical.{ExecTask, PhysicalContext, RetryExecTask}
 
 /**
  * Transform physical tree by pruning it's nodes

@@ -17,15 +17,16 @@
  
 package org.apache.linkis.storage.source
 
-import java.io.{Closeable, InputStream}
-import java.util
+import org.apache.commons.math3.util.Pair
 import org.apache.linkis.common.io._
+import org.apache.linkis.storage.conf.LinkisStorageConf
 import org.apache.linkis.storage.exception.StorageErrorException
 import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetReader}
 import org.apache.linkis.storage.script.ScriptFsReader
 import org.apache.linkis.storage.utils.StorageConfiguration
-import org.apache.commons.math3.util.Pair
-import org.apache.linkis.storage.conf.LinkisStorageConf
+
+import java.io.{Closeable, InputStream}
+import java.util
 
 
 trait FileSource extends Closeable {

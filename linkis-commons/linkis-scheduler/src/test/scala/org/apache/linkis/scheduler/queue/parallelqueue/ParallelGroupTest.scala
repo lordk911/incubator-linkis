@@ -16,8 +16,6 @@
  */
 package org.apache.linkis.scheduler.queue.parallelqueue
 
-import org.apache.linkis.scheduler.queue.GroupStatus
-import org.apache.linkis.scheduler.queue.fifoqueue.{FIFOGroup, FIFOSchedulerContextImpl}
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

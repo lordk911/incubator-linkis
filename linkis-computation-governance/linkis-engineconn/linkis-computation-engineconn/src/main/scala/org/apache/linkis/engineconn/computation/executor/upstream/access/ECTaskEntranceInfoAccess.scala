@@ -17,8 +17,6 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.access
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.exception.EngineConnException
@@ -29,6 +27,7 @@ import org.apache.linkis.rpc.sender.SpringCloudFeignConfigurationCache
 import org.springframework.cloud.client.{ServiceInstance => SpringCloudServiceInstance}
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient.EurekaServiceInstance
 
+import java.util
 import scala.collection.JavaConversions
 import scala.collection.JavaConverters._
 

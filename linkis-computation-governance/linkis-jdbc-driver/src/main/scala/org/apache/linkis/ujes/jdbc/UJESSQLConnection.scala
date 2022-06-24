@@ -17,18 +17,10 @@
  
 package org.apache.linkis.ujes.jdbc
 
-import java.sql.{Blob, CallableStatement, Clob, Connection, DatabaseMetaData, NClob, PreparedStatement, ResultSet, SQLException, SQLWarning, SQLXML, Savepoint, Statement, Struct}
+import java.sql._
 import java.util.Properties
 import java.util.concurrent.Executor
 import java.{sql, util}
-
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.ujes.client.UJESClient
-import org.apache.linkis.ujes.client.request.JobExecuteAction.EngineType
-import org.apache.linkis.ujes.jdbc.UJESSQLDriverMain._
-import org.apache.commons.lang.StringUtils
-
-import scala.collection.{JavaConversions, mutable}
 
 class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Properties) extends Connection with Logging {
   private[jdbc] var creator = "IDE"

@@ -18,6 +18,7 @@
 package org.apache.linkis.cs.highavailable.ha.instancealias.impl
 
 import com.google.common.cache.CacheBuilder
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.cs.common.exception.CSErrorException
@@ -30,7 +31,6 @@ import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.route.RouteLabel
 import org.apache.linkis.rpc.Sender
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 
 import java.util

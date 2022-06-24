@@ -18,7 +18,6 @@
 package org.apache.linkis.entrance
 
 import org.apache.linkis.common.exception.ErrorException
-import org.apache.linkis.entrance.execute.EntranceJob
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.scheduler.queue.Job
 

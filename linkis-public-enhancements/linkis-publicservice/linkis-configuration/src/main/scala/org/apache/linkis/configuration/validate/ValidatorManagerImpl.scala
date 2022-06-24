@@ -18,8 +18,9 @@
 package org.apache.linkis.configuration.validate
 
 import org.apache.linkis.common.utils.Logging
-import javax.annotation.PostConstruct
 import org.springframework.stereotype.Component
+
+import javax.annotation.PostConstruct
 
 @Component
 class ValidatorManagerImpl extends ValidatorManager with Logging{

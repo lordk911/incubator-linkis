@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineplugin.hive.launch
 
-import java.util
-
 import com.google.common.collect.Lists
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnBuildRequest
 import org.apache.linkis.manager.engineplugin.common.launch.process.JavaProcessEngineConnLaunchBuilder
+
+import java.util
 
 class HiveProcessEngineConnLaunchBuilder extends JavaProcessEngineConnLaunchBuilder {
 

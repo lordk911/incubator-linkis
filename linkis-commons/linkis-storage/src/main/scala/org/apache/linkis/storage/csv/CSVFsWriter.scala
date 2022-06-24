@@ -17,9 +17,9 @@
  
 package org.apache.linkis.storage.csv
 
-import java.io.OutputStream
-
 import org.apache.linkis.common.io.FsWriter
+
+import java.io.OutputStream
 
 
 abstract class CSVFsWriter extends FsWriter {

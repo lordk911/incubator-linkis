@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.am.label
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.label.entity.Label
@@ -29,6 +27,7 @@ import org.apache.linkis.manager.service.common.label.ManagerLabelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import java.util
 import scala.collection.JavaConversions._
 
 

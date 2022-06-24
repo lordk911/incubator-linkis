@@ -17,10 +17,10 @@
  
 package org.apache.linkis.engineplugin.hive.cs
 
+import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.linkis.cs.client.utils.ContextServiceUtils
 import org.apache.linkis.cs.common.utils.CSCommonUtils
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
-import org.apache.hadoop.hive.conf.HiveConf
 
 object CSHiveHelper {
 

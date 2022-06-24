@@ -17,8 +17,8 @@
  
 package org.apache.linkis.engineconnplugin.flink.client.deployment
 
-import org.apache.linkis.engineconnplugin.flink.client.context.ExecutionContext
 import org.apache.flink.api.common.JobID
+import org.apache.linkis.engineconnplugin.flink.client.context.ExecutionContext
 
 
 class YarnSessionClusterDescriptorAdapter(executionContext: ExecutionContext) extends YarnPerJobClusterDescriptorAdapter(executionContext) {

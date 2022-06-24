@@ -17,9 +17,6 @@
  
 package org.apache.linkis.ecm.server.service.impl
 
-import java.util
-import java.util.Collections
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.ecm.core.listener.{ECMEvent, ECMEventListener}
 import org.apache.linkis.ecm.server.conf.ECMConfiguration._
@@ -29,6 +26,9 @@ import org.apache.linkis.manager.common.entity.resource._
 import org.apache.linkis.manager.common.protocol.em.{RegisterEMRequest, RegisterEMResponse, StopEMRequest}
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.rpc.Sender
+
+import java.util
+import java.util.Collections
 
 
 class DefaultECMRegisterService extends ECMRegisterService with ECMEventListener with Logging {

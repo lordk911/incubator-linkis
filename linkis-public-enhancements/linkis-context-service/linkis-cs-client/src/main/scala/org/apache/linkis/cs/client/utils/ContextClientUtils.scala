@@ -17,10 +17,10 @@
  
 package org.apache.linkis.cs.client.utils
 
+import com.google.gson._
+
 import java.lang
 import java.lang.reflect.Type
-
-import com.google.gson._
 
 object ContextClientUtils {
   implicit val gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls

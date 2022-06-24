@@ -17,17 +17,21 @@ package org.apache.linkis.configuration.dao;
  * limitations under the License.
  */
 
-import org.apache.linkis.configuration.entity.*;
+import org.apache.linkis.configuration.entity.CategoryLabel;
+import org.apache.linkis.configuration.entity.ConfigKey;
+import org.apache.linkis.configuration.entity.ConfigKeyValue;
+import org.apache.linkis.configuration.entity.ConfigValue;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConfigMapperTest extends BaseDaoTest {
     @Autowired ConfigMapper configMapper;

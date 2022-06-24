@@ -23,7 +23,8 @@ import org.apache.linkis.jobhistory.cache.impl.DefaultQueryCacheManager;
 import org.apache.linkis.jobhistory.conf.JobhistoryConfiguration;
 import org.apache.linkis.jobhistory.conversions.TaskConversions;
 import org.apache.linkis.jobhistory.dao.JobDetailMapper;
-import org.apache.linkis.jobhistory.entity.*;
+import org.apache.linkis.jobhistory.entity.JobHistory;
+import org.apache.linkis.jobhistory.entity.QueryTaskVO;
 import org.apache.linkis.jobhistory.service.JobHistoryQueryService;
 import org.apache.linkis.jobhistory.util.QueryUtils;
 import org.apache.linkis.protocol.constants.TaskConstant;
@@ -37,13 +38,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
+import java.util.*;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.*;
 
 @RestController
 @RequestMapping(path = "/jobhistory")

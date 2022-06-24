@@ -19,11 +19,12 @@ package org.apache.linkis.server.restful
 
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.server.{Message, catchIt}
-import javax.servlet.http.HttpServletResponse
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.{Around, Aspect, Pointcut}
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.{RequestContextHolder, ServletRequestAttributes}
+
+import javax.servlet.http.HttpServletResponse
 
 
 @Aspect

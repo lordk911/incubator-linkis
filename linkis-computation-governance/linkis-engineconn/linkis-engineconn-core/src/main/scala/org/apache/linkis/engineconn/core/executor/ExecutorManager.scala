@@ -17,9 +17,6 @@
  
 package org.apache.linkis.engineconn.core.executor
 
-import java.util
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicInteger
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
@@ -35,6 +32,9 @@ import org.apache.linkis.manager.engineplugin.common.exception.{EngineConnPlugin
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.utils.LabelUtil
 
+import java.util
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 import scala.collection.JavaConverters._
 
 trait ExecutorManager {

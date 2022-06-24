@@ -17,18 +17,17 @@
 
 package org.apache.linkis.engineconnplugin.sqoop.launch
 
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang3.StringUtils
+import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEnvConfiguration._
+import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnBuildRequest
+import org.apache.linkis.manager.engineplugin.common.launch.process.Environment._
+import org.apache.linkis.manager.engineplugin.common.launch.process.JavaProcessEngineConnLaunchBuilder
+import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants._
+
 import java.nio.file.Paths
 import java.util
 import java.util.concurrent.TimeUnit
-
-import org.apache.linkis.engineconnplugin.sqoop.context.SqoopEnvConfiguration._
-import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnBuildRequest
-import org.apache.linkis.manager.engineplugin.common.launch.process.Environment.{variable, _}
-import org.apache.linkis.manager.engineplugin.common.launch.process.JavaProcessEngineConnLaunchBuilder
-import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants._
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang3.StringUtils
-
 import scala.collection.JavaConverters._
 
 class SqoopEngineConnLaunchBuilder extends JavaProcessEngineConnLaunchBuilder{

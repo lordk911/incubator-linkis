@@ -17,6 +17,7 @@
  
 package org.apache.linkis.engineplugin.server.service
 
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineplugin.server.loader.EngineConnPluginsLoader
 import org.apache.linkis.manager.engineplugin.common.exception.EngineConnPluginErrorException
@@ -25,7 +26,6 @@ import org.apache.linkis.manager.engineplugin.common.launch.entity.{EngineConnBu
 import org.apache.linkis.manager.engineplugin.common.launch.process.{EngineConnResourceGenerator, JavaProcessEngineConnLaunchBuilder}
 import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
 import org.apache.linkis.rpc.message.annotation.Receiver
-import org.apache.commons.lang.exception.ExceptionUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

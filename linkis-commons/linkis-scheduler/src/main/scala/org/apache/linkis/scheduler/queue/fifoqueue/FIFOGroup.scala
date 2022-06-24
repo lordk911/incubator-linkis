@@ -17,10 +17,9 @@
  
 package org.apache.linkis.scheduler.queue.fifoqueue
 
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.scheduler.queue.{AbstractGroup, SchedulerEvent}
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 
 class FIFOGroup(groupName: String, initCapacity: Int, maxCapacity: Int) extends AbstractGroup{

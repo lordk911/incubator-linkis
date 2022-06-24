@@ -17,13 +17,13 @@
 
 package org.apache.linkis.manager.engineplugin.shell.executor
 
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.utils.{Logging, Utils}
+
 import java.io._
 import java.util
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
-
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.commons.lang.StringUtils
 
 class YarnAppIdExtractor extends Thread with Logging{
   val MAX_BUFFER: Int = 32*1024*1024 //32MB

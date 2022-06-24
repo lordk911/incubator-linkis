@@ -17,13 +17,12 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util
-
+import org.apache.commons.collections.CollectionUtils
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
 import org.apache.linkis.ujes.client.request.UserAction
-import org.apache.commons.collections.CollectionUtils
 
+import java.util
 import scala.beans.BeanProperty
 import scala.collection.JavaConversions._
 

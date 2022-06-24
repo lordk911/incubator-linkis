@@ -17,20 +17,18 @@
 
 package org.apache.linkis.gateway.authentication.service
 
-import java.util.concurrent.{ExecutionException, TimeUnit}
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
-import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.utils.Utils
-import org.apache.linkis.gateway.authentication.bo.Token
-import org.apache.linkis.gateway.authentication.exception.TokenNotExistException
-import org.apache.linkis.gateway.authentication.bo.impl.TokenImpl
 import org.apache.linkis.gateway.authentication.bo.{Token, User}
+import org.apache.linkis.gateway.authentication.bo.impl.TokenImpl
 import org.apache.linkis.gateway.authentication.conf.TokenConfiguration
 import org.apache.linkis.gateway.authentication.dao.TokenDao
 import org.apache.linkis.gateway.authentication.entity.TokenEntity
 import org.apache.linkis.gateway.authentication.exception.{TokenAuthException, TokenNotExistException}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
+import java.util.concurrent.{ExecutionException, TimeUnit}
 
 @Service
 class CachedTokenService extends TokenService {

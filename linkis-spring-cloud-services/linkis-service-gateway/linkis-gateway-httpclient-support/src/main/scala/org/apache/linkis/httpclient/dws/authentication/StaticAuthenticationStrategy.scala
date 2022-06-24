@@ -17,14 +17,14 @@
  
 package org.apache.linkis.httpclient.dws.authentication
 
+import org.apache.commons.lang.StringUtils
+import org.apache.http.HttpResponse
 import org.apache.linkis.common.utils.ByteTimeUtils
 import org.apache.linkis.httpclient.authentication.{AbstractAuthenticationStrategy, Authentication, AuthenticationAction, AuthenticationResult}
 import org.apache.linkis.httpclient.dws.exception.AuthenticationFailedException
 import org.apache.linkis.httpclient.dws.request.DWSAuthenticationAction
 import org.apache.linkis.httpclient.dws.response.DWSAuthenticationResult
 import org.apache.linkis.httpclient.request.{Action, UserAction, UserPwdAction}
-import org.apache.commons.lang.StringUtils
-import org.apache.http.HttpResponse
 
 class StaticAuthenticationStrategy(override protected val sessionMaxAliveTime: Long) extends AbstractAuthenticationStrategy {
   def this() = this(ByteTimeUtils.timeStringAsMs("1h"))

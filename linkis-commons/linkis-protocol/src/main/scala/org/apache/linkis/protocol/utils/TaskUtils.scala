@@ -17,10 +17,9 @@
  
 package org.apache.linkis.protocol.utils
 
-import java.util
-
 import org.apache.linkis.protocol.constants.TaskConstant
 
+import java.util
 import scala.collection.JavaConversions._
 
 object TaskUtils {

@@ -17,6 +17,8 @@
  
 package org.apache.linkis.engineplugin.hive.hook
 
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
@@ -24,11 +26,9 @@ import org.apache.linkis.engineconn.common.hook.EngineConnHook
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineconn.core.executor.ExecutorManager
 import org.apache.linkis.engineplugin.hive.executor.HiveEngineConnExecutor
+import org.apache.linkis.manager.engineplugin.common.launch.process.Environment
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{CodeLanguageLabel, RunType}
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.common.conf.CommonVars
-import org.apache.linkis.manager.engineplugin.common.launch.process.Environment
 
 import scala.collection.JavaConversions._
 

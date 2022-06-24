@@ -17,8 +17,8 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.entity
 
-import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
 import org.apache.commons.lang3.StringUtils
+import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
 
 
 class ECTaskEntranceConnection(taskID: String, currentServiceInstanceName: String, upstreamServiceInstanceName: String) extends UpstreamConnection {

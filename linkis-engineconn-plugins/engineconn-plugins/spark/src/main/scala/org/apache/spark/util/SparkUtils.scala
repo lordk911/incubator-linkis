@@ -17,9 +17,9 @@
  
 package org.apache.spark.util
 
-import java.io.File
-
 import org.apache.spark.SparkConf
+
+import java.io.File
 
 /**
   *

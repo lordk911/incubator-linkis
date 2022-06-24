@@ -21,7 +21,6 @@ import org.apache.linkis.engineconn.computation.executor.hook.UDFLoad
 import org.apache.linkis.engineconn.core.hook.ExecutorHook
 import org.apache.linkis.engineconn.executor.entity.Executor
 import org.apache.linkis.manager.label.entity.engine.RunType
-import org.apache.linkis.manager.label.entity.engine.RunType.RunType
 import org.apache.linkis.udf.utils.ConstantVar
 import org.apache.linkis.udf.vo.UDFInfoVo
 

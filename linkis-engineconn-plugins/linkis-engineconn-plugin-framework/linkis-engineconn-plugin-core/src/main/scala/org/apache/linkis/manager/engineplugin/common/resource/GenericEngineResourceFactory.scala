@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.engineplugin.common.resource
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.common.entity.resource.{LoadInstanceResource, Resource}
 import org.apache.linkis.manager.engineplugin.common.conf.EngineConnPluginConf
-import org.apache.commons.lang.StringUtils
+
+import java.util
 
 class GenericEngineResourceFactory extends AbstractEngineResourceFactory with Logging {
 

@@ -17,9 +17,9 @@
  
 package org.apache.linkis.storage.excel
 
-import java.io.OutputStream
-
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
+
+import java.io.OutputStream
 
 class StorageMultiExcelWriter(override val outputStream: OutputStream, override val autoFormat: Boolean)
   extends StorageExcelWriter(null, null, null, outputStream, autoFormat) {

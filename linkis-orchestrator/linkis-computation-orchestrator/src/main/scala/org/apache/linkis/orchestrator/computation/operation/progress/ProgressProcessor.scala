@@ -18,12 +18,10 @@
 package org.apache.linkis.orchestrator.computation.operation.progress
 
 import org.apache.linkis.manager.common.protocol.resource.ResourceWithStatus
-
-import java.io.Closeable
 import org.apache.linkis.orchestrator.Orchestration
-import org.apache.linkis.orchestrator.computation.operation
 import org.apache.linkis.protocol.engine.JobProgressInfo
 
+import java.io.Closeable
 import java.util
 import scala.collection.mutable.ArrayBuffer
 

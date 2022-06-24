@@ -17,24 +17,22 @@
 
 package org.apache.linkis.engineconnplugin.sqoop.executor
 
-import org.apache.linkis.common.utils.{JsonUtils, OverloadUtils, Utils}
-import org.apache.linkis.engineconn.once.executor.{OnceExecutorExecutionContext, OperableOnceExecutor}
-import org.apache.linkis.engineconnplugin.sqoop.client.{LinkisSqoopClient, Sqoop}
-import org.apache.linkis.engineconnplugin.sqoop.context.SqoopResourceConfiguration.{LINKIS_QUEUE_NAME, LINKIS_SQOOP_TASK_MAP_CPU_CORES, LINKIS_SQOOP_TASK_MAP_MEMORY}
-import org.apache.linkis.engineconnplugin.sqoop.context.{SqoopEngineConnContext, SqoopParamsConfiguration}
-import org.apache.linkis.manager.common.entity.resource.{CommonNodeResource, DriverAndYarnResource, LoadInstanceResource, NodeResource, YarnResource}
-import org.apache.linkis.scheduler.executer.ErrorExecuteResponse
-import java.util
-import java.util.concurrent.{Future, TimeUnit}
-
+import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.core.EngineConnObject
-import org.apache.linkis.manager.engineplugin.common.conf.EngineConnPluginConf
-import org.apache.linkis.protocol.engine.JobProgressInfo
+import org.apache.linkis.engineconn.once.executor.{OnceExecutorExecutionContext, OperableOnceExecutor}
 import org.apache.linkis.engineconnplugin.sqoop.client.LinkisSqoopClient
 import org.apache.linkis.engineconnplugin.sqoop.client.exception.JobExecutionException
 import org.apache.linkis.engineconnplugin.sqoop.context.{SqoopEngineConnContext, SqoopEnvConfiguration}
+import org.apache.linkis.engineconnplugin.sqoop.context.SqoopResourceConfiguration.{LINKIS_QUEUE_NAME, LINKIS_SQOOP_TASK_MAP_CPU_CORES, LINKIS_SQOOP_TASK_MAP_MEMORY}
 import org.apache.linkis.engineconnplugin.sqoop.params.SqoopParamsResolver
+import org.apache.linkis.manager.common.entity.resource._
+import org.apache.linkis.manager.engineplugin.common.conf.EngineConnPluginConf
+import org.apache.linkis.protocol.engine.JobProgressInfo
+import org.apache.linkis.scheduler.executer.ErrorExecuteResponse
+
+import java.util
+import java.util.concurrent.{Future, TimeUnit}
 
 
 class SqoopOnceCodeExecutor(override val id: Long,

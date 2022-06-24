@@ -17,16 +17,15 @@
  
 package org.apache.linkis.governance.common.paser
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{CodeAndRunTypeUtils, Logging}
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
 import org.apache.linkis.governance.common.paser.CodeType.CodeType
-import org.apache.commons.lang.StringUtils
 import org.slf4j.{Logger, LoggerFactory}
 
+import java.util
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-import java.util
-import java.util.regex.Pattern
 
 
 trait CodeParser {

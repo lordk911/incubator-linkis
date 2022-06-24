@@ -17,9 +17,9 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream.handler
 
-import java.util
-
 import org.apache.linkis.engineconn.computation.executor.upstream.wrapper.ConnectionInfoWrapper
+
+import java.util
 
 class ECTaskKillHandlerRequest(wrappers: util.List[ConnectionInfoWrapper]) extends MonitorHandlerRequest {
   def getData(): util.List[ConnectionInfoWrapper] = wrappers

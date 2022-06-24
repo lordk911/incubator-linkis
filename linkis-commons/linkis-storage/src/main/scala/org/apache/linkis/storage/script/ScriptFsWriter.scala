@@ -17,13 +17,13 @@
  
 package org.apache.linkis.storage.script
 
-import java.io.{InputStream, OutputStream}
-
 import org.apache.linkis.common.io.{FsPath, FsWriter, MetaData}
 import org.apache.linkis.storage.LineRecord
 import org.apache.linkis.storage.script.compaction.{PYScriptCompaction, QLScriptCompaction, ScalaScriptCompaction, ShellScriptCompaction}
 import org.apache.linkis.storage.script.parser.{PYScriptParser, QLScriptParser, ScalaScriptParser, ShellScriptParser}
 import org.apache.linkis.storage.script.writer.StorageScriptFsWriter
+
+import java.io.{InputStream, OutputStream}
 
 abstract class ScriptFsWriter extends FsWriter {
 

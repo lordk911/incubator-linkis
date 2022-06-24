@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.am.manager
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.common.entity.node._
@@ -34,6 +32,7 @@ import org.apache.linkis.resourcemanager.service.ResourceManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConversions._
 
 

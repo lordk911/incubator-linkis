@@ -17,11 +17,11 @@
  
 package org.apache.linkis.common.utils
 
+import org.apache.commons.io.FileUtils
+import org.apache.linkis.common.conf.Configuration
+
 import java.io.File
 import java.util.concurrent.TimeUnit
-
-import org.apache.linkis.common.conf.Configuration
-import org.apache.commons.io.FileUtils
 
 
 object RefreshUtils {

@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.engineplugin.python
 
-import java.util
-
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
 import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
@@ -26,8 +24,10 @@ import org.apache.linkis.manager.engineplugin.common.resource.{EngineResourceFac
 import org.apache.linkis.manager.engineplugin.python.factory.PythonEngineConnFactory
 import org.apache.linkis.manager.engineplugin.python.launch.PythonProcessEngineConnLaunchBuilder
 import org.apache.linkis.manager.label.entity.Label
-import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel}
+import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
+
+import java.util
 
 class PythonEngineConnPlugin extends EngineConnPlugin {
 

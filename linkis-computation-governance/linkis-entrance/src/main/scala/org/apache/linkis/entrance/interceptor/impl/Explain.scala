@@ -17,18 +17,18 @@
 
 package org.apache.linkis.entrance.interceptor.impl
 
-import java.util.regex.Pattern
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
+import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceIllegalParamException}
 import org.apache.linkis.entrance.interceptor.exception.{PythonCodeCheckException, ScalaCodeCheckException}
 import org.apache.linkis.governance.common.entity.job.JobRequest
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceIllegalParamException}
 import org.slf4j.{Logger, LoggerFactory}
 
+import java.util.regex.Pattern
 import scala.collection.mutable.ArrayBuffer
 
 

@@ -32,8 +32,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.CollectionUtils
 
-import scala.collection.JavaConversions._
 import java.util
+import scala.collection.JavaConversions._
 
 @Component
 class UserResourceService {

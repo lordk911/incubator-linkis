@@ -17,7 +17,7 @@
  
 package org.apache.linkis.entrance.cs
 
-import java.util
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.cs.client.service.{CSNodeServiceImpl, CSVariableService, LinkisJobDataServiceImpl}
 import org.apache.linkis.cs.client.utils.{ContextServiceUtils, SerializeHelper}
@@ -35,8 +35,8 @@ import org.apache.linkis.manager.label.utils.LabelUtil
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.scheduler.queue.Job
-import org.apache.commons.lang.StringUtils
 
+import java.util
 import scala.collection.JavaConversions._
 
 

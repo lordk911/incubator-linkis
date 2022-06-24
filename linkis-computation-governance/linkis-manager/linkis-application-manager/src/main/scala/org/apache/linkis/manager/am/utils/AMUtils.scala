@@ -17,20 +17,18 @@
  
 package org.apache.linkis.manager.am.utils
 
-import java.{lang, util}
-
-import com.google.gson.{Gson, JsonObject}
+import com.google.gson.JsonObject
 import org.apache.linkis.manager.am.vo.{AMEngineNodeVo, EMNodeVo}
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.node.{EMNode, EngineNode}
-import org.apache.linkis.manager.common.entity.resource.{DriverAndYarnResource, LoadInstanceResource, Resource, ResourceSerializer, ResourceType}
+import org.apache.linkis.manager.common.entity.resource.{DriverAndYarnResource, Resource, ResourceSerializer, ResourceType}
 import org.apache.linkis.manager.common.serializer.NodeResourceSerializer
-import org.apache.linkis.manager.common.utils.ResourceUtils
 import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
 import org.apache.linkis.server.BDPJettyServerHelper
 import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization.write
 
+import java.util
 import scala.collection.JavaConverters._
 
 object AMUtils {

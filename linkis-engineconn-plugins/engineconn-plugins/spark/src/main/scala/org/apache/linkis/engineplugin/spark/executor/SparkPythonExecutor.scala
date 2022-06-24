@@ -17,10 +17,9 @@
  
 package org.apache.linkis.engineplugin.spark.executor
 
-import java.io._
-import java.util
-import java.net.InetAddress
-
+import org.apache.commons.exec.CommandLine
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.{RandomStringUtils, StringUtils}
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
@@ -37,18 +36,18 @@ import org.apache.linkis.engineplugin.spark.utils.EngineUtils
 import org.apache.linkis.governance.common.paser.PythonCodeParser
 import org.apache.linkis.scheduler.executer.{ExecuteResponse, SuccessExecuteResponse}
 import org.apache.linkis.storage.resultset.ResultSetWriter
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.{RandomStringUtils, StringUtils}
 import org.apache.spark.api.java.JavaSparkContext
 import org.apache.spark.sql.execution.datasources.csv.UDF
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import py4j.GatewayServer
 import py4j.GatewayServer.GatewayServerBuilder
 
+import java.io._
+import java.net.InetAddress
+import java.util
 import scala.collection.JavaConverters._
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutor, Future, Promise}
+import scala.concurrent._
 
 /**
  *

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.manager.engineplugin.common.resource
 
-import java.util
-
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.protocol.message.RequestProtocol
+
+import java.util
 
 
 trait EngineResourceRequest extends RequestProtocol {

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.governance.common.protocol.task
 
-import java.util
-
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.protocol.message.RequestProtocol
+
+import java.util
 
 trait RequestTask {
   def getCode: String

@@ -17,8 +17,7 @@
 
 package org.apache.linkis.gateway.ujes.parser
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.gateway.http.GatewayContext
@@ -26,7 +25,6 @@ import org.apache.linkis.gateway.parser.AbstractGatewayParser
 import org.apache.linkis.gateway.springcloud.SpringCloudGatewayConfiguration.{API_URL_PREFIX, normalPath}
 import org.apache.linkis.gateway.ujes.parser.ResultSetCacheGatewayParser._
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.lang.StringUtils
 import org.springframework.beans.factory.ObjectFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -35,6 +33,7 @@ import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.util.matching.Regex
 
 

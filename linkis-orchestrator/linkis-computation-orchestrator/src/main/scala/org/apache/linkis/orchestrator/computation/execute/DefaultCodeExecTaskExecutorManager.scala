@@ -17,10 +17,9 @@
  
 package org.apache.linkis.orchestrator.computation.execute
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
-import org.apache.linkis.common.exception.{LinkisRetryException, WarnException}
+import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
@@ -29,12 +28,12 @@ import org.apache.linkis.manager.label.entity.entrance.LoadBalanceLabel
 import org.apache.linkis.manager.label.utils.{LabelUtil, LabelUtils}
 import org.apache.linkis.orchestrator.computation.conf.ComputationOrchestratorConf
 import org.apache.linkis.orchestrator.computation.physical.CodeLogicalUnitExecTask
-import org.apache.linkis.orchestrator.ecm.entity.{DefaultMarkReq, LoadBanlanceMarkReq, Mark, MarkReq, Policy}
+import org.apache.linkis.orchestrator.ecm.entity._
 import org.apache.linkis.orchestrator.ecm.{EngineConnManager, EngineConnManagerBuilder}
-import org.apache.linkis.orchestrator.exception.{OrchestratorLabelConflictException, OrchestratorUseSameEngineException}
+import org.apache.linkis.orchestrator.exception.OrchestratorLabelConflictException
 import org.apache.linkis.orchestrator.listener.task.TaskLogEvent
-import org.apache.commons.lang.StringUtils
 
+import java.util
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.concurrent.duration.Duration

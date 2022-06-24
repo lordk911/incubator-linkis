@@ -17,9 +17,6 @@
 
 package org.apache.linkis.engineplugin.openlookeng
 
-import java.util
-import java.util.List
-
 import org.apache.linkis.engineplugin.openlookeng.builder.OpenLooKengProcessECLaunchBuilder
 import org.apache.linkis.engineplugin.openlookeng.factory.OpenLooKengEngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
@@ -29,6 +26,9 @@ import org.apache.linkis.manager.engineplugin.common.resource.{EngineResourceFac
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
+
+import java.util
+import java.util.List
 
 class OpenLooKengECPlugin extends EngineConnPlugin {
 

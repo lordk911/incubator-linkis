@@ -17,17 +17,16 @@
  
 package org.apache.linkis.storage.source
 
-import java.io.Closeable
-import java.util
-
+import org.apache.commons.io.IOUtils
+import org.apache.commons.math3.util.Pair
 import org.apache.linkis.common.io.{FsReader, FsWriter, MetaData, Record}
 import org.apache.linkis.storage.domain.{Column, DataType}
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
 import org.apache.linkis.storage.script.{ScriptMetaData, VariableParser}
 import org.apache.linkis.storage.{LineMetaData, LineRecord}
-import org.apache.commons.io.IOUtils
-import org.apache.commons.math3.util.Pair
 
+import java.io.Closeable
+import java.util
 import scala.collection.JavaConversions._
 
 

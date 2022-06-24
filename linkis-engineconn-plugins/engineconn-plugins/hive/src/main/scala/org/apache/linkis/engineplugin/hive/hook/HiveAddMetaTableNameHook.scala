@@ -17,13 +17,13 @@
  
 package org.apache.linkis.engineplugin.hive.hook
 
+import org.apache.commons.lang.StringUtils
+import org.apache.hadoop.hive.conf.HiveConf.ConfVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineconn.computation.executor.hook.ComputationExecutorHook
 import org.apache.linkis.engineplugin.hive.exception.HiveQueryFailedException
-import org.apache.commons.lang.StringUtils
-import org.apache.hadoop.hive.conf.HiveConf.ConfVars
 
 import java.util
 import java.util.regex.Pattern

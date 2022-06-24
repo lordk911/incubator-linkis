@@ -17,12 +17,6 @@
  
 package org.apache.linkis.engineconnplugin.flink.factory
 
-import java.io.File
-import java.net.URL
-import java.time.Duration
-import java.util
-import java.util.Collections
-
 import com.google.common.collect.{Lists, Sets}
 import org.apache.commons.lang3.StringUtils
 import org.apache.flink.configuration._
@@ -48,6 +42,11 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 import org.apache.linkis.manager.label.entity.engine._
 
+import java.io.File
+import java.net.URL
+import java.time.Duration
+import java.util
+import java.util.Collections
 import scala.collection.JavaConverters._
 
 

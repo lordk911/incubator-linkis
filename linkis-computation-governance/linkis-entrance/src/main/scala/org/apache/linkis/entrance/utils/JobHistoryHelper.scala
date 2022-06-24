@@ -17,6 +17,7 @@
 
 package org.apache.linkis.entrance.utils
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
@@ -28,13 +29,11 @@ import org.apache.linkis.governance.common.protocol.job._
 import org.apache.linkis.protocol.query.cache.{CacheTaskResult, RequestReadCache}
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.queue.SchedulerEventState
-import java.util
-import java.util.Date
-
-import javax.servlet.http.HttpServletRequest
-import org.apache.commons.lang.StringUtils
 import sun.net.util.IPAddressUtil
 
+import java.util
+import java.util.Date
+import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConversions._
 
 object JobHistoryHelper extends Logging{

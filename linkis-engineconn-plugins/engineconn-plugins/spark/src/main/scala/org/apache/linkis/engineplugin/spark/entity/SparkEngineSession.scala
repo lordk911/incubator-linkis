@@ -17,10 +17,10 @@
  
 package org.apache.linkis.engineplugin.spark.entity
 
-import java.io.File
-
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.{SQLContext, SparkSession}
+
+import java.io.File
 
 
 case class SparkEngineSession(sparkContext: SparkContext,

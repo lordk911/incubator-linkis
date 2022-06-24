@@ -18,7 +18,7 @@
 package org.apache.linkis.orchestrator.ecm.service
 
 import org.apache.linkis.governance.common.protocol.task._
-import org.apache.linkis.manager.common.protocol.resource.{ResponseTaskRunningInfo, ResponseTaskYarnResource}
+import org.apache.linkis.manager.common.protocol.resource.ResponseTaskRunningInfo
 import org.apache.linkis.rpc.Sender
 
 

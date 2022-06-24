@@ -19,8 +19,6 @@ package org.apache.linkis.scheduler.queue.fifoqueue
 
 
 
-import java.util.concurrent.{ExecutorService, Future}
-
 import org.apache.linkis.common.exception.{ErrorException, WarnException}
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.Utils
@@ -30,6 +28,7 @@ import org.apache.linkis.scheduler.executer.Executor
 import org.apache.linkis.scheduler.future.{BDPFuture, BDPFutureTask}
 import org.apache.linkis.scheduler.queue._
 
+import java.util.concurrent.{ExecutorService, Future}
 import scala.beans.BeanProperty
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.TimeoutException

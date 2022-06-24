@@ -17,14 +17,14 @@
  
 package org.apache.linkis.server.conf
 
-import java.io.File
+import org.apache.commons.lang3.StringUtils
 import java.lang.Boolean
-
 import org.apache.linkis.common.conf.{CommonVars, Configuration, TimeType}
 import org.apache.linkis.common.utils.{DESUtil, Logging, Utils}
 import org.apache.linkis.server.exception.BDPInitServerException
-import org.apache.commons.lang3.StringUtils
 import sun.misc.BASE64Encoder
+
+import java.io.File
 
 
 object ServerConfiguration extends Logging{

@@ -19,13 +19,6 @@ package org.apache.linkis.ujes.jdbc
 
 import java.sql.{Connection, DatabaseMetaData, ResultSet, RowIdLifetime}
 import java.util
-import org.apache.linkis.ujes.client.request.{GetColumnsAction, GetDBSAction, GetTablesAction}
-import org.apache.linkis.ujes.jdbc.entity.JdbcColumn
-import org.apache.linkis.ujes.jdbc.utils.JDBCUtils
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.common.utils.Logging
-
-import scala.collection.JavaConversions._
 
 
 class UJESSQLDatabaseMetaData(ujesSQLConnection: UJESSQLConnection) extends DatabaseMetaData with Logging {
@@ -328,7 +321,6 @@ class UJESSQLDatabaseMetaData(ujesSQLConnection: UJESSQLConnection) extends Data
     val getDBSAction = GetDBSAction.builder().setUser(getUserName).build()
     val dBSResult = ujesSQLConnection.ujesClient.getDBS(getDBSAction)
     val dbsName = dBSResult.getDBSName()
-    import scala.collection.JavaConversions._
     logger.info(s"dbNames are " + dbsName.mkString(","))
     new LinkisMetaDataResultSet[String](util.Arrays.asList("TABLE_SCHEMA", "TABLE_CATALOG"),
       util.Arrays.asList("string", "string"), dbsName) {

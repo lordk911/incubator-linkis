@@ -17,8 +17,6 @@
  
 package org.apache.linkis.rpc.interceptor.common
 
-import java.util.concurrent.{Callable, TimeUnit}
-
 import com.google.common.cache.{Cache, CacheBuilder, RemovalListener, RemovalNotification}
 import org.apache.linkis.common.exception.WarnException
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -28,7 +26,7 @@ import org.apache.linkis.rpc.interceptor.{RPCInterceptor, RPCInterceptorChain, R
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 
-import scala.tools.scalap.scalax.util.StringUtil
+import java.util.concurrent.{Callable, TimeUnit}
 
 @Component
 class CacheableRPCInterceptor extends RPCInterceptor with Logging{

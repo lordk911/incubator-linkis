@@ -17,28 +17,23 @@
  
 package org.apache.linkis.jobhistory.service.impl
 
-import java.sql.Timestamp
-
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
+import org.apache.linkis.governance.common.constant.job.JobRequestConstants
+import org.apache.linkis.governance.common.entity.job.QueryException
+import org.apache.linkis.governance.common.protocol.job._
+import org.apache.linkis.jobhistory.conversions.TaskConversions._
 import org.apache.linkis.jobhistory.dao.{JobDetailMapper, JobHistoryMapper}
 import org.apache.linkis.jobhistory.entity.JobDetail
 import org.apache.linkis.jobhistory.service.JobHistoryDetailQueryService
-import org.apache.linkis.rpc.message.annotation.Receiver
-import java.util
-
-import org.apache.commons.lang.exception.ExceptionUtils
-import org.apache.linkis.common.errorcode.LinkisPublicEnhancementErrorCodeSummary
-import org.apache.linkis.common.exception.LinkisRetryException
-import org.apache.linkis.governance.common.constant.job.JobRequestConstants
-import org.apache.linkis.governance.common.entity.job.QueryException
-import org.apache.linkis.governance.common.protocol.job.{JobDetailReqBatchUpdate, JobDetailReqInsert, JobDetailReqQuery, JobDetailReqUpdate, JobRespProtocol}
-import org.apache.linkis.jobhistory.conversions.TaskConversions._
 import org.apache.linkis.jobhistory.transitional.TaskStatus
 import org.apache.linkis.jobhistory.util.QueryUtils
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+import java.util
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters.asScalaBufferConverter
 

@@ -17,14 +17,13 @@
  
 package org.apache.linkis.manager.am.conf
 
-import java.util
-
 import org.apache.linkis.common.conf.Configuration
-import org.apache.linkis.governance.common.protocol.conf.{RequestQueryEngineConfig, RequestQueryGlobalConfig, RequestQueryEngineConfigWithGlobalConfig, ResponseQueryConfig}
+import org.apache.linkis.governance.common.protocol.conf.{RequestQueryEngineConfigWithGlobalConfig, RequestQueryGlobalConfig, ResponseQueryConfig}
 import org.apache.linkis.manager.label.entity.engine.{EngineTypeLabel, UserCreatorLabel}
-import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
 import org.apache.linkis.protocol.CacheableProtocol
 import org.apache.linkis.rpc.RPCMapCache
+
+import java.util
 
 
 

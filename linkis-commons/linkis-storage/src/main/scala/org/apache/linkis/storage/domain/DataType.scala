@@ -17,10 +17,10 @@
  
 package org.apache.linkis.storage.domain
 
-import java.sql.{Date, Timestamp}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
+
 import java.math.{BigDecimal => JavaBigDecimal}
+import java.sql.{Date, Timestamp}
 
 object DataType extends Logging{
 

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.computation.client
 
-import java.io.Closeable
-
 import org.apache.linkis.computation.client.interactive.InteractiveJob
 import org.apache.linkis.computation.client.once.OnceJob
+
+import java.io.Closeable
 
 
 /**

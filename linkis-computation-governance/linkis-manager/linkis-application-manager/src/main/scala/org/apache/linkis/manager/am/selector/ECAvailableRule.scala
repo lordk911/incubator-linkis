@@ -17,12 +17,12 @@
 
 package org.apache.linkis.manager.am.selector
 
-import java.util
-
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineConnMode, EngineConnModeLabel}
 import org.apache.linkis.manager.label.utils.LabelUtil
+
+import java.util
 
 trait ECAvailableRule {
 

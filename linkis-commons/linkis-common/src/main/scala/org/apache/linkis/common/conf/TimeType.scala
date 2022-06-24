@@ -17,11 +17,10 @@
  
 package org.apache.linkis.common.conf
 
-import java.util.Date
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.utils.ByteTimeUtils
 
+import java.util.Date
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 
 

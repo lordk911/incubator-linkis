@@ -16,17 +16,16 @@
  */
 
 package org.apache.linkis.engineplugin.spark.args
-import java.util
-
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.engineplugin.spark.extension.SparkPreExecutionHook
-import org.springframework.stereotype.Component
-import javax.annotation.PostConstruct
-
-import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
-import org.apache.linkis.engineplugin.spark.common.{SparkEnginePluginConst, SparkKind}
-import org.apache.linkis.manager.label.entity.engine.{CodeLanguageLabel, RunType}
 import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.utils.{Logging, Utils}
+import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
+import org.apache.linkis.engineplugin.spark.common.SparkEnginePluginConst
+import org.apache.linkis.engineplugin.spark.extension.SparkPreExecutionHook
+import org.apache.linkis.manager.label.entity.engine.{CodeLanguageLabel, RunType}
+import org.springframework.stereotype.Component
+
+import java.util
+import javax.annotation.PostConstruct
 
 /**
   * Set sys.argv[] if: 1. it is a pyspark task. 2. user provide with args in runtimeMap. 3. it is at the beginning of the code

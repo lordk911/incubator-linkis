@@ -17,18 +17,18 @@
  
 package org.apache.linkis.engineconnplugin.flink.factory
 
+import org.apache.flink.yarn.configuration.YarnConfigOptions
 import org.apache.linkis.engineconn.common.conf.EngineConnConf
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
 import org.apache.linkis.engineconn.computation.executor.creation.ComputationExecutorFactory
 import org.apache.linkis.engineconn.computation.executor.execute.ComputationExecutor
+import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration
 import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext
 import org.apache.linkis.engineconnplugin.flink.executor.FlinkSQLComputationExecutor
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.RunType
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
-import org.apache.flink.yarn.configuration.YarnConfigOptions
-import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration
 
 import scala.collection.JavaConverters._
 

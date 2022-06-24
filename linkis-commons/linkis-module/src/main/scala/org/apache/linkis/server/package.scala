@@ -17,17 +17,16 @@
  
 package org.apache.linkis
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.exception.{ErrorException, ExceptionManager, FatalException, WarnException}
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.server.exception.{BDPServerErrorException, NonLoginException}
 import org.apache.linkis.server.security.SecurityFilter
-import javax.servlet.http.HttpServletRequest
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.exception.ExceptionUtils
 import org.slf4j.Logger
 
+import java.util
+import javax.servlet.http.HttpServletRequest
 import scala.collection.{JavaConversions, mutable}
 
 

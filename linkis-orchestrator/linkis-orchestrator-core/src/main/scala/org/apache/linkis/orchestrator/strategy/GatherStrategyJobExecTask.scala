@@ -21,7 +21,7 @@ import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.orchestrator.core.ResultSet
 import org.apache.linkis.orchestrator.exception.OrchestratorErrorCodeSummary
 import org.apache.linkis.orchestrator.execution.impl.{DefaultFailedTaskResponse, DefaultResultSetTaskResponse}
-import org.apache.linkis.orchestrator.execution.{CompletedTaskResponse, SucceedTaskResponse, TaskResponse}
+import org.apache.linkis.orchestrator.execution.{SucceedTaskResponse, TaskResponse}
 import org.apache.linkis.orchestrator.plans.logical.{EndJobTaskDesc, StartJobTaskDesc}
 import org.apache.linkis.orchestrator.plans.physical.{ExecTask, JobExecTask, ReheatableExecTask}
 

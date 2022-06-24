@@ -22,8 +22,8 @@ import org.apache.linkis.datasource.client.exception.DataSourceClientBuilderExce
 import org.apache.linkis.httpclient.dws.DWSHttpClient
 import org.apache.linkis.httpclient.request.POSTAction
 
-import scala.collection.JavaConverters._
 import java.util
+import scala.collection.JavaConverters._
 
 class UpdateDataSourceParameterAction extends POSTAction with DataSourceAction {
   override def getRequestPayload: String = DWSHttpClient.jacksonJson.writeValueAsString(getRequestPayloads)

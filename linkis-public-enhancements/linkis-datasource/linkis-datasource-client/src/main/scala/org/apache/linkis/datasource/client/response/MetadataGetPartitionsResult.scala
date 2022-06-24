@@ -21,6 +21,7 @@ import org.apache.linkis.httpclient.dws.DWSHttpClient
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
 import org.apache.linkis.metadatamanager.common.domain.MetaPartitionInfo
+
 import java.util
 import scala.beans.BeanProperty
 

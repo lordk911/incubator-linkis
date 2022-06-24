@@ -17,7 +17,6 @@
 
 package org.apache.linkis.gateway.authentication.service
 
-import org.apache.linkis.gateway.authentication.bo.Token
 import org.apache.linkis.gateway.authentication.bo.{Token, User}
 
 

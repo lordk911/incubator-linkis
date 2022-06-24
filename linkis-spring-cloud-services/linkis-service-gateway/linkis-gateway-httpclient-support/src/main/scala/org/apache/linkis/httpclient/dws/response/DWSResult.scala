@@ -17,15 +17,15 @@
  
 package org.apache.linkis.httpclient.dws.response
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
-
-import java.util
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.httpclient.dws.DWSHttpClient
+import org.apache.linkis.httpclient.dws.response.DWSResult.LOGGEDIN_STR
 import org.apache.linkis.httpclient.exception.HttpClientResultException
 import org.apache.linkis.httpclient.response.HttpResult
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.httpclient.dws.response.DWSResult.LOGGEDIN_STR
+
+import java.util
 
 trait DWSResult extends Logging with HttpResult {
 

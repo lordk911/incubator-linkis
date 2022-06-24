@@ -23,8 +23,8 @@ import org.apache.linkis.gateway.http.{GatewayContext, GatewayHttpRequest}
 import org.apache.linkis.server.exception.LoginExpireException
 import org.apache.linkis.server.security.SecurityFilter._
 import org.apache.linkis.server.security.{SSOUtils, ServerSSOUtils}
-import javax.servlet.http.Cookie
 
+import javax.servlet.http.Cookie
 import scala.collection.JavaConversions._
 
 object GatewaySSOUtils extends Logging {

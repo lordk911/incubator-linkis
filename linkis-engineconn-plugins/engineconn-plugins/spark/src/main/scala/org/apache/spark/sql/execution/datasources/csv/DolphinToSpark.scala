@@ -18,14 +18,14 @@
 package org.apache.spark.sql.execution.datasources.csv
 
 import org.apache.linkis.common.conf.CommonVars
-
-import java.util
 import org.apache.linkis.engineplugin.spark.config.SparkConfiguration
 import org.apache.linkis.storage.resultset.ResultSetReader
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
 import org.apache.linkis.storage.{domain => wds}
-import org.apache.spark.sql.types.{DecimalType, IntegerType, ShortType, StructField, StructType, _}
+import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+
+import java.util
 
 
 /**

@@ -17,8 +17,6 @@
  
 package org.apache.linkis.gateway.ujes.parser
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.gateway.config.GatewayConfiguration
 import org.apache.linkis.gateway.http.GatewayContext
@@ -27,10 +25,11 @@ import org.apache.linkis.gateway.springcloud.SpringCloudGatewayConfiguration._
 import org.apache.linkis.gateway.ujes.route.label.RouteLabelParser
 import org.apache.linkis.instance.label.service.InsLabelService
 import org.apache.linkis.manager.label.entity.route.RouteLabel
-import javax.annotation.Resource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util
+import javax.annotation.Resource
 import scala.collection.JavaConversions._
 
 @Component

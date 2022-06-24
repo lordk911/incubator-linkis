@@ -17,10 +17,10 @@
  
 package org.apache.linkis.orchestrator.execution.impl
 
-import java.util.Comparator
-
 import org.apache.linkis.orchestrator.execution.ExecTaskRunner
 import org.apache.linkis.orchestrator.plans.logical.{EndJobTaskDesc, EndStageTaskDesc}
+
+import java.util.Comparator
 
 case class UserTaskRunner(user: String, maxRunningNumber: Int, runningNumber: Int, taskRunner: ExecTaskRunner) {
 

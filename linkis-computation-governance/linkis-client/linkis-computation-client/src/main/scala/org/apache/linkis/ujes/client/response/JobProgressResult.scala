@@ -17,13 +17,12 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util.{List, Map}
-
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.json4s._
 import org.json4s.jackson.Serialization._
 
+import java.util.{List, Map}
 import scala.collection.JavaConversions._
 
 @DWSHttpMessageResult("/api/rest_j/v\\d+/entrance/(\\S+)/progress")

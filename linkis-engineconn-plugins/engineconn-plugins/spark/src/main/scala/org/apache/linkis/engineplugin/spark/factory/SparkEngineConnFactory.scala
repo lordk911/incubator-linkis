@@ -17,10 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.factory
 
-import java.io.File
-import java.lang.reflect.Constructor
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
@@ -31,10 +28,13 @@ import org.apache.linkis.manager.engineplugin.common.creation.{ExecutorFactory, 
 import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 import org.apache.linkis.server.JMap
-import org.apache.commons.lang.StringUtils
 import org.apache.spark.sql.{SQLContext, SparkSession}
 import org.apache.spark.util.SparkUtils
 import org.apache.spark.{SparkConf, SparkContext}
+
+import java.io.File
+import java.lang.reflect.Constructor
+import java.util
 
 /**
  *

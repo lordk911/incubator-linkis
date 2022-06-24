@@ -17,14 +17,13 @@
  
 package org.apache.linkis.gateway.springcloud.http
 
-import java.net.{InetSocketAddress, URI}
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.gateway.http.GatewayHttpRequest
 import org.apache.linkis.server._
-import javax.servlet.http.Cookie
-import org.apache.commons.lang.StringUtils
 import org.springframework.http.server.reactive.AbstractServerHttpRequest
 
+import java.net.{InetSocketAddress, URI}
+import javax.servlet.http.Cookie
 import scala.collection.JavaConversions
 
 class SpringCloudGatewayHttpRequest(request: AbstractServerHttpRequest) extends GatewayHttpRequest {

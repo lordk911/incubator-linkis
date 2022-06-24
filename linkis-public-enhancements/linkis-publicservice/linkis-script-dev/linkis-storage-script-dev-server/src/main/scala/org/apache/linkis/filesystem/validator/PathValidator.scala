@@ -17,25 +17,24 @@
  
 package org.apache.linkis.filesystem.validator
 
-import java.io.File
 import com.fasterxml.jackson.databind.JsonNode
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.filesystem.conf.WorkSpaceConfiguration._
 import org.apache.linkis.filesystem.exception.WorkSpaceException
 import org.apache.linkis.filesystem.util.WorkspaceUtil
 import org.apache.linkis.server
-import org.apache.linkis.server.{Message, catchIt}
-import org.apache.linkis.server.security.SecurityFilter
+import org.apache.linkis.server.Message
 import org.apache.linkis.server.utils.ModuleUserUtils
 import org.apache.linkis.storage.utils.StorageUtils
-
-import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.{Around, Aspect, Pointcut}
 import org.aspectj.lang.reflect.MethodSignature
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import org.springframework.web.context.request.{RequestContextHolder, ServletRequestAttributes}
+
+import java.io.File
+import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
 @Aspect
 @Component

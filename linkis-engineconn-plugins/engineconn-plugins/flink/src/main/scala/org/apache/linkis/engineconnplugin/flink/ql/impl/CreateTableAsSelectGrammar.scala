@@ -17,12 +17,12 @@
 
 package org.apache.linkis.engineconnplugin.flink.ql.impl
 
+import org.apache.flink.table.api.internal.TableEnvironmentInternal
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconnplugin.flink.client.sql.operation.OperationUtil
 import org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet
 import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext
 import org.apache.linkis.engineconnplugin.flink.ql.Grammar
-import org.apache.flink.table.api.internal.TableEnvironmentInternal
 
 import scala.util.matching.Regex
 

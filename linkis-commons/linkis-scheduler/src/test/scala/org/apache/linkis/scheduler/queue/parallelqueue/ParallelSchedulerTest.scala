@@ -17,9 +17,7 @@
 package org.apache.linkis.scheduler.queue.parallelqueue
 
 import org.apache.linkis.scheduler.SchedulerContext
-import org.apache.linkis.scheduler.queue.UserJob
-import org.apache.linkis.scheduler.queue.fifoqueue.{FIFOGroupFactory, FIFOScheduler, FIFOSchedulerContextImpl}
-import org.junit.jupiter.api.Assertions.{assertEquals, assertNotNull}
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.{BeforeEach, Test}
 
 class ParallelSchedulerTest {

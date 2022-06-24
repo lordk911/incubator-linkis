@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.engineplugin.io
 
-import java.util
-
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
 import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
@@ -26,6 +24,8 @@ import org.apache.linkis.manager.engineplugin.common.resource.{EngineResourceFac
 import org.apache.linkis.manager.engineplugin.io.builder.IoProcessEngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.io.factory.IoEngineConnFactory
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 class IoEngineConnPlugin extends EngineConnPlugin {
 

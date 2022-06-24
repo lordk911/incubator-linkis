@@ -17,8 +17,9 @@
  
 package org.apache.linkis.httpclient.dws
 
-import java.util
-
+import org.apache.commons.beanutils.BeanUtils
+import org.apache.commons.lang.{ClassUtils, StringUtils}
+import org.apache.http.{HttpException, HttpResponse}
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.{JsonUtils, Logging}
 import org.apache.linkis.httpclient.AbstractHttpClient
@@ -30,10 +31,8 @@ import org.apache.linkis.httpclient.dws.response.{DWSHttpMessageFactory, DWSHttp
 import org.apache.linkis.httpclient.request.HttpAction
 import org.apache.linkis.httpclient.response.impl.DefaultHttpResult
 import org.apache.linkis.httpclient.response.{HttpResult, ListResult, Result}
-import org.apache.commons.beanutils.BeanUtils
-import org.apache.commons.lang.{ClassUtils, StringUtils}
-import org.apache.http.{HttpException, HttpResponse}
 
+import java.util
 import scala.collection.JavaConversions
 
 class DWSHttpClient(clientConfig: DWSClientConfig, clientName: String)

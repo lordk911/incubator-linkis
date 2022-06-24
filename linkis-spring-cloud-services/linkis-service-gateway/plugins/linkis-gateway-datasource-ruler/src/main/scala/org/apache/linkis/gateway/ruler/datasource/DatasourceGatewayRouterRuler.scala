@@ -19,20 +19,6 @@ package org.apache.linkis.gateway.ruler.datasource
 
 import java.util
 
-import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.gateway.http.GatewayContext
-import org.apache.linkis.gateway.ruler.datasource.service.DatasourceMapService
-import org.apache.linkis.gateway.ujes.route.EntranceGatewayRouterRuler
-import org.apache.linkis.protocol.constants.TaskConstant
-import org.apache.linkis.protocol.utils.TaskUtils
-import org.apache.linkis.rpc.interceptor.ServiceInstanceUtils
-import org.apache.linkis.server.{BDPJettyServerHelper, JMap}
-import org.apache.commons.lang.StringUtils
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-
-import scala.collection.JavaConversions._
-
 
 @Component
 class DatasourceGatewayRouterRuler extends EntranceGatewayRouterRuler with Logging {

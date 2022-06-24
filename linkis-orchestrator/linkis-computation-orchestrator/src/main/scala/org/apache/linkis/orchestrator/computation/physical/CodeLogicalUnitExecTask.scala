@@ -17,12 +17,11 @@
  
 package org.apache.linkis.orchestrator.computation.physical
 
-import java.util.concurrent.TimeUnit
-import org.apache.linkis.common.exception.{ErrorException, LinkisRetryException, WarnException}
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.exception.{ErrorException, LinkisRetryException}
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.governance.common.protocol.task.{RequestTask, RequestTaskExecute}
-import org.apache.linkis.governance.common.utils.GovernanceConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.orchestrator.computation.conf.ComputationOrchestratorConf
 import org.apache.linkis.orchestrator.computation.execute.{CodeExecTaskExecutor, CodeExecTaskExecutorManager}
@@ -31,18 +30,18 @@ import org.apache.linkis.orchestrator.exception.{OrchestratorErrorCodeSummary, O
 import org.apache.linkis.orchestrator.execution.AsyncTaskResponse.NotifyListener
 import org.apache.linkis.orchestrator.execution.impl.DefaultFailedTaskResponse
 import org.apache.linkis.orchestrator.execution.{AsyncTaskResponse, TaskResponse}
+import org.apache.linkis.orchestrator.listener.task.TaskLogEvent
 import org.apache.linkis.orchestrator.plans.ast.QueryParams
-import org.apache.linkis.orchestrator.plans.physical.{AbstractExecTask, ExecTask, PhysicalContext, ReheatableExecTask, RetryExecTask}
+import org.apache.linkis.orchestrator.plans.physical.{AbstractExecTask, ExecTask, PhysicalContext}
 import org.apache.linkis.orchestrator.plans.unit.CodeLogicalUnit
 import org.apache.linkis.orchestrator.strategy.async.AsyncExecTask
 import org.apache.linkis.orchestrator.strategy.{ResultSetExecTask, StatusInfoExecTask}
 import org.apache.linkis.orchestrator.utils.OrchestratorIDCreator
 import org.apache.linkis.scheduler.executer.{ErrorExecuteResponse, SubmitResponse}
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.orchestrator.listener.task.TaskLogEvent
 
-import scala.concurrent.duration.Duration
+import java.util.concurrent.TimeUnit
 import scala.collection.convert.decorateAsScala._
+import scala.concurrent.duration.Duration
 /**
   *
   *

@@ -17,12 +17,10 @@
  
 package org.apache.linkis.manager.label.entity.engine
 
-import java.util
-import org.apache.linkis.manager.label.entity.{EngineNodeLabel, Feature, GenericLabel}
 import org.apache.linkis.manager.label.entity.annon.ValueSerialNum
+import org.apache.linkis.manager.label.entity.{EngineNodeLabel, Feature, GenericLabel}
 
-
-import org.apache.linkis.manager.label.entity.GenericLabel
+import java.util
 
 
 class EngineConnModeLabel extends GenericLabel with EngineNodeLabel {

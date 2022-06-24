@@ -17,9 +17,9 @@
  
 package org.apache.linkis.scheduler.executer
 
-import java.io.Closeable
-
 import org.apache.linkis.protocol.engine.EngineState
+
+import java.io.Closeable
 
 
 trait Executor extends Closeable {

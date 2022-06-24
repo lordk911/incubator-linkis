@@ -17,12 +17,12 @@
  
 package org.apache.linkis.gateway.security.sso
 
-import java.net.URI
-
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.utils.ClassUtils
 import org.apache.linkis.gateway.config.GatewayConfiguration
 import org.apache.linkis.gateway.http.GatewayContext
+
+import java.net.URI
 
 trait SSOInterceptor {
 

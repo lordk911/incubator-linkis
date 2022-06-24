@@ -17,27 +17,26 @@
  
 package org.apache.linkis.server
 
-import java.io.File
-import java.lang
-import java.lang.reflect.Type
-import java.text.SimpleDateFormat
-import java.util.EnumSet
-
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson._
+import org.apache.commons.io.FileUtils
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.server.conf.ServerConfiguration._
 import org.apache.linkis.server.socket.ControllerServer
 import org.apache.linkis.server.socket.controller.{ServerEventService, ServerListenerEventBus}
-import javax.servlet.{DispatcherType, Filter, MultipartConfigElement}
-import org.apache.commons.io.FileUtils
 import org.eclipse.jetty.server.session.SessionHandler
 import org.eclipse.jetty.servlet.{DefaultServlet, FilterHolder, ServletContextHandler, ServletHolder}
 import org.eclipse.jetty.webapp.WebAppContext
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
 import org.springframework.web.servlet.DispatcherServlet
 
+import java.io.File
+import java.lang
+import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.util.EnumSet
+import javax.servlet.{DispatcherType, Filter, MultipartConfigElement}
 import scala.collection.mutable
 
 

@@ -17,13 +17,13 @@
  
 package org.apache.linkis.gateway.security.token
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.gateway.authentication.service.TokenService
 import org.apache.linkis.gateway.config.GatewayConfiguration._
 import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.gateway.security.{GatewaySSOUtils, SecurityFilter}
 import org.apache.linkis.server.Message
-import org.apache.commons.lang.StringUtils
 
 object TokenAuthentication extends Logging {
 

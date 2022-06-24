@@ -17,8 +17,6 @@
  
 package org.apache.linkis.storage.resultset
 
-import java.io.{ByteArrayInputStream, IOException, InputStream}
-
 import org.apache.linkis.common.io.resultset.{ResultSet, ResultSetReader}
 import org.apache.linkis.common.io.{Fs, MetaData, Record}
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -26,6 +24,7 @@ import org.apache.linkis.storage.domain.Dolphin
 import org.apache.linkis.storage.exception.StorageWarnException
 import org.apache.linkis.storage.utils.StorageUtils
 
+import java.io.{ByteArrayInputStream, IOException, InputStream}
 import scala.collection.mutable.ArrayBuffer
 
 

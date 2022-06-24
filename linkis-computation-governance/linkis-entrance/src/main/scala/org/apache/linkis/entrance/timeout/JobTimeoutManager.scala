@@ -17,9 +17,6 @@
  
 package org.apache.linkis.entrance.timeout
 
-import java.util
-import java.util.concurrent.{ConcurrentHashMap, ConcurrentMap, TimeUnit}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
 import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceIllegalParamException}
@@ -28,7 +25,8 @@ import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.entrance.{JobQueuingTimeoutLabel, JobRunningTimeoutLabel}
 
-
+import java.util
+import java.util.concurrent.{ConcurrentHashMap, ConcurrentMap, TimeUnit}
 import scala.collection.JavaConversions._
 
 

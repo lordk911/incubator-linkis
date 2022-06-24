@@ -17,9 +17,9 @@
 
 package org.apache.linkis.engineconnplugin.sqoop.params
 
-import java.util
-
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
+
+import java.util
 /**
   * Resolve the engine job params
  */

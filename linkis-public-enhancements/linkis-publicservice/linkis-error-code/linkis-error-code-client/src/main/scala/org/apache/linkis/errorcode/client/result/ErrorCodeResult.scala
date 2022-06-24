@@ -17,11 +17,11 @@
  
 package org.apache.linkis.errorcode.client.result
 
-import java.util
-
-import org.apache.linkis.errorcode.common.{CommonConf, LinkisErrorCode}
+import org.apache.linkis.errorcode.common.LinkisErrorCode
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
+
+import java.util
 
 
 abstract class ErrorCodeResult extends DWSResult

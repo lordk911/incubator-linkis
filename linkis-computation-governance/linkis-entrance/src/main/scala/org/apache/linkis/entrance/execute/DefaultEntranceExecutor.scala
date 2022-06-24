@@ -34,7 +34,6 @@ import org.apache.linkis.orchestrator.Orchestration
 import org.apache.linkis.orchestrator.computation.entity.ComputationJobReq
 import org.apache.linkis.orchestrator.computation.operation.log.{LogOperation, LogProcessor}
 import org.apache.linkis.orchestrator.computation.operation.progress.{DefaultProgressOperation, ProgressProcessor}
-import org.apache.linkis.orchestrator.computation.operation.resource.{ResourceReportOperation, ResourceReportProcessor}
 import org.apache.linkis.orchestrator.core.{OrchestrationFuture, OrchestrationResponse}
 import org.apache.linkis.orchestrator.domain.JobReq
 import org.apache.linkis.orchestrator.execution.impl.DefaultFailedTaskResponse

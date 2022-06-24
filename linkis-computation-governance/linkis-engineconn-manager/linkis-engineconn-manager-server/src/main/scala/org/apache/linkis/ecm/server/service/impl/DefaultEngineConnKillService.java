@@ -17,6 +17,7 @@
  
 package org.apache.linkis.ecm.server.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.linkis.common.ServiceInstance;
 import org.apache.linkis.common.utils.Utils;
 import org.apache.linkis.ecm.core.engineconn.EngineConn;
@@ -27,9 +28,8 @@ import org.apache.linkis.governance.common.utils.GovernanceUtils;
 import org.apache.linkis.manager.common.protocol.engine.EngineStopRequest;
 import org.apache.linkis.manager.common.protocol.engine.EngineStopResponse;
 import org.apache.linkis.manager.common.protocol.engine.EngineSuicideRequest;
-import org.apache.linkis.rpc.message.annotation.Receiver;
 import org.apache.linkis.rpc.Sender;
-import org.apache.commons.lang.StringUtils;
+import org.apache.linkis.rpc.message.annotation.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

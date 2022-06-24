@@ -17,12 +17,12 @@
  
 package org.apache.linkis.computation.client.once
 
-import org.apache.linkis.computation.client.job.{AbstractLinkisJob, SubmittableLinkisJob}
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
+import org.apache.linkis.computation.client.job.{AbstractLinkisJob, SubmittableLinkisJob}
 import org.apache.linkis.computation.client.once.action.{GetEngineConnAction, KillEngineConnAction}
 import org.apache.linkis.computation.client.once.simple.SimpleOnceJob
+
+import java.util
 
 
 trait OnceJob extends AbstractLinkisJob {

@@ -17,7 +17,6 @@
  
 package org.apache.linkis.engineconn.acessible.executor.service
 
-import java.util
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.executor.service.ManagerService
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
@@ -30,6 +29,7 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
 import org.apache.linkis.rpc.Sender
 
+import java.util
 import scala.collection.JavaConverters._
 
 class DefaultManagerService extends ManagerService with Logging{

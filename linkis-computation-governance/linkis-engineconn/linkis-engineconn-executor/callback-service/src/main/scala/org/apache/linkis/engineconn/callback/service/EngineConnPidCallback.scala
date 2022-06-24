@@ -17,12 +17,12 @@
  
 package org.apache.linkis.engineconn.callback.service
 
-import java.lang.management.ManagementFactory
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.engineconn.core.EngineConnObject
 import org.apache.linkis.governance.common.protocol.task.ResponseEngineConnPid
 import org.apache.linkis.rpc.Sender
+
+import java.lang.management.ManagementFactory
 
 
 class EngineConnPidCallback(emInstance: ServiceInstance) extends AbstractEngineConnStartUpCallback(emInstance) {

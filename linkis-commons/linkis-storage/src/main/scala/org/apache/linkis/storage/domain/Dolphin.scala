@@ -17,11 +17,11 @@
  
 package org.apache.linkis.storage.domain
 
-import java.io.{IOException, InputStream}
-
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.storage.exception.StorageWarnException
 import org.apache.linkis.storage.utils.{StorageConfiguration, StorageUtils}
+
+import java.io.{IOException, InputStream}
 
 
 object Dolphin extends Logging{

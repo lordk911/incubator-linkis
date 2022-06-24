@@ -17,13 +17,12 @@
  
 package org.apache.linkis.ecm.server.conf
 
-import java.io.File
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.conf.{CommonVars, TimeType}
 import org.apache.linkis.common.utils.ByteTimeUtils
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
 
+import java.io.File
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 
 

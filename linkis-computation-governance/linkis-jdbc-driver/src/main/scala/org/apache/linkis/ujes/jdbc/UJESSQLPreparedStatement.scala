@@ -19,7 +19,7 @@ package org.apache.linkis.ujes.jdbc
 
 import java.io.{InputStream, Reader}
 import java.net.URL
-import java.sql.{Blob, Clob, Date, NClob, ParameterMetaData, PreparedStatement, Ref, ResultSetMetaData, RowId, SQLXML, Time, Timestamp}
+import java.sql._
 import java.util
 import java.util.Calendar
 

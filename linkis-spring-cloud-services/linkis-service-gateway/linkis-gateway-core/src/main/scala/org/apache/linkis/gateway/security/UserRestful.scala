@@ -17,22 +17,21 @@
  
 package org.apache.linkis.gateway.security
 
-import java.nio.charset.StandardCharsets
-import java.util.Random
-
 import com.google.gson.Gson
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.net.util.Base64
 import org.apache.linkis.common.utils.{Logging, RSAUtils, Utils}
 import org.apache.linkis.gateway.config.GatewayConfiguration
-import org.apache.linkis.gateway.exception.GatewayErrorException
 import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.gateway.security.sso.SSOInterceptor
-import org.apache.linkis.protocol.usercontrol.{RequestLogin, RequestRegister, RequestUserListFromWorkspace, RequestUserWorkspace, ResponseLogin, ResponseRegister, ResponseUserWorkspace, ResponseWorkspaceUserList}
+import org.apache.linkis.protocol.usercontrol.{RequestLogin, RequestRegister, ResponseLogin, ResponseRegister}
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.security.SSOUtils
 import org.apache.linkis.server.{Message, _}
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.net.util.Base64
+
+import java.nio.charset.StandardCharsets
+import java.util.Random
 
 
 trait UserRestful {

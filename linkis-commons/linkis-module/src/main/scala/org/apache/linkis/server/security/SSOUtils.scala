@@ -17,14 +17,14 @@
  
 package org.apache.linkis.server.security
 
-import java.util.concurrent.{ConcurrentHashMap, TimeUnit}
-
+import org.apache.commons.lang.time.DateFormatUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, RSAUtils, Utils}
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.exception.{IllegalUserTicketException, LoginExpireException, NonLoginException}
+
+import java.util.concurrent.{ConcurrentHashMap, TimeUnit}
 import javax.servlet.http.Cookie
-import org.apache.commons.lang.time.DateFormatUtils
 import scala.collection.JavaConverters._
 
 object SSOUtils extends Logging {

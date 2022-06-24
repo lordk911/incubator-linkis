@@ -20,8 +20,6 @@ package org.apache.linkis.cs.client.http
 import org.apache.linkis.cs.client.utils.{ContextClientUtils, ContextServerHttpConf}
 import org.apache.linkis.httpclient.request.{GetAction, POSTAction, UserAction}
 
-import java.util.Date
-
 trait ContextAction extends UserAction{
 
   private var user: String = "hadoop"

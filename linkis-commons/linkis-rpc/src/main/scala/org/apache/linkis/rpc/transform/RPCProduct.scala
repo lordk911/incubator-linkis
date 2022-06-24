@@ -17,9 +17,7 @@
  
 package org.apache.linkis.rpc.transform
 
-import java.lang.reflect.{ParameterizedType, Type}
-import java.util
-
+import org.apache.commons.lang.ClassUtils
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.protocol.message.RequestProtocol
@@ -27,9 +25,10 @@ import org.apache.linkis.rpc.errorcode.RPCErrorConstants
 import org.apache.linkis.rpc.exception.DWCURIException
 import org.apache.linkis.rpc.serializer.ProtostuffSerializeUtil
 import org.apache.linkis.server.{EXCEPTION_MSG, Message}
-import org.apache.commons.lang.ClassUtils
 import org.json4s.{DefaultFormats, Formats, Serializer}
 
+import java.lang.reflect.{ParameterizedType, Type}
+import java.util
 import scala.collection.JavaConversions
 
 

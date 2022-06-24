@@ -17,8 +17,6 @@
  
 package org.apache.linkis.ujes.jdbc.hook.impl
 
-import org.apache.linkis.ujes.jdbc.hook.JDBCDriverPreExecutionHook
-
 
 class TableauPreExecutionHook extends JDBCDriverPreExecutionHook{
   override def callPreExecutionHook(sql: String): String = {

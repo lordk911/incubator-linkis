@@ -18,7 +18,7 @@
 package org.apache.linkis.orchestrator.computation.catalyst.planner
 
 import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.orchestrator.code.plans.ast.{CodeJob, CodeStage}
+import org.apache.linkis.orchestrator.code.plans.ast.CodeJob
 import org.apache.linkis.orchestrator.code.plans.logical.{CodeLogicalUnitTask, CodeLogicalUnitTaskDesc}
 import org.apache.linkis.orchestrator.extensions.catalyst.PlannerTransform
 import org.apache.linkis.orchestrator.plans.ast.{ASTContext, Job, Stage}

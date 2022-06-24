@@ -17,14 +17,13 @@
  
 package org.apache.linkis.manager.am.selector
 
-import java.util
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.am.selector.rule.NodeSelectRule
 import org.apache.linkis.manager.common.entity.node.Node
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import java.util
 import scala.collection.JavaConversions._
 
 

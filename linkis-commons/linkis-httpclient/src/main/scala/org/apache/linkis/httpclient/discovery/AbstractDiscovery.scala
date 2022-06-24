@@ -17,18 +17,17 @@
 
 package org.apache.linkis.httpclient.discovery
 
+import org.apache.commons.lang.StringUtils
+import org.apache.http.HttpResponse
+import org.apache.linkis.common.utils.{Logging, Utils}
+import org.apache.linkis.httpclient.Client
+import org.apache.linkis.httpclient.config.HttpClientConstant
+import org.apache.linkis.httpclient.exception.DiscoveryException
+
 import java.io.Closeable
 import java.net.ConnectException
 import java.util
 import java.util.concurrent.ScheduledFuture
-
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.httpclient.Client
-import org.apache.linkis.httpclient.exception.DiscoveryException
-import org.apache.http.HttpResponse
-import org.apache.linkis.httpclient.config.HttpClientConstant
-
 import scala.collection.JavaConversions._
 import scala.concurrent.duration.TimeUnit
 

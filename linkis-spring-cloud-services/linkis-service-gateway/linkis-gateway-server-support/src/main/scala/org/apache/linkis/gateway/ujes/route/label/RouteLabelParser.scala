@@ -18,8 +18,6 @@
 package org.apache.linkis.gateway.ujes.route.label
 
 import org.apache.linkis.common.utils.{Logging, Utils}
-import java.util
-
 import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.Label
@@ -27,6 +25,7 @@ import org.apache.linkis.manager.label.entity.route.RouteLabel
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.server.BDPJettyServerHelper
 
+import java.util
 import scala.collection.JavaConversions._
 
 trait RouteLabelParser {

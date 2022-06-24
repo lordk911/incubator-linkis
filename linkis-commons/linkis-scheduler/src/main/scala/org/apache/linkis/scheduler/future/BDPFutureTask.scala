@@ -17,9 +17,9 @@
  
 package org.apache.linkis.scheduler.future
 
-import java.util.concurrent.{Future, FutureTask}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
+
+import java.util.concurrent.{Future, FutureTask}
 
 
 class BDPFutureTask(future: Future[_]) extends BDPFuture with Logging {

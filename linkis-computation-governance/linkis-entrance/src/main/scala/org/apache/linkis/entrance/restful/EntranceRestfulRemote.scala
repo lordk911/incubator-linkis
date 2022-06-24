@@ -17,12 +17,12 @@
  
 package org.apache.linkis.entrance.restful
 
-import java.util
-
 import com.fasterxml.jackson.databind.JsonNode
 import org.apache.linkis.server.Message
+import org.springframework.web.bind.annotation._
+
+import java.util
 import javax.servlet.http.HttpServletRequest
-import org.springframework.web.bind.annotation.{PathVariable, RequestBody, RequestMapping, RequestMethod, RequestParam}
 
 
 trait EntranceRestfulRemote {

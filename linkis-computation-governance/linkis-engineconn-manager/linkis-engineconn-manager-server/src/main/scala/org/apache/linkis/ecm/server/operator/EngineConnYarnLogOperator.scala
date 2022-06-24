@@ -22,9 +22,9 @@ import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.ecm.core.conf.ECMErrorCode
 import org.apache.linkis.ecm.server.exception.ECMErrorException
 
-import scala.collection.JavaConverters._
 import java.io.File
 import java.util.concurrent.TimeUnit
+import scala.collection.JavaConverters._
 
 class EngineConnYarnLogOperator extends EngineConnLogOperator {
 

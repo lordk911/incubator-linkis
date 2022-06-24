@@ -17,10 +17,9 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util
-
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 
+import java.util
 import scala.beans.BeanProperty
 
 @DWSHttpMessageResult("/api/rest_j/v\\d+/entrance/(\\S+)/log")

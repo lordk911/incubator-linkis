@@ -18,11 +18,9 @@
 package org.apache.linkis.manager.engineplugin.python.executor
 
 
-import java.io.{File, FileFilter, FileOutputStream, InputStream}
-import java.net.ServerSocket
-import java.nio.file.Files
-import java.util.{List => JList}
-
+import org.apache.commons.exec.CommandLine
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineconn.computation.executor.rs.RsOutputStream
@@ -34,11 +32,12 @@ import org.apache.linkis.storage.domain._
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
 import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetWriter}
 import org.apache.linkis.storage.{LineMetaData, LineRecord}
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringUtils
 import py4j.GatewayServer
 
+import java.io.{File, FileFilter, FileOutputStream, InputStream}
+import java.net.ServerSocket
+import java.nio.file.Files
+import java.util.{List => JList}
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.duration.Duration

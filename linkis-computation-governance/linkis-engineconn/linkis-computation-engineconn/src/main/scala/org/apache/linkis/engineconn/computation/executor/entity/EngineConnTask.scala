@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineconn.computation.executor.entity
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait EngineConnTask {

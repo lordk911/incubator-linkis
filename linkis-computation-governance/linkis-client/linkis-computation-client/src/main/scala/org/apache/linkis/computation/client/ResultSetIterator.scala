@@ -17,12 +17,12 @@
  
 package org.apache.linkis.computation.client
 
-import java.util
-
 import org.apache.linkis.ujes.client.UJESClient
 import org.apache.linkis.ujes.client.exception.UJESJobException
 import org.apache.linkis.ujes.client.request.ResultSetAction
 import org.apache.linkis.ujes.client.response.ResultSetResult
+
+import java.util
 
 
 abstract class ResultSetIterator[M, R](resultSetIterable: ResultSetIterable, metadata: Object, records: Object)
@@ -102,8 +102,8 @@ class ResultSetIterable(ujesClient: UJESClient,
 class TableResultSetIterator(resultSetIterable: ResultSetIterable, metadata: Object, records: Object)
   extends ResultSetIterator[util.List[util.Map[String, String]], util.List[Any]](resultSetIterable, metadata, records)
 
-import scala.collection.convert.WrapAsScala._
 import scala.collection.convert.WrapAsJava._
+import scala.collection.convert.WrapAsScala._
 class TextResultSetIterator(resultSetIterable: ResultSetIterable, metadata: Object, records: Object)
   extends ResultSetIterator[String, String](resultSetIterable, metadata, records) {
 

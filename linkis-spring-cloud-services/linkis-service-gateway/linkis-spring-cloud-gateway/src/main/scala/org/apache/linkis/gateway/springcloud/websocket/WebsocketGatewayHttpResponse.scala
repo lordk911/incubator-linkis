@@ -18,6 +18,7 @@
 package org.apache.linkis.gateway.springcloud.websocket
 
 import org.apache.linkis.gateway.http.GatewayHttpResponse
+
 import javax.servlet.http.Cookie
 
 class WebsocketGatewayHttpResponse extends GatewayHttpResponse {

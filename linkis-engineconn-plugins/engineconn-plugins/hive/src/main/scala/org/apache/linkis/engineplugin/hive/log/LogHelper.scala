@@ -17,9 +17,9 @@
  
 package org.apache.linkis.engineplugin.hive.log
 
-import java.util
-
 import org.slf4j.LoggerFactory
+
+import java.util
 
 object LogHelper {
   private val logPattern = """Stage-(\d+)\s+map\s+=\s+(\d+)%,\s+reduce\s+=\s+(\d+)%""".r.unanchored

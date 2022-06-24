@@ -17,9 +17,9 @@
  
 package org.apache.linkis.httpclient.loadbalancer
 
-import java.util
-
 import org.apache.linkis.httpclient.discovery.DiscoveryListener
+
+import java.util
 
 
 abstract class AbstractLoadBalancer extends LoadBalancer with DiscoveryListener {

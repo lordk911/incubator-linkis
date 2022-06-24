@@ -26,12 +26,9 @@ import org.apache.linkis.orchestrator.exception.{OrchestratorErrorCodeSummary, O
 import org.apache.linkis.orchestrator.execution.TaskResponse
 import org.apache.linkis.orchestrator.listener.task.TaskInfoEvent
 import org.apache.linkis.orchestrator.plans.logical.TaskDesc
-import org.apache.linkis.orchestrator.strategy.{ResultSetExecTask, StatusInfoExecTask}
 import org.apache.linkis.orchestrator.strategy.async.AsyncExecTask
+import org.apache.linkis.orchestrator.strategy.{ResultSetExecTask, StatusInfoExecTask}
 import org.apache.linkis.orchestrator.utils.OrchestratorIDCreator
-
-import java.util
-import scala.collection.JavaConverters.mapAsScalaMapConverter
 
 
 class RetryExecTask(private val originTask: ExecTask, private val age: Int = 1) extends AbstractExecTask

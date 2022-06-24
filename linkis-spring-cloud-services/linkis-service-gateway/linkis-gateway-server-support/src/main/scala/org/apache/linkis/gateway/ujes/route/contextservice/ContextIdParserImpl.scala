@@ -17,6 +17,7 @@
  
 package org.apache.linkis.gateway.ujes.route.contextservice
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.cs.common.entity.source.ContextIDParser
@@ -26,7 +27,6 @@ import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContex
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.protocol.label.LabelInsQueryRequest
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 
 import java.util

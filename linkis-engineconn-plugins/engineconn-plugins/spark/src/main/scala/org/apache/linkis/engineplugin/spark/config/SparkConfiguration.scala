@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineplugin.spark.config
 
-import java.io.File
-
 import org.apache.linkis.common.conf.{CommonVars, TimeType}
 import org.apache.linkis.common.utils.{ClassUtils, Logging}
 import org.apache.linkis.engineplugin.spark.factory.SparkEngineConnFactory
+
+import java.io.File
 
 /**
   *

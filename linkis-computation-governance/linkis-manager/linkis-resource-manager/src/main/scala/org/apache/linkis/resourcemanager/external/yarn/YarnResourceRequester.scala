@@ -18,16 +18,16 @@
 package org.apache.linkis.resourcemanager.external.yarn
 
 import org.apache.commons.lang3.StringUtils
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.manager.common.entity.resource.{CommonNodeResource, NodeResource, ResourceType, YarnResource}
-import org.apache.linkis.resourcemanager.external.domain.{ExternalAppInfo, ExternalResourceIdentifier, ExternalResourceProvider}
-import org.apache.linkis.resourcemanager.external.request.ExternalResourceRequester
-import org.apache.http.{HttpHeaders, HttpResponse}
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.util.EntityUtils
+import org.apache.http.{HttpHeaders, HttpResponse}
+import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.common.conf.RMConfiguration
+import org.apache.linkis.manager.common.entity.resource.{CommonNodeResource, NodeResource, ResourceType, YarnResource}
 import org.apache.linkis.manager.common.exception.{RMErrorException, RMWarnException}
+import org.apache.linkis.resourcemanager.external.domain.{ExternalAppInfo, ExternalResourceIdentifier, ExternalResourceProvider}
+import org.apache.linkis.resourcemanager.external.request.ExternalResourceRequester
 import org.apache.linkis.resourcemanager.utils.RequestKerberosUrlUtils
 import org.json4s.JValue
 import org.json4s.JsonAST._
@@ -35,7 +35,7 @@ import org.json4s.jackson.JsonMethods.parse
 import sun.misc.BASE64Encoder
 
 import java.util
-import java.util.concurrent.{ConcurrentHashMap, TimeUnit}
+import java.util.concurrent.ConcurrentHashMap
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 

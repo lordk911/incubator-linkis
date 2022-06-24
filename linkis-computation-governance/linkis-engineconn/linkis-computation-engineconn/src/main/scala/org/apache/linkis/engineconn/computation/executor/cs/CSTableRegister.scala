@@ -17,8 +17,7 @@
  
 package org.apache.linkis.engineconn.computation.executor.cs
 
-import java.util.Date
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.io.resultset.ResultSetWriter
 import org.apache.linkis.common.io.{MetaData, Record}
 import org.apache.linkis.common.utils.Logging
@@ -31,7 +30,8 @@ import org.apache.linkis.cs.common.utils.CSCommonUtils
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.storage.domain.Column
 import org.apache.linkis.storage.utils.StorageUtils
-import org.apache.commons.lang.StringUtils
+
+import java.util.Date
 
 
 object CSTableRegister extends Logging{

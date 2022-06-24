@@ -17,12 +17,9 @@
  
 package org.apache.linkis.manager.engineplugin.python.executor
 
-import java.util
-
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.computation.executor.execute.{ComputationExecutor, EngineExecutionContext}
 import org.apache.linkis.engineconn.core.EngineConnObject
-import org.apache.linkis.engineconn.core.executor.ExecutorManager
 import org.apache.linkis.engineconn.launch.EngineConnServer
 import org.apache.linkis.governance.common.paser.PythonCodeParser
 import org.apache.linkis.manager.common.entity.resource.{CommonNodeResource, LoadInstanceResource, NodeResource}
@@ -32,8 +29,8 @@ import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.executer.{ExecuteResponse, SuccessExecuteResponse}
 
+import java.util
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.JavaConverters._
 
 class PythonEngineConnExecutor(id: Int, pythonSession: PythonSession, outputPrintLimit: Int) extends ComputationExecutor(outputPrintLimit) {
 

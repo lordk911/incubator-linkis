@@ -17,13 +17,12 @@
  
 package org.apache.linkis.computation.client.job
 
-import java.util.concurrent.{Future, TimeUnit, TimeoutException}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.computation.client.operator.{Operator, OperatorFactory}
 import org.apache.linkis.computation.client.{JobListener, LinkisJob, LinkisJobBuilder}
 import org.apache.linkis.ujes.client.exception.UJESJobException
 
+import java.util.concurrent.{Future, TimeUnit, TimeoutException}
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.duration.Duration
 

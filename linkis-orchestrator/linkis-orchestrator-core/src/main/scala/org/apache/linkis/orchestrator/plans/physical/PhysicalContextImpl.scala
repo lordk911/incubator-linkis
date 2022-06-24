@@ -16,16 +16,15 @@
  */
  
 package org.apache.linkis.orchestrator.plans.physical
-import java.util
 import org.apache.linkis.common.listener.Event
-import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.apache.linkis.orchestrator.exception.OrchestratorErrorCodeSummary
 import org.apache.linkis.orchestrator.execution.impl.DefaultFailedTaskResponse
 import org.apache.linkis.orchestrator.execution.{CompletedTaskResponse, SucceedTaskResponse, TaskResponse}
 import org.apache.linkis.orchestrator.listener._
-import org.apache.linkis.orchestrator.listener.task.{RootTaskResponseEvent, TaskLogEvent, TaskRunningInfoEvent, TaskYarnResourceEvent}
+import org.apache.linkis.orchestrator.listener.task.{RootTaskResponseEvent, TaskLogEvent, TaskRunningInfoEvent}
 
+import java.util
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 

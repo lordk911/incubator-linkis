@@ -17,7 +17,6 @@
 
 package org.apache.linkis.resourcemanager.service.impl
 
-import org.apache.commons.lang.time.DateFormatUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.governance.common.utils.ECPathUtils
 import org.apache.linkis.manager.common.entity.persistence.ECResourceInfoRecord

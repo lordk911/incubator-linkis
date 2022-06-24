@@ -17,14 +17,14 @@
 
 package org.apache.linkis.engineconn.computation.executor.upstream
 
-import java.util
-
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.computation.executor.entity.EngineConnTask
 import org.apache.linkis.engineconn.computation.executor.execute.ComputationExecutor
 import org.apache.linkis.engineconn.computation.executor.upstream.access.{ConnectionInfoAccessRequest, ECTaskEntranceInfoAccess, ECTaskEntranceInfoAccessRequest}
 import org.apache.linkis.engineconn.computation.executor.upstream.handler.{ECTaskKillHandler, ECTaskKillHandlerRequest, MonitorHandlerRequest}
 import org.apache.linkis.engineconn.computation.executor.upstream.wrapper.{ConnectionInfoWrapper, ECTaskEntranceConnectionWrapper}
+
+import java.util
 
 class ECTaskEntranceMonitor extends SingleThreadUpstreamConnectionMonitor(name = "ECTask-upstream-connection-monitor", infoAccess = new ECTaskEntranceInfoAccess, handler = new ECTaskKillHandler) with Logging {
 

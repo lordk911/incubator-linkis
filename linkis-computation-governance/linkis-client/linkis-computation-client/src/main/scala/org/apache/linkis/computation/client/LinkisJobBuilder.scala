@@ -17,9 +17,7 @@
 
 package org.apache.linkis.computation.client
 
-import java.util
-import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.utils.{RetryHandler, Utils}
@@ -27,9 +25,11 @@ import org.apache.linkis.httpclient.dws.authentication.TokenAuthenticationStrate
 import org.apache.linkis.httpclient.dws.config.{DWSClientConfig, DWSClientConfigBuilder}
 import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.ujes.client.exception.{UJESClientBuilderException, UJESJobException}
-import org.apache.linkis.ujes.client.{UJESClient, UJESClientImpl}
 import org.apache.linkis.ujes.client.request.JobSubmitAction
-import org.apache.commons.lang.StringUtils
+import org.apache.linkis.ujes.client.{UJESClient, UJESClientImpl}
+
+import java.util
+import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
 
 
 trait LinkisJobBuilder[Job <: LinkisJob] {

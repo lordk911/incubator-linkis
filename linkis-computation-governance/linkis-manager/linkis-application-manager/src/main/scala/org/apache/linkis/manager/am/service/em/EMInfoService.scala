@@ -18,7 +18,6 @@
 package org.apache.linkis.manager.am.service.em
 
 import org.apache.linkis.common.ServiceInstance
-import org.apache.linkis.manager.am.vo.EMNodeVo
 import org.apache.linkis.manager.common.entity.metrics.NodeHealthyInfo
 import org.apache.linkis.manager.common.entity.node.EMNode
 import org.apache.linkis.manager.common.protocol.em.GetEMInfoRequest

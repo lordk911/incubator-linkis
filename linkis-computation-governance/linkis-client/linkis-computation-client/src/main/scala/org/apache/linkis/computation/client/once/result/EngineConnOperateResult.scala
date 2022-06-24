@@ -17,10 +17,10 @@
 
 package org.apache.linkis.computation.client.once.result
 
-import java.util
-
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.ujes.client.exception.UJESJobException
+
+import java.util
 
 @DWSHttpMessageResult("/api/rest_j/v\\d+/linkisManager/executeEngineConnOperation")
 class EngineConnOperateResult extends LinkisManagerResult {

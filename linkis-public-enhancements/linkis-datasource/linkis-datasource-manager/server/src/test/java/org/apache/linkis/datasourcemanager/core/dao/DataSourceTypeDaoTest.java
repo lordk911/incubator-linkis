@@ -25,7 +25,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DataSourceTypeDaoTest extends BaseDaoTest {
     private static final Logger logger = LoggerFactory.getLogger(DataSourceTypeDaoTest.class);

@@ -17,8 +17,9 @@
  
 package org.apache.linkis.manager.label.entity
 
-import java.util
 import org.apache.linkis.manager.label.entity.annon.ValueSerialNum
+
+import java.util
 
 
 class JobLabel extends GenericLabel {

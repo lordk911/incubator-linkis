@@ -21,8 +21,8 @@ import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.orchestrator.code.plans.logical.{CacheTask, CodeLogicalUnitTask}
 import org.apache.linkis.orchestrator.computation.physical.{CacheExecTask, CodeLogicalUnitExecTask}
 import org.apache.linkis.orchestrator.extensions.catalyst.PhysicalTransform
-import org.apache.linkis.orchestrator.plans.logical.{CommandTask, JobTask, LogicalContext, StageTask, StartJobTaskDesc, Task}
-import org.apache.linkis.orchestrator.plans.physical.{ExecTask, JobExecTask, StageExecTask}
+import org.apache.linkis.orchestrator.plans.logical.{JobTask, LogicalContext, StageTask, Task}
+import org.apache.linkis.orchestrator.plans.physical.ExecTask
 import org.apache.linkis.orchestrator.strategy.{GatherStrategyJobExecTask, GatherStrategyStageInfoExecTask}
 
 /**

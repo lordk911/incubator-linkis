@@ -18,7 +18,7 @@
 package org.apache.linkis.configuration.receiver
 
 import org.apache.linkis.configuration.service.ConfigurationService
-import org.apache.linkis.governance.common.protocol.conf.{RequestConfigByLabel, RequestQueryEngineConfig, RequestQueryEngineConfigWithGlobalConfig, RequestQueryEngineTypeDefault, RequestQueryGlobalConfig}
+import org.apache.linkis.governance.common.protocol.conf._
 import org.apache.linkis.rpc.{Receiver, Sender}
 
 import scala.concurrent.duration.Duration

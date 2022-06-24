@@ -17,9 +17,6 @@
 
 package org.apache.linkis.ujes.jdbc.hook.impl
 
-import org.apache.linkis.ujes.jdbc.UJESSQLDriverMain
-import org.apache.linkis.ujes.jdbc.hook.JDBCDriverPreExecutionHook
-
 
 class NoLimitExecutionHook extends JDBCDriverPreExecutionHook{
   override def callPreExecutionHook(sql: String): String = {

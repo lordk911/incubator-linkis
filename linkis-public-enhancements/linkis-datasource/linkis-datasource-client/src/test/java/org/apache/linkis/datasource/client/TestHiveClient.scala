@@ -17,9 +17,6 @@
 
 package org.apache.linkis.datasource.client
 
-import java.util
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.utils.JsonUtils
 import org.apache.linkis.datasource.client.impl.{LinkisDataSourceRemoteClient, LinkisMetaDataRemoteClient}
 import org.apache.linkis.datasource.client.request._
@@ -28,6 +25,9 @@ import org.apache.linkis.datasourcemanager.common.domain.DataSource
 import org.apache.linkis.httpclient.dws.authentication.StaticAuthenticationStrategy
 import org.apache.linkis.httpclient.dws.config.DWSClientConfigBuilder
 import org.junit.jupiter.api.{Disabled, Test}
+
+import java.util
+import java.util.concurrent.TimeUnit
 
 object TestHiveClient {
   val gatewayUrl = "http://127.0.0.1:9001"

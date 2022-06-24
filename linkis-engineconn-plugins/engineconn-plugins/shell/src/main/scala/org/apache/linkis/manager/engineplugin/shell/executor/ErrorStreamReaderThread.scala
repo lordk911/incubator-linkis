@@ -17,11 +17,11 @@
 
 package org.apache.linkis.manager.engineplugin.shell.executor
 
-import java.io.{BufferedReader, IOException}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.acessible.executor.log.LogHelper
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
+
+import java.io.BufferedReader
 
 class ErrorStreamReaderThread extends Thread with Logging {
   private var engineExecutionContext: EngineExecutionContext = _

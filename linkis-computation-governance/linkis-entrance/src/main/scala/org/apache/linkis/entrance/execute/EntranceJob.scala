@@ -17,29 +17,25 @@
 
 package org.apache.linkis.entrance.execute
 
-import java.util
-import java.util.Date
-import java.util.concurrent.atomic.{AtomicInteger, AtomicLong}
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.entrance.EntranceContext
 import org.apache.linkis.entrance.conf.EntranceConfiguration
 import org.apache.linkis.entrance.event._
 import org.apache.linkis.entrance.exception.EntranceErrorException
-import org.apache.linkis.entrance.persistence.HaPersistenceTask
 import org.apache.linkis.governance.common.entity.job.{JobRequest, SubJobInfo}
-import org.apache.linkis.governance.common.entity.task.RequestPersistTask
 import org.apache.linkis.governance.common.paser.CodeParser
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.protocol.engine.JobProgressInfo
-import org.apache.linkis.protocol.task.Task
 import org.apache.linkis.rpc.utils.RPCUtils
-import org.apache.linkis.scheduler.executer.{CompletedExecuteResponse, ErrorExecuteResponse, SuccessExecuteResponse}
+import org.apache.linkis.scheduler.executer.{CompletedExecuteResponse, ErrorExecuteResponse}
 import org.apache.linkis.scheduler.queue.SchedulerEventState._
 import org.apache.linkis.scheduler.queue.{Job, SchedulerEventState}
-import org.apache.commons.lang.StringUtils
 
+import java.util
+import java.util.Date
+import java.util.concurrent.atomic.{AtomicInteger, AtomicLong}
 import scala.beans.BeanProperty
 
 

@@ -17,8 +17,8 @@
  
 package org.apache.linkis.rpc.interceptor.common
 
-import java.net.ConnectException
-
+import feign.RetryableException
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.utils.RetryHandler
@@ -26,9 +26,9 @@ import org.apache.linkis.protocol.RetryableProtocol
 import org.apache.linkis.rpc.exception.DWCRPCRetryException
 import org.apache.linkis.rpc.interceptor.{RPCInterceptor, RPCInterceptorChain, RPCInterceptorExchange, ServiceInstanceRPCInterceptorChain}
 import org.apache.linkis.rpc.utils.RPCUtils
-import feign.RetryableException
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
+
+import java.net.ConnectException
 
 
 @Component

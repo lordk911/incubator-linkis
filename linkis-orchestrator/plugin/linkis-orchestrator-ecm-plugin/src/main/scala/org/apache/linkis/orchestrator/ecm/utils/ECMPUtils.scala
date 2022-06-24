@@ -17,13 +17,12 @@
 
 package org.apache.linkis.orchestrator.ecm.utils
 
-import java.util
-
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.entrance.JobStrategyLabel
 import org.apache.linkis.manager.label.utils.LabelUtils
 
+import java.util
 import scala.collection.JavaConverters._
 
 object ECMPUtils {

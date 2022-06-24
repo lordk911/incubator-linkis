@@ -19,8 +19,6 @@ package org.apache.linkis.datasourcemanager.core.service;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DataSourceRelateServiceTest {
 
     @Test

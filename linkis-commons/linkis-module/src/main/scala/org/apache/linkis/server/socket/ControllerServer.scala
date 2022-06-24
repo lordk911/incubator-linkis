@@ -17,9 +17,9 @@
  
 package org.apache.linkis.server.socket
 
-import java.util
-import java.util.concurrent.atomic.AtomicInteger
-
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
+import org.apache.commons.lang.time.DateFormatUtils
 import org.apache.linkis.common.conf.Configuration.DEFAULT_DATE_PATTERN
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -27,11 +27,10 @@ import org.apache.linkis.server.Message
 import org.apache.linkis.server.conf.ServerConfiguration._
 import org.apache.linkis.server.exception.BDPServerErrorException
 import org.apache.linkis.server.socket.controller.{ServerListenerEventBus, SocketServerEvent}
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.exception.ExceptionUtils
-import org.apache.commons.lang.time.DateFormatUtils
 import org.eclipse.jetty.websocket.servlet._
 
+import java.util
+import java.util.concurrent.atomic.AtomicInteger
 import scala.collection.JavaConversions._
 
 

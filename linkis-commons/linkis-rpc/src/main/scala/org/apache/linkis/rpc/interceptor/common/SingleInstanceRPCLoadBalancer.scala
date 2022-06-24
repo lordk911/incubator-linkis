@@ -18,11 +18,11 @@
 package org.apache.linkis.rpc.interceptor.common
 
 import com.netflix.loadbalancer.ILoadBalancer
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.protocol.{Protocol, SingleInstanceProtocol}
 import org.apache.linkis.rpc.interceptor.RPCLoadBalancer
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 
 

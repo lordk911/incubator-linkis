@@ -17,7 +17,6 @@
  
 package org.apache.linkis.engineconn.acessible.executor.execution
 
-import java.util.concurrent.TimeUnit
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.acessible.executor.conf.AccessibleExecutorConfiguration
 import org.apache.linkis.engineconn.acessible.executor.entity.AccessibleExecutor
@@ -33,9 +32,10 @@ import org.apache.linkis.engineconn.executor.service.ManagerService
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.protocol.engine.{ECCanKillRequest, EngineConnReleaseRequest}
 import org.apache.linkis.manager.common.protocol.resource.ResourceUsedProtocol
-import org.apache.linkis.rpc.Sender
-import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.manager.label.utils.LabelUtil
+import org.apache.linkis.rpc.Sender
+
+import java.util.concurrent.TimeUnit
 
 
 class AccessibleEngineConnExecution extends EngineConnExecution with Logging {

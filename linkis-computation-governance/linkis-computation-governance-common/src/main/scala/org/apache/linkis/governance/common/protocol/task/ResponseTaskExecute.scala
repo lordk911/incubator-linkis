@@ -17,12 +17,12 @@
  
 package org.apache.linkis.governance.common.protocol.task
 
-import java.util
-
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.protocol.message.RequestProtocol
 import org.apache.linkis.protocol.{BroadcastProtocol, RetryableProtocol}
+
+import java.util
 
 case class ResponseTaskExecute(execId: String)
 

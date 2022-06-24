@@ -17,13 +17,13 @@
  
 package org.apache.linkis.httpclient.dws.authentication
 
-import java.util
-
+import org.apache.http.HttpResponse
+import org.apache.http.cookie.Cookie
 import org.apache.linkis.httpclient.authentication._
 import org.apache.linkis.httpclient.dws.exception.AuthenticationFailedException
 import org.apache.linkis.httpclient.request.{Action, UserAction}
-import org.apache.http.HttpResponse
-import org.apache.http.cookie.Cookie
+
+import java.util
 
 class TokenAuthenticationStrategy(override protected val sessionMaxAliveTime: Long) extends AbstractAuthenticationStrategy {
 

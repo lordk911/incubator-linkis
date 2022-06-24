@@ -18,11 +18,7 @@
 package org.apache.linkis.engineconnplugin.flink.client.sql.operation.impl;
 
 import org.apache.linkis.engineconnplugin.flink.client.context.ExecutionContext;
-import org.apache.linkis.engineconnplugin.flink.client.result.AbstractResult;
-import org.apache.linkis.engineconnplugin.flink.client.result.BatchResult;
-import org.apache.linkis.engineconnplugin.flink.client.result.ChangelogResult;
-import org.apache.linkis.engineconnplugin.flink.client.result.ResultUtil;
-import org.apache.linkis.engineconnplugin.flink.client.result.TypedResult;
+import org.apache.linkis.engineconnplugin.flink.client.result.*;
 import org.apache.linkis.engineconnplugin.flink.client.sql.operation.AbstractJobOperation;
 import org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ColumnInfo;
 import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext;
@@ -31,11 +27,7 @@ import org.apache.linkis.engineconnplugin.flink.exception.SqlExecutionException;
 
 import org.apache.flink.api.common.JobID;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.table.api.Table;
-import org.apache.flink.table.api.TableColumn;
-import org.apache.flink.table.api.TableEnvironment;
-import org.apache.flink.table.api.TableResult;
-import org.apache.flink.table.api.TableSchema;
+import org.apache.flink.table.api.*;
 import org.apache.flink.table.types.DataType;
 import org.apache.flink.table.types.logical.utils.LogicalTypeUtils;
 import org.apache.flink.table.types.utils.DataTypeUtils;
@@ -44,11 +36,7 @@ import org.apache.flink.types.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /** Operation for SELECT command. */
 public class SelectOperation extends AbstractJobOperation {

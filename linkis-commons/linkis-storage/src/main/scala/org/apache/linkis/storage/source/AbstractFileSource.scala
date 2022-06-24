@@ -17,12 +17,11 @@
  
 package org.apache.linkis.storage.source
 
-import java.util
-
-import org.apache.linkis.common.io.{FsWriter, MetaData, Record}
 import org.apache.commons.io.IOUtils
 import org.apache.commons.math3.util.Pair
+import org.apache.linkis.common.io.{FsWriter, MetaData, Record}
 
+import java.util
 import scala.collection.JavaConversions._
 
 

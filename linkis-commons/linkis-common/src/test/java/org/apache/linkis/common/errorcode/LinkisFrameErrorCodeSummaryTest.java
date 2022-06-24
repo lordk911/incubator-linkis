@@ -20,7 +20,7 @@ package org.apache.linkis.common.errorcode;
 import org.junit.jupiter.api.Test;
 
 import static org.apache.linkis.common.errorcode.LinkisFrameErrorCodeSummary.VALIDATE_ERROR_CODE_FAILED;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /** LinkisFrameErrorCodeSummary Tester */
 class LinkisFrameErrorCodeSummaryTest {

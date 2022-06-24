@@ -18,12 +18,12 @@
 package org.apache.linkis.orchestrator.listener.task
 
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
+import org.apache.linkis.manager.common.protocol.resource.ResourceWithStatus
 import org.apache.linkis.orchestrator.core.ResultSet
 import org.apache.linkis.orchestrator.execution.CompletedTaskResponse
 import org.apache.linkis.orchestrator.listener.{OrchestratorAsyncEvent, OrchestratorSyncEvent}
 import org.apache.linkis.orchestrator.plans.physical.ExecTask
 import org.apache.linkis.protocol.engine.JobProgressInfo
-import org.apache.linkis.manager.common.protocol.resource.ResourceWithStatus
 
 import java.util
 

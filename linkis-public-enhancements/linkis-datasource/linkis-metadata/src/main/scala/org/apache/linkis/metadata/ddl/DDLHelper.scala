@@ -17,13 +17,13 @@
  
 package org.apache.linkis.metadata.ddl
 
-import java.util
-
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.metadata.ddl.ScalaDDLCreator.{CODE, USER}
 import org.apache.linkis.metadata.domain.mdq.bo.MdqTableBO
+
+import java.util
 
 object DDLHelper extends Logging {
   def createDDL(params:util.Map[String, Object]):String = {

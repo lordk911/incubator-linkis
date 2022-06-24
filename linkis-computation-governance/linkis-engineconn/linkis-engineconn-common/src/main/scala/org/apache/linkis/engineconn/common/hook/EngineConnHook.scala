@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineconn.common.hook
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.conf.EngineConnConf
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
-import org.apache.commons.lang.StringUtils
 
 
 trait EngineConnHook {

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.orchestrator
 
-import java.io.Closeable
-
 import org.apache.linkis.orchestrator.core.{GlobalState, OrchestratorPlugin}
 import org.apache.linkis.orchestrator.extensions.Extensions
+
+import java.io.Closeable
 
 /**
   *

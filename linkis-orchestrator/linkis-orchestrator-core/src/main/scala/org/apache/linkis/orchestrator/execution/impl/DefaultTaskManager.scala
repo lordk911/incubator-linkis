@@ -17,9 +17,6 @@
  
 package org.apache.linkis.orchestrator.execution.impl
 
-import java.util
-import java.util.concurrent.CopyOnWriteArrayList
-
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
@@ -30,6 +27,8 @@ import org.apache.linkis.orchestrator.listener.execution.ExecutionTaskCompletedE
 import org.apache.linkis.orchestrator.listener.task._
 import org.apache.linkis.orchestrator.plans.physical.ExecTask
 
+import java.util
+import java.util.concurrent.CopyOnWriteArrayList
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

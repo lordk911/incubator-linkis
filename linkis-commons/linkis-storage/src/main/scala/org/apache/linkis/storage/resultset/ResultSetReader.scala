@@ -17,12 +17,13 @@
  
 package org.apache.linkis.storage.resultset
 
-import java.io.InputStream
 import org.apache.linkis.common.io.resultset.{ResultSet, ResultSetReader}
 import org.apache.linkis.common.io.{FsPath, MetaData, Record}
 import org.apache.linkis.storage.FSFactory
 import org.apache.linkis.storage.exception.StorageErrorException
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord, TableResultSet}
+
+import java.io.InputStream
 
 
 object ResultSetReader {

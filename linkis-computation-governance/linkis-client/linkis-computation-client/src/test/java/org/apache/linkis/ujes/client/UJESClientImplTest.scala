@@ -17,14 +17,14 @@
  
 package org.apache.linkis.ujes.client
 
-import java.util.concurrent.TimeUnit
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.httpclient.dws.authentication.StaticAuthenticationStrategy
 import org.apache.linkis.httpclient.dws.config.DWSClientConfigBuilder
 import org.apache.linkis.ujes.client.request.JobExecuteAction.EngineType
 import org.apache.linkis.ujes.client.request.{JobExecuteAction, ResultSetAction}
-import org.apache.commons.io.IOUtils
+
+import java.util.concurrent.TimeUnit
 
 @Deprecated
 object UJESClientImplTest extends App {

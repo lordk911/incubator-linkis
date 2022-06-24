@@ -17,18 +17,9 @@
 
 package org.apache.linkis.bml.restful;
 
-import org.apache.linkis.bml.Entity.DownloadModel;
-import org.apache.linkis.bml.Entity.Resource;
-import org.apache.linkis.bml.Entity.ResourceTask;
-import org.apache.linkis.bml.Entity.ResourceVersion;
-import org.apache.linkis.bml.Entity.Version;
+import org.apache.linkis.bml.Entity.*;
 import org.apache.linkis.bml.common.*;
-import org.apache.linkis.bml.common.Constant;
-import org.apache.linkis.bml.service.BmlService;
-import org.apache.linkis.bml.service.DownloadService;
-import org.apache.linkis.bml.service.ResourceService;
-import org.apache.linkis.bml.service.TaskService;
-import org.apache.linkis.bml.service.VersionService;
+import org.apache.linkis.bml.service.*;
 import org.apache.linkis.bml.threading.TaskState;
 import org.apache.linkis.bml.util.HttpRequestHelper;
 import org.apache.linkis.bml.vo.ResourceBasicVO;
@@ -42,27 +33,18 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @RequestMapping(path = "/bml")
 @RestController

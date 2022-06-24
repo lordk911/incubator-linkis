@@ -17,14 +17,13 @@
  
 package org.apache.linkis.manager.am.label
 
-import java.util
-
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf._
 import org.apache.linkis.manager.label.entity.node.AliasServiceInstanceLabel
 import org.apache.linkis.manager.label.entity.{EMNodeLabel, EngineNodeLabel, Label}
 import org.apache.linkis.manager.service.common.label.LabelFilter
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConversions._
 
 

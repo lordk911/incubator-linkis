@@ -17,9 +17,7 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util
-import java.util.Date
-
+import org.apache.commons.beanutils.BeanUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.governance.common.entity.task.RequestPersistTask
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
@@ -27,7 +25,9 @@ import org.apache.linkis.httpclient.dws.response.DWSResult
 import org.apache.linkis.ujes.client.UJESClient
 import org.apache.linkis.ujes.client.exception.UJESJobException
 import org.apache.linkis.ujes.client.request.{ResultSetListAction, UserAction}
-import org.apache.commons.beanutils.BeanUtils
+
+import java.util
+import java.util.Date
 
 @DWSHttpMessageResult("/api/rest_j/v\\d+/jobhistory/\\S+/get")
 class JobInfoResult extends DWSResult with UserAction with Status {

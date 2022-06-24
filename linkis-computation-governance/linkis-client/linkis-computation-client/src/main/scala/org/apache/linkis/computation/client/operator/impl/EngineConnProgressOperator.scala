@@ -17,12 +17,11 @@
 
 package org.apache.linkis.computation.client.operator.impl
 
-import java.util
-
 import org.apache.linkis.computation.client.once.result.EngineConnOperateResult
 import org.apache.linkis.computation.client.operator.OnceJobOperator
 import org.apache.linkis.protocol.engine.JobProgressInfo
 
+import java.util
 import scala.collection.JavaConverters._
 
 

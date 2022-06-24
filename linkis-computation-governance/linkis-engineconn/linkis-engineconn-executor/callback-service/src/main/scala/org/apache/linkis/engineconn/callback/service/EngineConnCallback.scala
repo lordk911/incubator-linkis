@@ -19,10 +19,10 @@ package org.apache.linkis.engineconn.callback.service
 
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.protocol.message.RequestProtocol
-import org.apache.linkis.rpc.Sender
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.protocol.engine.EngineConnStatusCallback
+import org.apache.linkis.protocol.message.RequestProtocol
+import org.apache.linkis.rpc.Sender
 
 trait EngineConnCallback {
 

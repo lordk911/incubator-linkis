@@ -19,7 +19,6 @@ package org.apache.linkis.ujes.client.request
 
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
-import org.apache.linkis.ujes.client.request.UserAction
 
 import java.util
 import scala.beans.BeanProperty

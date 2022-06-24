@@ -17,8 +17,6 @@
  
 package org.apache.linkis.engineplugin.hive
 
-import java.util
-import java.util.List
 import org.apache.linkis.engineplugin.hive.creation.HiveEngineConnFactory
 import org.apache.linkis.engineplugin.hive.launch.HiveProcessEngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
@@ -26,8 +24,11 @@ import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.resource.{EngineResourceFactory, GenericEngineResourceFactory}
 import org.apache.linkis.manager.label.entity.Label
-import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel}
+import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
+
+import java.util
+import java.util.List
 
 class HiveEngineConnPlugin extends EngineConnPlugin {
 

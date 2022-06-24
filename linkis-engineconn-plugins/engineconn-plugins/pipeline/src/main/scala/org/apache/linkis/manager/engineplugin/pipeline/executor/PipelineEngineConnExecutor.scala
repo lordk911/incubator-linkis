@@ -17,7 +17,6 @@
  
 package org.apache.linkis.manager.engineplugin.pipeline.executor
 
-import java.util
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.computation.executor.execute.{ComputationExecutor, EngineExecutionContext}
 import org.apache.linkis.engineconn.core.EngineConnObject
@@ -29,6 +28,7 @@ import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.executer.ExecuteResponse
 
+import java.util
 import scala.collection.JavaConversions.mapAsScalaMap
 
 class PipelineEngineConnExecutor(val id: Int) extends ComputationExecutor with Logging {

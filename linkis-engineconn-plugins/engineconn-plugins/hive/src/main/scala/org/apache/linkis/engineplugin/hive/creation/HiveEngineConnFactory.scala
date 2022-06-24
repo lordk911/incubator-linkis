@@ -17,9 +17,10 @@
 
 package org.apache.linkis.engineplugin.hive.creation
 
-import java.io.{ByteArrayOutputStream, PrintStream}
-import java.security.PrivilegedExceptionAction
 import org.apache.commons.lang3.StringUtils
+import org.apache.hadoop.hive.conf.HiveConf
+import org.apache.hadoop.hive.ql.Driver
+import org.apache.hadoop.hive.ql.session.SessionState
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
@@ -34,10 +35,9 @@ import org.apache.linkis.hadoop.common.utils.HDFSUtils
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
 import org.apache.linkis.manager.label.entity.engine.{EngineType, RunType}
-import org.apache.hadoop.hive.conf.HiveConf
-import org.apache.hadoop.hive.ql.Driver
-import org.apache.hadoop.hive.ql.session.SessionState
 
+import java.io.{ByteArrayOutputStream, PrintStream}
+import java.security.PrivilegedExceptionAction
 import scala.collection.JavaConversions._
 
 class HiveEngineConnFactory extends ComputationSingleExecutorEngineConnFactory with Logging {

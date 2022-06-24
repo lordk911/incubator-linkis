@@ -19,16 +19,6 @@ package org.apache.linkis.ujes.jdbc
 
 import java.sql.{Connection, ResultSet, SQLWarning, Statement}
 import java.util.concurrent.TimeUnit
-import org.apache.linkis.common.exception.ErrorException
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.ujes.client.request.JobExecuteAction
-import org.apache.linkis.ujes.client.request.JobExecuteAction.EngineType
-import org.apache.linkis.ujes.client.response.JobExecuteResult
-import org.apache.linkis.ujes.jdbc.hook.JDBCDriverPreExecutionHook
-
-import scala.collection.JavaConversions
-import scala.concurrent.TimeoutException
-import scala.concurrent.duration.Duration
 
 class UJESSQLStatement(private[jdbc] val ujesSQLConnection: UJESSQLConnection) extends Statement with Logging {
 

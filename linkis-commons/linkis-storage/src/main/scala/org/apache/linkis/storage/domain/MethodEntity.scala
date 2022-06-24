@@ -17,11 +17,11 @@
  
 package org.apache.linkis.storage.domain
 
-import java.lang.reflect.Type
-
 import com.google.gson.GsonBuilder
 import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization.write
+
+import java.lang.reflect.Type
 
 /**
   *

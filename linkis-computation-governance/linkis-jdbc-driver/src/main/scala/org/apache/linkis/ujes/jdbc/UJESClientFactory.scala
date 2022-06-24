@@ -19,12 +19,6 @@ package org.apache.linkis.ujes.jdbc
 
 import java.util
 import java.util.Properties
-import org.apache.linkis.httpclient.dws.authentication.StaticAuthenticationStrategy
-import org.apache.linkis.httpclient.dws.config.DWSClientConfigBuilder
-import org.apache.linkis.ujes.client.UJESClient
-import org.apache.linkis.ujes.jdbc.UJESSQLDriverMain._
-import org.apache.commons.lang.StringUtils
-import org.apache.linkis.common.utils.Logging
 
 object UJESClientFactory extends Logging {
 

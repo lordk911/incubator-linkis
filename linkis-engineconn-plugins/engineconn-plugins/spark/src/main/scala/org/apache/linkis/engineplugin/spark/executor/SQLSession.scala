@@ -17,8 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.executor
 
-import java.text.NumberFormat
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineplugin.spark.config.SparkConfiguration
@@ -29,11 +28,11 @@ import org.apache.linkis.storage.domain.{Column, DataType}
 import org.apache.linkis.storage.resultset.ResultSetFactory
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
 import org.apache.linkis.storage.{LineMetaData, LineRecord}
-import org.apache.commons.lang.StringUtils
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types.{StructField, StructType}
 
+import java.text.NumberFormat
 import scala.collection.mutable.ArrayBuffer
 
 

@@ -19,7 +19,7 @@ package org.apache.linkis.orchestrator.plans.physical
 
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.orchestrator.execution.TaskResponse
-import org.apache.linkis.orchestrator.listener.task.{TaskLogEvent, TaskRunningInfoEvent, TaskYarnResourceEvent}
+import org.apache.linkis.orchestrator.listener.task.{TaskLogEvent, TaskRunningInfoEvent}
 import org.apache.linkis.orchestrator.plans.PlanContext
 
 /**

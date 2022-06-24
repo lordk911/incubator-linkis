@@ -17,11 +17,6 @@
  
 package org.apache.linkis.ujes.jdbc.hook
 
-import org.apache.linkis.common.conf.CommonVars
-import org.apache.linkis.common.utils.{Logging, Utils}
-
-import scala.collection.mutable.ArrayBuffer
-
 
 trait JDBCDriverPreExecutionHook {
 

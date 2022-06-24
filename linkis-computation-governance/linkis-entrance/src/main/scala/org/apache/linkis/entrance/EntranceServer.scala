@@ -17,17 +17,17 @@
  
 package org.apache.linkis.entrance
 
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.exception.{ErrorException, LinkisException, LinkisRuntimeException}
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.exception.{EntranceErrorException, SubmitFailedException}
-import org.apache.linkis.entrance.execute.{EntranceExecutorManager, EntranceJob}
+import org.apache.linkis.entrance.execute.EntranceJob
 import org.apache.linkis.entrance.log.LogReader
 import org.apache.linkis.entrance.timeout.JobTimeoutManager
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.queue.{Job, SchedulerEventState}
 import org.apache.linkis.server.conf.ServerConfiguration
-import org.apache.commons.lang.exception.ExceptionUtils
 
 
 abstract class EntranceServer extends Logging {

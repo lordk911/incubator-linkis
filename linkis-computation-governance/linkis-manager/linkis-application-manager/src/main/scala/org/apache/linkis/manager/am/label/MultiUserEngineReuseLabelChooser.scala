@@ -17,17 +17,16 @@
  
 package org.apache.linkis.manager.am.label
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.am.conf.AMConfiguration
 import org.apache.linkis.manager.am.exception.{AMErrorCode, AMErrorException}
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineTypeLabel, UserCreatorLabel}
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConverters._
 
 @Component

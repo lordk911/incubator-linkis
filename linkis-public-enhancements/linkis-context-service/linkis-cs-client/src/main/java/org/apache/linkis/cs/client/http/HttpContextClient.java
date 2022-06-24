@@ -48,11 +48,14 @@ import org.apache.linkis.httpclient.response.Result;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.*;
 
 /** Description: HttpContextClient是ContextClient的使用Http方式进行通信的具体实现 一般可以将其做成单例 */
 public class HttpContextClient extends AbstractContextClient {

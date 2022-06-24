@@ -17,9 +17,9 @@
 
 package org.apache.linkis.ujes.client.request
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.httpclient.request.GetAction
 import org.apache.linkis.ujes.client.exception.UJESClientBuilderException
-import org.apache.commons.lang.StringUtils
 
 
 

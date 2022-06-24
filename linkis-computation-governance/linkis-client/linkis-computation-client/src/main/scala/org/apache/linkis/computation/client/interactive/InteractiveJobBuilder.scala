@@ -17,12 +17,12 @@
  
 package org.apache.linkis.computation.client.interactive
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.computation.client.AbstractLinkisJobBuilder
 import org.apache.linkis.computation.client.utils.LabelKeyUtils
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
 import org.apache.linkis.ujes.client.UJESClient
 import org.apache.linkis.ujes.client.request.JobSubmitAction
-import org.apache.commons.lang.StringUtils
 
 
 class InteractiveJobBuilder private[interactive]()

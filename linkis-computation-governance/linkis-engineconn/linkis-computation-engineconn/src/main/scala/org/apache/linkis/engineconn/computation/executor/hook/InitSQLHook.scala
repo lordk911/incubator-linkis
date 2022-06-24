@@ -17,9 +17,8 @@
 
 package org.apache.linkis.engineconn.computation.executor.hook
 
-import java.io.File
-import java.util
-
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
@@ -31,8 +30,9 @@ import org.apache.linkis.engineconn.core.executor.ExecutorManager
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{CodeLanguageLabel, RunType}
-import org.apache.commons.io.FileUtils
-import org.apache.commons.lang.StringUtils
+
+import java.io.File
+import java.util
 
 
 abstract class InitSQLHook  extends EngineConnHook with Logging {

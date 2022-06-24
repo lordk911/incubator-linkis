@@ -17,17 +17,16 @@
  
 package org.apache.linkis.resourcemanager.service
 
-import java.util.Date
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.common.entity.persistence.PersistenceLock
-import org.apache.linkis.manager.label.entity.{EngineNodeLabel, ResourceLabel}
+import org.apache.linkis.manager.label.entity.ResourceLabel
 import org.apache.linkis.manager.persistence.LockManagerPersistence
 import org.apache.linkis.resourcemanager.domain.RMLabelContainer
-import org.apache.commons.lang.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util.Date
 import scala.collection.JavaConversions._
 
 @Component

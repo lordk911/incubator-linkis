@@ -17,14 +17,14 @@
  
 package org.apache.linkis.storage.script.writer
 
-import java.io.{ByteArrayInputStream, IOException, InputStream, OutputStream}
-import java.util
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{FsPath, MetaData, Record}
 import org.apache.linkis.storage.LineRecord
 import org.apache.linkis.storage.script.{Compaction, ScriptFsWriter, ScriptMetaData}
 import org.apache.linkis.storage.utils.{StorageConfiguration, StorageUtils}
-import org.apache.commons.io.IOUtils
+
+import java.io.{ByteArrayInputStream, IOException, InputStream, OutputStream}
+import java.util
 
 
 class StorageScriptFsWriter(val path: FsPath, val charset: String, outputStream: OutputStream = null) extends ScriptFsWriter {

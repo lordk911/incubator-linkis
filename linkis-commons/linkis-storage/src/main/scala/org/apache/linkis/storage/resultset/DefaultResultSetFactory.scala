@@ -17,8 +17,7 @@
 
 package org.apache.linkis.storage.resultset
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.io.resultset.ResultSet
 import org.apache.linkis.common.io.{Fs, FsPath, MetaData, Record}
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -26,7 +25,8 @@ import org.apache.linkis.storage.FSFactory
 import org.apache.linkis.storage.domain.Dolphin
 import org.apache.linkis.storage.exception.{StorageErrorException, StorageWarnException}
 import org.apache.linkis.storage.utils.{StorageConfiguration, StorageUtils}
-import org.apache.commons.lang.StringUtils
+
+import java.util
 
 
 class DefaultResultSetFactory extends ResultSetFactory with Logging{

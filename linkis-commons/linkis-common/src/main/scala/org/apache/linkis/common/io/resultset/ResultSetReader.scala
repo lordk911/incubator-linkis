@@ -17,9 +17,9 @@
  
 package org.apache.linkis.common.io.resultset
 
-import java.io.{ByteArrayInputStream, InputStream}
-
 import org.apache.linkis.common.io.{FsReader, MetaData, Record}
+
+import java.io.{ByteArrayInputStream, InputStream}
 
 
 abstract class ResultSetReader[K <: MetaData, V <: Record](resultSet: ResultSet[K, V],

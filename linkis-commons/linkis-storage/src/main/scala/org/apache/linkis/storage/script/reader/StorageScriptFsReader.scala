@@ -17,13 +17,12 @@
  
 package org.apache.linkis.storage.script.reader
 
-import java.io._
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{FsPath, MetaData, Record}
 import org.apache.linkis.storage.script._
 import org.apache.linkis.storage.utils.StorageUtils
-import org.apache.commons.io.IOUtils
 
+import java.io._
 import scala.collection.mutable.ArrayBuffer
 
 

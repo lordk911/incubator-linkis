@@ -21,8 +21,10 @@ import org.apache.linkis.bml.Entity.Resource;
 import org.apache.linkis.bml.Entity.ResourceTask;
 import org.apache.linkis.bml.Entity.ResourceVersion;
 import org.apache.linkis.bml.Entity.Version;
-import org.apache.linkis.bml.common.*;
 import org.apache.linkis.bml.common.Constant;
+import org.apache.linkis.bml.common.ResourceHelper;
+import org.apache.linkis.bml.common.ResourceHelperFactory;
+import org.apache.linkis.bml.common.UpdateResourceException;
 import org.apache.linkis.bml.dao.ResourceDao;
 import org.apache.linkis.bml.dao.TaskDao;
 import org.apache.linkis.bml.dao.VersionDao;
@@ -44,15 +46,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.apache.linkis.bml.common.Constant.FIRST_VERSION;
 
