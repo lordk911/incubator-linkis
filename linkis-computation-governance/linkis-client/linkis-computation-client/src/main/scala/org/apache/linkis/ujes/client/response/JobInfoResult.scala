@@ -17,9 +17,7 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util
-import java.util.Date
-
+import org.apache.commons.beanutils.BeanUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.governance.common.entity.task.RequestPersistTask
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
@@ -27,7 +25,9 @@ import org.apache.linkis.httpclient.dws.response.DWSResult
 import org.apache.linkis.ujes.client.UJESClient
 import org.apache.linkis.ujes.client.exception.UJESJobException
 import org.apache.linkis.ujes.client.request.{ResultSetListAction, UserAction}
-import org.apache.commons.beanutils.BeanUtils
+
+import java.util
+import java.util.Date
 
 @DWSHttpMessageResult("/api/rest_j/v\\d+/jobhistory/\\S+/get")
 class JobInfoResult extends DWSResult with UserAction with Status {
@@ -35,6 +35,8 @@ class JobInfoResult extends DWSResult with UserAction with Status {
   private var task: java.util.Map[_, _] = _
   private var requestPersistTask: RequestPersistTask = _
   private var resultSetList: Array[String] = _
+
+  private var strongerExecId: String = _
 
   def setTask(task: util.Map[_, _]): Unit = {
     this.task = task
@@ -44,6 +46,7 @@ class JobInfoResult extends DWSResult with UserAction with Status {
     task.remove("createdTime")
     task.remove("updatedTime")
     task.remove("engineStartTime")
+    task.remove("labels")
     Utils.tryCatch{
       BeanUtils.populate(requestPersistTask, task.asInstanceOf[util.Map[String, _]])
     }{
@@ -53,11 +56,19 @@ class JobInfoResult extends DWSResult with UserAction with Status {
     requestPersistTask.setCreatedTime(new Date(createdTime))
     requestPersistTask.setUpdatedTime(new Date(updatedTime))
     requestPersistTask.setEngineStartTime(new Date(updatedTime))
+    if (task.containsKey("strongerExecId")) {
+      this.strongerExecId = task.get("strongerExecId").asInstanceOf[String]
+    }
+
   }
 
   def getTask = task
 
   def getRequestPersistTask: RequestPersistTask = requestPersistTask
+
+  def getStrongerExecId: String = {
+    this.strongerExecId
+  }
 
   def getResultSetList(ujesClient: UJESClient): Array[String] = {
     if(isSucceed && resultSetList == null) synchronized {

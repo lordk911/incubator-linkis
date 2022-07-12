@@ -17,10 +17,9 @@
  
 package org.apache.linkis.rpc.interceptor
 
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.rpc.RPCSpringBeanCache
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 
 object ServiceInstanceUtils {

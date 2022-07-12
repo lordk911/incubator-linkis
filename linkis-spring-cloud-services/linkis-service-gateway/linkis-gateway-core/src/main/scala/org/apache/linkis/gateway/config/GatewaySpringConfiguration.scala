@@ -17,10 +17,9 @@
  
 package org.apache.linkis.gateway.config
 
-import java.util.stream.Collectors
-
+import org.apache.linkis.gateway.authentication.service.TokenService
+import org.apache.linkis.gateway.security.token.TokenAuthentication
 import org.apache.linkis.gateway.security.{LDAPUserRestful, SecurityFilter, SecurityHook, UserRestful}
-import javax.annotation.PostConstruct
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -28,15 +27,22 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters
 import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.http.converter.HttpMessageConverter
 
+import java.util.stream.Collectors
+import javax.annotation.PostConstruct
+
 @Configuration
 class GatewaySpringConfiguration {
 
   @Autowired
   private var userRestful: UserRestful = _
 
+  @Autowired
+  private var tokenService: TokenService = _
+
   @PostConstruct
   def init(): Unit = {
     SecurityFilter.setUserRestful(userRestful)
+    TokenAuthentication.setTokenService(tokenService)
   }
 
 //  @Bean(Array("defaultGatewayParser"))

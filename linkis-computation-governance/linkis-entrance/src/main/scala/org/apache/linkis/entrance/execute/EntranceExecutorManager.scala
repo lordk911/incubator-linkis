@@ -24,13 +24,10 @@ import org.apache.linkis.entrance.exception.EntranceErrorException
 import org.apache.linkis.entrance.job.EntranceExecutionJob
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.manager.label.utils.LabelUtils
-import org.apache.linkis.orchestrator.Orchestration
 import org.apache.linkis.scheduler.executer.{Executor, ExecutorManager}
 import org.apache.linkis.scheduler.queue.{GroupFactory, Job, SchedulerEvent}
 
-import java.util
 import java.util.Date
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import scala.concurrent.duration.Duration
 
@@ -53,7 +50,7 @@ abstract class EntranceExecutorManager(groupFactory: GroupFactory) extends Execu
     markReq.setCreateService(EntranceConfiguration.DEFAULT_CREATE_SERVICE.getValue)
     // todo get default config from db
     markReq.setProperties(jobReq.getParams)
-    markReq.setUser(jobReq.getSubmitUser)
+    markReq.setUser(jobReq.getExecuteUser)
     markReq.setLabels(LabelUtils.labelsToMap(jobReq.getLabels))
     markReq
   }

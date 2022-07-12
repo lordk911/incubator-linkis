@@ -17,10 +17,10 @@
  
 package org.apache.linkis.engineplugin.hive.progress
 
-import java.util.concurrent.LinkedBlockingQueue
-
 import org.apache.linkis.engineplugin.hive.log.HiveProgress
 import org.slf4j.{Logger, LoggerFactory}
+
+import java.util.concurrent.LinkedBlockingQueue
 
 object HiveProgressHelper {
 

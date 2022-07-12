@@ -17,9 +17,9 @@
  
 package org.apache.linkis.common.utils
 
-import java.lang.management.ManagementFactory
-
 import com.sun.management.OperatingSystemMXBean
+
+import java.lang.management.ManagementFactory
 
 object OverloadUtils {
 

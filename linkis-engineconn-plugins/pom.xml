@@ -22,7 +22,7 @@
     <parent>
         <artifactId>linkis</artifactId>
         <groupId>org.apache.linkis</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,12 +38,13 @@
         <module>engineconn-plugins/hive</module>
         <module>engineconn-plugins/spark</module>
         <module>engineconn-plugins/python</module>
-
+        <module>engineconn-plugins/openlookeng</module>
         <module>engineconn-plugins/io_file</module>
         <module>engineconn-plugins/shell</module>
         <module>engineconn-plugins/pipeline</module>
         <module>engineconn-plugins/jdbc</module>
         <module>engineconn-plugins/flink</module>
+        <module>engineconn-plugins/sqoop</module>
     </modules>
 
 </project>

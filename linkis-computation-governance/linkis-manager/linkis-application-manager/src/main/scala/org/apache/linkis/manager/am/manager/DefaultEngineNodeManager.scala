@@ -17,7 +17,6 @@
  
 package org.apache.linkis.manager.am.manager
 
-import java.util
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.utils.{Logging, RetryHandler, Utils}
@@ -38,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 import java.lang.reflect.UndeclaredThrowableException
+import java.util
 import scala.collection.JavaConversions._
 
 
@@ -178,7 +178,7 @@ class DefaultEngineNodeManager extends EngineNodeManager with Logging {
         engineNode.setServiceInstance(scoreServiceInstances.getServiceInstance)
         engineNode
     }
-    //1. 增加nodeMetrics 2 增加RM信息
+    //1. add nodeMetrics 2 add RM info
     val resourceInfo = resourceManager.getResourceInfo(scoreServiceInstances.map(_.getServiceInstance))
     val nodeMetrics = nodeMetricManagerPersistence.getNodeMetrics(engineNodes.toList)
     engineNodes.map { engineNode =>
@@ -194,28 +194,7 @@ class DefaultEngineNodeManager extends EngineNodeManager with Logging {
   }
 
 
-  /*private def fillMetricsToNode(engineNode: EngineNode, metrics: NodeMetrics): EngineNode = {
 
-    engineNode.setNodeStatus(metricsConverter.parseStatus(metrics))
-    engineNode.setNodeTaskInfo(metricsConverter.parseTaskInfo(metrics))
-    engineNode.setNodeHealthyInfo(metricsConverter.parseHealthyInfo(metrics))
-    engineNode.setNodeOverLoadInfo(metricsConverter.parseOverLoadInfo(metrics))
-    engineNode
-  }*/
-
-  /* /**
-     * clear engine info from persistence
-     * invoke deleteNode
-     *
-     * @param stopEngineRequest
-     */
-   override def stopEngine(stopEngineRequest: EngineStopRequest): Unit = {
-     val instance = stopEngineRequest.getServiceInstance
-     val node = new AMEngineNode()
-     node.setServiceInstance(instance)
-     nodePointerBuilder.buildEngineNodePointer(node).stopNode()
-     deleteEngineNode(node)
-   }*/
 
   /**
     * add info to persistence

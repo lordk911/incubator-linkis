@@ -25,22 +25,21 @@ import org.apache.linkis.cli.common.exception.error.ErrorLevel;
 import org.apache.linkis.cli.core.exception.CommandException;
 import org.apache.linkis.cli.core.exception.TransformerException;
 import org.apache.linkis.cli.core.exception.error.CommonErrMsg;
+import org.apache.linkis.cli.core.interactor.command.SpecialMap;
 import org.apache.linkis.cli.core.interactor.command.fitter.Fitter;
 import org.apache.linkis.cli.core.interactor.command.parser.result.ParseResult;
 import org.apache.linkis.cli.core.interactor.command.parser.transformer.ParamKeyMapper;
-import org.apache.linkis.cli.core.utils.SpecialMap;
 
 import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** @description: Given {@link CmdTemplate}, Parse user input arguements into {@link Params} */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstarctParser implements Parser {
     private static final Logger logger = LoggerFactory.getLogger(AbstarctParser.class);
 

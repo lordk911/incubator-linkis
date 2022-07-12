@@ -17,10 +17,9 @@
  
 package org.apache.linkis.engineconn.computation.executor.execute
 
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
-
 import com.google.common.cache.{Cache, CacheBuilder}
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -28,11 +27,10 @@ import org.apache.linkis.engineconn.acessible.executor.entity.AccessibleExecutor
 import org.apache.linkis.engineconn.acessible.executor.listener.event.TaskStatusChangedEvent
 import org.apache.linkis.engineconn.common.conf.{EngineConnConf, EngineConnConstant}
 import org.apache.linkis.engineconn.computation.executor.conf.ComputationExecutorConf
-import org.apache.linkis.engineconn.computation.executor.creation.ComputationExecutorManager
 import org.apache.linkis.engineconn.computation.executor.entity.EngineConnTask
 import org.apache.linkis.engineconn.computation.executor.hook.ComputationExecutorHook
+import org.apache.linkis.engineconn.computation.executor.upstream.event.TaskStatusChangedForUpstreamMonitorEvent
 import org.apache.linkis.engineconn.core.EngineConnObject
-import org.apache.linkis.engineconn.core.engineconn.EngineConnManager
 import org.apache.linkis.engineconn.core.executor.ExecutorManager
 import org.apache.linkis.engineconn.executor.entity.{LabelExecutor, ResourceExecutor}
 import org.apache.linkis.engineconn.executor.listener.ExecutorListenerBusContext
@@ -40,13 +38,12 @@ import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
 import org.apache.linkis.governance.common.paser.CodeParser
 import org.apache.linkis.governance.common.protocol.task.{EngineConcurrentInfo, RequestTask}
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
-import org.apache.linkis.manager.engineplugin.common.creation.ExecutorFactory
 import org.apache.linkis.manager.label.entity.engine.UserCreatorLabel
-import org.apache.linkis.manager.label.entity.entrance.ExecuteOnceLabel
 import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.scheduler.executer._
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.exception.ExceptionUtils
+
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 
 abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends AccessibleExecutor with ResourceExecutor with LabelExecutor with Logging {
@@ -63,17 +60,19 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
 
   private var codeParser: Option[CodeParser] = None
 
-  private var runningTasks: Count = new Count
+  protected val runningTasks: Count = new Count
 
-  private var pendingTasks: Count = new Count
+  protected val pendingTasks: Count = new Count
 
-  private var succeedTasks: Count = new Count
+  protected val succeedTasks: Count = new Count
 
-  private var failedTasks: Count = new Count
+  protected val failedTasks: Count = new Count
 
   private var lastTask: EngineConnTask = _
 
   private val MAX_TASK_EXECUTE_NUM = ComputationExecutorConf.ENGINE_MAX_TASK_EXECUTE_NUM.getValue
+
+  private val CLOSE_LOCKER = new Object
 
   protected def setInitialized(inited: Boolean = true): Unit = this.engineInitialized = inited
 
@@ -119,7 +118,7 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
   protected def callback(): Unit = {}
 
   override def close(): Unit = {
-    if (null != lastTask) synchronized {
+    if (null != lastTask) CLOSE_LOCKER.synchronized {
       killTask(lastTask.getTaskId)
     } else {
       killTask("By close")
@@ -144,11 +143,11 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
   }
 
 
-  def toExecuteTask(engineConnTask: EngineConnTask, internalExecute: Boolean = false): ExecuteResponse = {
+   def toExecuteTask(engineConnTask: EngineConnTask, internalExecute: Boolean = false): ExecuteResponse = {
     runningTasks.increase()
     this.internalExecute = internalExecute
     Utils.tryFinally{
-    transformTaskStatus(engineConnTask, ExecutionNodeStatus.Running)
+      transformTaskStatus(engineConnTask, ExecutionNodeStatus.Running)
       val engineExecutionContext = createEngineExecutionContext(engineConnTask)
       var hookedCode = engineConnTask.getCode
       Utils.tryCatch {
@@ -156,7 +155,7 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
         ComputationExecutorHook.getComputationExecutorHooks.foreach(hook => {
           hookedCode = hook.beforeExecutorExecute(engineExecutionContext, engineCreationContext, hookedCode)
         })
-      } ( e => info("failed to do with hook", e))
+      } (e => info("failed to do with hook", e))
       if (hookedCode.length > 100) {
         info(s"hooked after code: ${hookedCode.substring(0, 100)} ....")
       } else {
@@ -207,11 +206,11 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
           failedTasks.increase()
       }
 
+
       if (null == response && codes.isEmpty) {
-        error("This code is empty, and the task will be directly marked as successful.")
+        warn("This code is empty, the task will be directly marked as successful")
         response = SuccessExecuteResponse()
       }
-
       response = response match {
         case _: OutputExecuteResponse =>
           succeedTasks.increase()
@@ -242,11 +241,11 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
       toExecuteTask(engineConnTask)
     }
 
-      Utils.tryAndWarn(afterExecute(engineConnTask, response))
+    Utils.tryAndWarn(afterExecute(engineConnTask, response))
     info(s"Finished to execute task ${engineConnTask.getTaskId}")
-    lastTask = null
-      response
-    }
+    //lastTask = null
+    response
+  }
 
   def setCodeParser(codeParser: CodeParser): Unit = this.codeParser = Some(codeParser)
 
@@ -285,7 +284,6 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
     Utils.tryAndWarn {
       val task = getTaskById(taskId)
       if (null != task) {
-        task.setStatus(ExecutionNodeStatus.Cancelled)
         transformTaskStatus(task, ExecutionNodeStatus.Cancelled)
       }
     }
@@ -310,6 +308,7 @@ abstract class ComputationExecutor(val outputPrintLimit: Int = 1000) extends Acc
     }
     if (oriStatus != newStatus && !isInternalExecute) {
       listenerBusContext.getEngineConnSyncListenerBus.postToAll(TaskStatusChangedEvent(task.getTaskId, oriStatus, newStatus))
+      listenerBusContext.getEngineConnSyncListenerBus.postToAll(TaskStatusChangedForUpstreamMonitorEvent(task.getTaskId, oriStatus, newStatus, task, this))
     }
   }
 

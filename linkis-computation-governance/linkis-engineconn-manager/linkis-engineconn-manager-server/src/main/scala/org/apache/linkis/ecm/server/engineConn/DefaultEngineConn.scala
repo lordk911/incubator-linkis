@@ -17,8 +17,6 @@
  
 package org.apache.linkis.ecm.server.engineConn
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.ecm.core.engineconn.{EngineConn, EngineConnInfo}
 import org.apache.linkis.ecm.core.launch.{EngineConnLaunchRunner, EngineConnManagerEnv}
@@ -26,6 +24,8 @@ import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnCreationDesc
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 class DefaultEngineConn extends EngineConn {
@@ -100,5 +100,5 @@ class DefaultEngineConn extends EngineConn {
 
   override def setEngineConnManagerEnv(env: EngineConnManagerEnv): Unit = this.ecmEnv = env
 
-  override def toString = s"DefaultEngineConn($status, $tickedId, $resource, $labels, $engineConnCreationDesc, $engineConnInfo, $ecmEnv, $engineConnLaunchRunner, $instance, $pid)"
+  override def toString = s"DefaultEngineConn($status, $tickedId, $instance, $pid)"
 }

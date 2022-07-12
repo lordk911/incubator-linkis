@@ -17,11 +17,11 @@
  
 package org.apache.linkis.governance.common.protocol.engineconn
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.governance.common.entity.NodeExistStatus
 import org.apache.linkis.protocol.message.RequestProtocol
+
+import java.util
 
 case class RequestEngineStatusBatch(engineList: util.List[ServiceInstance]) extends RequestProtocol
 

@@ -17,23 +17,22 @@
  
 package org.apache.linkis.entrance.orchestrator.plugin
 
-import java.util
-import java.util.concurrent.TimeUnit
-
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
-import org.apache.linkis.governance.common.protocol.conf.{RequestQueryEngineConfig, RequestQueryEngineConfigWithGlobalConfig, ResponseQueryConfig}
+import org.apache.linkis.governance.common.protocol.conf.{RequestQueryEngineConfigWithGlobalConfig, ResponseQueryConfig}
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineTypeLabel, UserCreatorLabel}
 import org.apache.linkis.orchestrator.plugin.UserParallelOrchestratorPlugin
 import org.apache.linkis.rpc.Sender
-import org.apache.commons.lang.StringUtils
 import org.apache.linkis.server.BDPJettyServerHelper
 
+import java.util
+import java.util.concurrent.TimeUnit
 import scala.collection.JavaConverters._
 
 class EntranceUserParallelOrchestratorPlugin extends UserParallelOrchestratorPlugin with Logging {

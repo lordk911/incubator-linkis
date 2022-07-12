@@ -17,14 +17,13 @@
  
 package org.apache.linkis.engineplugin.spark.common
 
-import java.io.InputStream
-import java.util.concurrent.locks.ReentrantLock
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineplugin.spark.config.SparkConfiguration
-import org.apache.commons.io.IOUtils
 
+import java.io.InputStream
+import java.util.concurrent.locks.ReentrantLock
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 

@@ -17,13 +17,13 @@
  
 package org.apache.linkis.server.socket
 
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.collection.BlockingLoopArray
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.server.security.SecurityFilter
-import javax.servlet.http.HttpServletRequest
 import org.eclipse.jetty.websocket.api.{Session, WebSocketAdapter}
+
+import java.util.concurrent.TimeUnit
+import javax.servlet.http.HttpServletRequest
 
 
 case class ServerSocket(request: HttpServletRequest, socketListener: SocketListener, protocol: String = "")

@@ -17,6 +17,7 @@
  
 package org.apache.linkis.manager.engineplugin.io.factory
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
@@ -27,7 +28,6 @@ import org.apache.linkis.manager.engineplugin.io.executor.IoEngineConnExecutor
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
 import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel, RunType}
-import org.apache.commons.lang.StringUtils
 
 class IoEngineConnFactory extends ComputationSingleExecutorEngineConnFactory with Logging {
 

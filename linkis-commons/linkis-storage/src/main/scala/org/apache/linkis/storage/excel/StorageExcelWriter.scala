@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,20 +17,22 @@
  
 package org.apache.linkis.storage.excel
 
+import org.apache.commons.io.IOUtils
+import org.apache.linkis.common.io.{MetaData, Record}
+import org.apache.linkis.common.utils.Logging
+import org.apache.linkis.storage.domain._
+import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
+import org.apache.poi.ss.usermodel._
+import org.apache.poi.xssf.streaming.{SXSSFCell, SXSSFSheet, SXSSFWorkbook}
+
 import java.io._
 import java.util
-
-import org.apache.linkis.common.io.{MetaData, Record}
-import org.apache.linkis.storage.domain.{BigIntType, DataType, IntType, LongType, ShortIntType, TinyIntType}
-import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
-import org.apache.commons.io.IOUtils
-import org.apache.poi.ss.usermodel._
-import org.apache.poi.xssf.streaming.{SXSSFSheet, SXSSFWorkbook}
-
+import java.util.Date
 import scala.collection.mutable.ArrayBuffer
 
 
-class StorageExcelWriter(val charset: String, val sheetName: String, val dateFormat: String, val outputStream: OutputStream) extends ExcelFsWriter {
+class StorageExcelWriter(val charset: String, val sheetName: String, val dateFormat: String, val outputStream: OutputStream, val autoFormat: Boolean) extends ExcelFsWriter with Logging {
+
 
   protected var workBook: SXSSFWorkbook = _
   protected var sheet: SXSSFSheet = _
@@ -70,9 +72,27 @@ class StorageExcelWriter(val charset: String, val sheetName: String, val dateFor
   def createCellStyle(dataType: DataType): CellStyle = {
     val style = workBook.createCellStyle()
     format = workBook.createDataFormat()
-    dataType match {
-      case BigIntType | TinyIntType | ShortIntType | IntType | LongType  => style.setDataFormat(format.getFormat("0"))
+    dataType.toString match {
       case _ => style.setDataFormat(format.getFormat("@"))
+    }
+    if (autoFormat) {
+      dataType match {
+        case StringType => style.setDataFormat(format.getFormat("@"))
+        case TinyIntType => style.setDataFormat(format.getFormat("#"))
+        case ShortIntType => style.setDataFormat(format.getFormat("#"))
+        case IntType => style.setDataFormat(format.getFormat("#"))
+        case LongType => style.setDataFormat(format.getFormat("#.##E+00"))
+        case BigIntType => style.setDataFormat(format.getFormat("#.##E+00"))
+        case FloatType => style.setDataFormat(format.getFormat("#.0000000000"))
+        case DoubleType => style.setDataFormat(format.getFormat("#.0000000000"))
+        case CharType => style.setDataFormat(format.getFormat("@"))
+        case VarcharType => style.setDataFormat(format.getFormat("@"))
+        case DateType => style.setDataFormat(format.getFormat("m/d/yy h:mm"))
+        case TimestampType => style.setDataFormat(format.getFormat("m/d/yy h:mm"))
+        case DecimalType => style.setDataFormat(format.getFormat("#.000000000"))
+        case BigDecimalType => style.setDataFormat(format.getFormat("#.000000000"))
+        case _ => style.setDataFormat(format.getFormat("@"))
+      }
     }
     style
   }
@@ -115,9 +135,10 @@ class StorageExcelWriter(val charset: String, val sheetName: String, val dateFor
     for (elem <- excelRecord) {
       val cell = tableBody.createCell(colunmPoint)
       val dataType = types.apply(colunmPoint)
-      dataType match {
-        case BigIntType | TinyIntType | ShortIntType | IntType | LongType => cell.setCellValue(if (elem.toString.equals("NULL")) 0 else elem.toString.toDouble)
-        case _ => cell.setCellValue(elem.toString) //read时候进行null替换等等
+      if (autoFormat) {
+        setCellTypeValue(dataType, elem, cell)
+      } else {
+        cell.setCellValue(DataType.valueToString(elem))
       }
       cell.setCellStyle(getCellStyle(dataType))
       colunmPoint += 1
@@ -125,6 +146,41 @@ class StorageExcelWriter(val charset: String, val sheetName: String, val dateFor
     rowPoint += 1
   }
 
+  private def setCellTypeValue(dataType: DataType, elem: Any, cell: SXSSFCell): Unit = {
+    if (null == elem) return
+    dataType match {
+      case StringType => cell.setCellValue(DataType.valueToString(elem))
+      case TinyIntType => cell.setCellValue(elem.toString.toInt)
+      case ShortIntType => cell.setCellValue(elem.toString.toInt)
+      case IntType => cell.setCellValue(elem.toString.toInt)
+      case LongType => cell.setCellValue(elem.toString.toLong)
+      case BigIntType => cell.setCellValue(elem.toString.toLong)
+      case FloatType => cell.setCellValue(elem.toString.toFloat)
+      case DoubleType => cell.setCellValue(elem.toString.toDouble)
+      case CharType => cell.setCellValue(DataType.valueToString(elem))
+      case VarcharType => cell.setCellValue(DataType.valueToString(elem))
+      case DateType => cell.setCellValue(getDate(elem))
+      case TimestampType => cell.setCellValue(getDate(elem))
+      case DecimalType => cell.setCellValue(DataType.valueToString(elem))
+      case BigDecimalType => cell.setCellValue(DataType.valueToString(elem))
+      case _ =>
+        val value = DataType.valueToString(elem)
+        cell.setCellValue(value)
+        if (null != dataType) {
+          logger.warn(s"Cannot find matched type for dataType : ${dataType.toString}, string value:${value}, value className : ${elem.getClass.getName}, will treat it as string.")
+        } else {
+          logger.warn(s"Invalid null dataType. Will treat value string : ${value}, value className : ${elem.getClass.getName} as string.")
+        }
+    }
+  }
+
+  private def getDate(value: Any): Date = {
+    if (value.isInstanceOf[Date]) {
+      value.asInstanceOf[Date]
+    } else {
+      throw new NumberFormatException(s"Value ${value} with class : ${value.getClass.getName} is not a valid type of Date.");
+    }
+  }
 
   override def flush(): Unit = {
     getWorkBook.write(os)

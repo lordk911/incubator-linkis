@@ -33,10 +33,12 @@ fi
 info="We will stop all linkis applications, it will take some time, please wait"
 echo ${info}
 
-
-
-
 source ${LINKIS_HOME}/sbin/common.sh
+# set LINKIS_CONF_DIR
+if [ "$LINKIS_CONF_DIR" = "" ]; then
+  export LINKIS_CONF_DIR=$LINKIS_HOME/conf
+fi
+source $LINKIS_CONF_DIR/linkis-env.sh
 
 
 function stopApp(){
@@ -68,12 +70,12 @@ stopApp
 if [ "$ENABLE_METADATA_MANAGER" == "true" ]; then
   #linkis-ps-data-source-manager
   SERVER_NAME="ps-data-source-manager"
-  SERVER_IP=$DATASOURCE_MANAGER_IP
+  SERVER_IP=$DATASOURCE_MANAGER_INSTALL_IP
   stopApp
 
   #linkis-ps-metadatamanager
   SERVER_NAME="ps-metadatamanager"
-  SERVER_IP=$METADATA_MANAGER_IP
+  SERVER_IP=$METADATA_MANAGER_INSTALL_IP
   stopApp
 fi
 

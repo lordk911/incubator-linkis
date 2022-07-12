@@ -21,6 +21,9 @@ import org.apache.linkis.jobhistory.entity.JobDetail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+import java.util.List;
+
 import org.h2.tools.Server;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,9 +31,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,13 +50,13 @@ class JobDetailMapperTest extends BaseDaoTest {
     private JobDetail insertOne() {
         // insertOne
         JobDetail jobDetail = new JobDetail();
-        jobDetail.setJob_history_id(0L);
-        jobDetail.setResult_location("/test/location");
-        jobDetail.setResult_array_size(2);
-        jobDetail.setExecution_content("excution content");
-        jobDetail.setJob_group_info("test");
-        jobDetail.setCreated_time(new Date());
-        jobDetail.setUpdated_time(new Date());
+        jobDetail.setJobHistoryId(0L);
+        jobDetail.setResultLocation("/test/location");
+        jobDetail.setResultArraySize(2);
+        jobDetail.setExecutionContent("excution content");
+        jobDetail.setJobGroupInfo("test");
+        jobDetail.setCreatedTime(new Date());
+        jobDetail.setUpdatedTime(new Date());
         jobDetail.setStatus("success");
         jobDetail.setPriority(0);
 
@@ -79,7 +79,7 @@ class JobDetailMapperTest extends BaseDaoTest {
     void testSelectJobDetailByJobHistoryId() {
         JobDetail jobDetail = insertOne();
         List<JobDetail> result =
-                jobDetailMapper.selectJobDetailByJobHistoryId(jobDetail.getJob_history_id());
+                jobDetailMapper.selectJobDetailByJobHistoryId(jobDetail.getJobHistoryId());
         assertNotEquals(result.size(), 0);
     }
 
@@ -100,13 +100,12 @@ class JobDetailMapperTest extends BaseDaoTest {
     void testUpdateJobDetail() {
 
         JobDetail expectedJobDetail = insertOne();
-        expectedJobDetail.setResult_location("modify " + expectedJobDetail.getResult_location());
-        expectedJobDetail.setResult_array_size(10);
-        expectedJobDetail.setExecution_content(
-                "modify " + expectedJobDetail.getExecution_content());
-        expectedJobDetail.setJob_group_info("modify " + expectedJobDetail.getJob_group_info());
-        expectedJobDetail.setCreated_time(new Date());
-        expectedJobDetail.setUpdated_time(new Date());
+        expectedJobDetail.setResultLocation("modify " + expectedJobDetail.getResultLocation());
+        expectedJobDetail.setResultArraySize(10);
+        expectedJobDetail.setExecutionContent("modify " + expectedJobDetail.getExecutionContent());
+        expectedJobDetail.setJobGroupInfo("modify " + expectedJobDetail.getJobGroupInfo());
+        expectedJobDetail.setCreatedTime(new Date());
+        expectedJobDetail.setUpdatedTime(new Date());
         expectedJobDetail.setStatus("modify " + expectedJobDetail.getStatus());
         expectedJobDetail.setPriority(1);
 

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.storage.script
 
-import java.io.InputStream
-
 import org.apache.linkis.common.io.{FsPath, FsReader}
 import org.apache.linkis.storage.script.reader.StorageScriptFsReader
+
+import java.io.InputStream
 
 abstract class ScriptFsReader extends FsReader {
 

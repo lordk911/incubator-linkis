@@ -17,10 +17,10 @@
  
 package org.apache.linkis.scheduler
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.scheduler.exception.SchedulerErrorException
 import org.apache.linkis.scheduler.queue.SchedulerEvent
-import org.apache.commons.lang.StringUtils
 
 
 abstract class AbstractScheduler extends Scheduler {

@@ -17,8 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.executor
 
-import java.text.NumberFormat
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineplugin.spark.config.SparkConfiguration
@@ -29,11 +28,11 @@ import org.apache.linkis.storage.domain.{Column, DataType}
 import org.apache.linkis.storage.resultset.ResultSetFactory
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
 import org.apache.linkis.storage.{LineMetaData, LineRecord}
-import org.apache.commons.lang.StringUtils
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types.{StructField, StructType}
 
+import java.text.NumberFormat
 import scala.collection.mutable.ArrayBuffer
 
 
@@ -97,15 +96,7 @@ object SQLSession extends Logging {
     Utils.tryThrow({
       while (index < maxResult && iterator.hasNext) {
         val row = iterator.next()
-        val r: Array[Any] = columns.indices.map { i =>
-          val data = row(i) match {
-            case value: String => value.replaceAll("\n|\t", " ")
-            case value: Double => nf.format(value)
-            case value: Any => value.toString
-            case _ => null
-          }
-          data
-        }.toArray
+        val r: Array[Any] = columns.indices.map{ i => toHiveString(row(i))}.toArray
         writer.addRecord(new TableRecord(r))
         index += 1
       }
@@ -118,6 +109,28 @@ object SQLSession extends Logging {
     engineExecutionContext.appendStdout(s"${EngineUtils.getName} >> Time taken: ${System.currentTimeMillis() - startTime}, Fetched $index row(s).")
     engineExecutionContext.sendResultSet(writer)
   }
+
+
+  private def toHiveString(value: Any): String = {
+
+    value match {
+      case value: String => value.replaceAll("\n|\t", " ")
+      case value: Double => nf.format(value)
+      case value: java.math.BigDecimal => formatDecimal(value)
+      case value: Any => value.toString
+      case _ => null
+    }
+
+  }
+
+  private def formatDecimal(d: java.math.BigDecimal): String = {
+    if (null == d || d.compareTo(java.math.BigDecimal.ZERO) == 0) {
+      java.math.BigDecimal.ZERO.toPlainString
+    } else {
+      d.stripTrailingZeros().toPlainString
+    }
+  }
+
 
   def showHTML(sc: SparkContext, jobGroup: String, htmlContent: Any, engineExecutionContext: EngineExecutionContext): Unit = {
     val startTime = System.currentTimeMillis()

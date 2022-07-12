@@ -17,17 +17,16 @@
  
 package org.apache.linkis.orchestrator.ecm.entity
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
-
-import java.util
 import org.apache.linkis.manager.common.protocol.engine.EngineAskRequest
-import org.apache.linkis.manager.label.builder.factory.{LabelBuilderFactoryContext, StdLabelBuilderFactory}
+import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.entrance.LoadBalanceLabel
-import org.apache.commons.lang.StringUtils
 import org.apache.linkis.orchestrator.ecm.utils.ECMPUtils
 
+import java.util
 import scala.beans.BeanProperty
 import scala.collection.JavaConversions._
 

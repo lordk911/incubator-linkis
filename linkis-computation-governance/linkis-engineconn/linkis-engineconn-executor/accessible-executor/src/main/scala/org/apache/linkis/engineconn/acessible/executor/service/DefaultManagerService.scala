@@ -17,13 +17,11 @@
  
 package org.apache.linkis.engineconn.acessible.executor.service
 
-import java.util
-
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.executor.service.ManagerService
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
-import org.apache.linkis.manager.common.protocol.engine.EngineConnReleaseRequest
+import org.apache.linkis.manager.common.protocol.engine.{ECCanKillRequest, ECCanKillResponse, EngineConnReleaseRequest}
 import org.apache.linkis.manager.common.protocol.label.LabelReportRequest
 import org.apache.linkis.manager.common.protocol.node.{NodeHeartbeatMsg, ResponseNodeStatus}
 import org.apache.linkis.manager.common.protocol.resource.ResourceUsedProtocol
@@ -31,6 +29,7 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
 import org.apache.linkis.rpc.Sender
 
+import java.util
 import scala.collection.JavaConverters._
 
 class DefaultManagerService extends ManagerService with Logging{
@@ -79,4 +78,10 @@ class DefaultManagerService extends ManagerService with Logging{
     getManagerSender.send(resourceUsedProtocol)
   }
 
+  override def ecCanKillRequest(ecCanKillRequest: ECCanKillRequest): ECCanKillResponse = {
+    getManagerSender.ask(ecCanKillRequest) match {
+      case ecCanKillResponse: ECCanKillResponse => ecCanKillResponse
+      case _ => new ECCanKillResponse()
+    }
+  }
 }

@@ -17,23 +17,22 @@
  
 package org.apache.linkis.rpc.interceptor.common
 
-import java.util.concurrent.{Callable, TimeUnit}
-
 import com.google.common.cache.{Cache, CacheBuilder, RemovalListener, RemovalNotification}
 import org.apache.linkis.common.exception.WarnException
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.protocol.CacheableProtocol
+import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.rpc.interceptor.{RPCInterceptor, RPCInterceptorChain, RPCInterceptorExchange}
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 
-import scala.tools.scalap.scalax.util.StringUtil
+import java.util.concurrent.{Callable, TimeUnit}
 
 @Component
 class CacheableRPCInterceptor extends RPCInterceptor with Logging{
 
   private val guavaCache: Cache[Any, Any] = CacheBuilder.newBuilder().concurrencyLevel(5)
-    .expireAfterAccess(120000, TimeUnit.MILLISECONDS).initialCapacity(20)  //TODO Make parameters(做成参数)
+    .expireAfterAccess(RPCConfiguration.BDP_RPC_CACHE_CONF_EXPIRE_TIME.getValue, TimeUnit.MILLISECONDS).initialCapacity(20)  //TODO Make parameters(做成参数)
     .maximumSize(1000).recordStats().removalListener(new RemovalListener[Any, Any] {
     override def onRemoval(removalNotification: RemovalNotification[Any, Any]): Unit = {
       debug(s"CacheSender removed key => ${removalNotification.getKey}, value => ${removalNotification.getValue}.")

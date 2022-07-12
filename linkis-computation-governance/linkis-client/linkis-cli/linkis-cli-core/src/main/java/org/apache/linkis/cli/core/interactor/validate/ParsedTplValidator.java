@@ -19,20 +19,21 @@ package org.apache.linkis.cli.core.interactor.validate;
 
 import org.apache.linkis.cli.common.entity.command.CmdOption;
 import org.apache.linkis.cli.common.entity.command.CmdTemplate;
+import org.apache.linkis.cli.common.entity.validate.Validator;
 import org.apache.linkis.cli.common.exception.error.ErrorLevel;
 import org.apache.linkis.cli.core.exception.CommandException;
 import org.apache.linkis.cli.core.exception.ValidateException;
 import org.apache.linkis.cli.core.exception.error.CommonErrMsg;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * @description: 1. Check if there is missing or unknown option. 2. Call checkParam method for
- *     command-specific validation.
+ * 1. Check if there is missing or unknown option. 2. Call checkParam method for command-specific
+ * validation.
  */
 public class ParsedTplValidator implements Validator {
     private static final Logger logger = LoggerFactory.getLogger(ParsedTplValidator.class);

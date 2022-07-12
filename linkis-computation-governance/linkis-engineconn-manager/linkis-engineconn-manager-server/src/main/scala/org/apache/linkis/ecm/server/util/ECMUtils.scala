@@ -17,24 +17,26 @@
  
 package org.apache.linkis.ecm.server.util
 
-import java.io.{File, InputStream}
-import java.util
-
+import org.apache.commons.io.{FileUtils, IOUtils}
 import org.apache.linkis.bml.client.{BmlClient, BmlClientFactory}
 import org.apache.linkis.bml.protocol.BmlDownloadResponse
 import org.apache.linkis.ecm.server.exception.ECMErrorException
 import org.apache.linkis.manager.common.protocol.bml.BmlResource
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.storage.fs.FileSystem
-import org.apache.commons.io.{FileUtils, IOUtils}
 
+import java.io.{File, InputStream}
+import java.util
 import scala.collection.JavaConversions._
 
 
 object ECMUtils {
 
+  @volatile var bmlClient: BmlClient = _
+  val lock = new Object()
+
   private def download(resource: BmlResource, userName: String): util.Map[String, Object] = {
-    val client: BmlClient = createBMLClient(userName)
+    val client: BmlClient = getBMLClient(userName)
     var response: BmlDownloadResponse = null
     if (resource.getVersion == null) {
       response = client.downloadShareResource(userName, resource.getResourceId)
@@ -55,11 +57,13 @@ object ECMUtils {
     IOUtils.closeQuietly(is)
   }
 
-  private def createBMLClient(userName: String): BmlClient = {
-    if (userName == null)
-      BmlClientFactory.createBmlClient()
-    else
-      BmlClientFactory.createBmlClient(userName)
+  private def getBMLClient(userName: String): BmlClient = {
+    if (bmlClient == null) {
+      lock.synchronized {
+        if (bmlClient == null) bmlClient = BmlClientFactory.createBmlClient(userName)
+      }
+    }
+    bmlClient
   }
 
 

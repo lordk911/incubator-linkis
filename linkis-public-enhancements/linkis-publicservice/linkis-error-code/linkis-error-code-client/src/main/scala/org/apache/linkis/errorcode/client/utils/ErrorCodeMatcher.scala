@@ -17,10 +17,10 @@
  
 package org.apache.linkis.errorcode.client.utils
 
-import java.util
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.errorcode.common.LinkisErrorCode
+
+import java.util
 
 
 object ErrorCodeMatcher extends Logging{

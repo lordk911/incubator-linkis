@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.engineplugin.common.launch.entity
 
-import java.util
-
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.common.protocol.bml.BmlResource
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.protocol.message.RequestProtocol
+
+import java.util
 
 
 trait EngineConnBuildRequest extends RequestProtocol {

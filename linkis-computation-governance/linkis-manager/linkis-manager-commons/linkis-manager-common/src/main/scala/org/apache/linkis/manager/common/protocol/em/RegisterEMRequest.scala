@@ -17,11 +17,11 @@
  
 package org.apache.linkis.manager.common.protocol.em
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.protocol.message.RequestProtocol
+
+import java.util
 
 
 class RegisterEMRequest extends EMRequest with RequestProtocol with Serializable {

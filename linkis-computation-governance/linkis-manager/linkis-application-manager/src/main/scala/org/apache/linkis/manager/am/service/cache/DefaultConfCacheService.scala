@@ -20,8 +20,8 @@ package org.apache.linkis.manager.am.service.cache
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.governance.common.protocol.conf.{RequestQueryEngineConfig, RequestQueryGlobalConfig}
 import org.apache.linkis.manager.common.protocol.conf.RemoveCacheConfRequest
-import org.apache.linkis.message.annotation.Receiver
 import org.apache.linkis.rpc.interceptor.common.CacheableRPCInterceptor
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

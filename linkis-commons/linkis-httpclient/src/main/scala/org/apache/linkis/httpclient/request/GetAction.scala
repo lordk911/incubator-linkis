@@ -17,11 +17,10 @@
  
 package org.apache.linkis.httpclient.request
 
-import java.net.URLEncoder
-import java.util
-
 import org.apache.linkis.common.conf.Configuration
 
+import java.net.URLEncoder
+import java.util
 import scala.collection.JavaConversions
 
 

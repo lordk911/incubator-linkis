@@ -19,8 +19,6 @@ package org.apache.linkis.entrance.interceptor
 
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.governance.common.entity.job.JobRequest
-import org.apache.linkis.governance.common.protocol.job.JobReq
-import org.apache.linkis.protocol.task.Task
 
 
 

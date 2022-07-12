@@ -26,16 +26,17 @@ import org.apache.linkis.cs.contextcache.index.ContextInvertedIndexSetImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class ContextValueMapSetImpl implements ContextValueMapSet {
 
     private static final Logger logger = LoggerFactory.getLogger(ContextInvertedIndexSetImpl.class);
 
-    Map<String, Map<String, ContextKeyValue>> contextValueMapSet = new HashMap<>();
+    Map<String, Map<String, ContextKeyValue>> contextValueMapSet = new ConcurrentHashMap<>();
 
     @Override
     public Map<String, ContextKeyValue> getContextValueMap(ContextType contextType) {

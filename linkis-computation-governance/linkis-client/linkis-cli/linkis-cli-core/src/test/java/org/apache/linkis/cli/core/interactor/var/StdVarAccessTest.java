@@ -19,6 +19,7 @@ package org.apache.linkis.cli.core.interactor.var;
 
 import org.apache.linkis.cli.common.entity.command.CmdTemplate;
 import org.apache.linkis.cli.common.entity.properties.ClientProperties;
+import org.apache.linkis.cli.common.entity.var.VarAccess;
 import org.apache.linkis.cli.core.constants.TestConstants;
 import org.apache.linkis.cli.core.interactor.command.TestCmdType;
 import org.apache.linkis.cli.core.interactor.command.fitter.SingleTplFitter;
@@ -35,14 +36,14 @@ import org.apache.linkis.cli.core.interactor.validate.ParsedTplValidator;
 
 import org.apache.commons.lang3.StringUtils;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -95,7 +96,7 @@ public class StdVarAccessTest {
         ParseResult result = parser.parse(cmdStr);
 
         ParsedTplValidator parsedTplValidator = new ParsedTplValidator();
-        parsedTplValidator.doValidation(result.getParsedTemplateCopy());
+        parsedTplValidator.doValidation(result.getParsedTemplate());
 
         System.setProperty("conf.root", "src/test/resources/conf/");
         System.setProperty("conf.file", "linkis-cli.properties");

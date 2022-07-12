@@ -14,23 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.common.utils
 
-import java.util.Hashtable
-
+import org.apache.commons.lang3.StringUtils
 import org.apache.linkis.common.conf.CommonVars
+
+import java.util.Hashtable
 import javax.naming.Context
 import javax.naming.ldap.InitialLdapContext
-import org.apache.commons.lang.StringUtils
-
 
 
 object LDAPUtils extends Logging {
 
-  val url =  CommonVars("wds.linkis.ldap.proxy.url", "").getValue
+  val url = CommonVars("wds.linkis.ldap.proxy.url", "").getValue
   val baseDN = CommonVars("wds.linkis.ldap.proxy.baseDN", "").getValue
   val userNameFormat = CommonVars("wds.linkis.ldap.proxy.userNameFormat", "").getValue
+
   def login(userID: String, password: String): Unit = {
     val env = new Hashtable[String, String]()
     val bindDN = if (StringUtils.isBlank(userNameFormat)) userID else {
@@ -39,7 +39,12 @@ object LDAPUtils extends Logging {
     val bindPassword = password
     env.put(Context.SECURITY_AUTHENTICATION, "simple")
     env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory")
-    env.put(Context.PROVIDER_URL, url + baseDN)
+    if (url.endsWith("\\/")) {
+      env.put(Context.PROVIDER_URL, url + "\\/" + baseDN)
+    } else {
+      env.put(Context.PROVIDER_URL, url + baseDN)
+    }
+    //    env.put(Context.PROVIDER_URL, url + baseDN)
     env.put(Context.SECURITY_PRINCIPAL, bindDN)
     env.put(Context.SECURITY_CREDENTIALS, bindPassword)
     //    Utils.tryCatch {

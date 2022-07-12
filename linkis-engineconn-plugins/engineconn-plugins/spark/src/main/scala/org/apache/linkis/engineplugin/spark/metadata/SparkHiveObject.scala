@@ -17,10 +17,11 @@
  
 package org.apache.linkis.engineplugin.spark.metadata
 
-import java.util.{List => JList}
+import org.apache.hadoop.hive.ql.security.authorization.plugin.HivePrivilegeObject
 import org.apache.linkis.cs.common.entity.history.metadata.TableOperationType
 import org.apache.linkis.cs.common.entity.metadata.CSColumn
-import org.apache.hadoop.hive.ql.security.authorization.plugin.HivePrivilegeObject
+
+import java.util.{List => JList}
 
 /**
  * Description:

@@ -17,16 +17,13 @@
  
 package org.apache.linkis.gateway.springcloud.websocket
 
-import java.net.InetSocketAddress
-import java.util.function
-
+import io.netty.handler.codec.http.websocketx.WebSocketFrame
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.gateway.exception.GatewayErrorException
 import org.apache.linkis.gateway.springcloud.errorcode.GatewayErrorConstants
 import org.apache.linkis.gateway.springcloud.websocket.SpringCloudGatewayWebsocketUtils._
 import org.apache.linkis.server.conf.ServerConfiguration
-import io.netty.handler.codec.http.websocketx.WebSocketFrame
 import org.springframework.core.io.buffer.NettyDataBufferFactory
 import org.springframework.web.reactive.socket.adapter.ReactorNettyWebSocketSession
 import org.springframework.web.reactive.socket.adapter.ReactorNettyWebSocketSession.WebSocketConnection
@@ -34,6 +31,8 @@ import org.springframework.web.reactive.socket.{CloseStatus, HandshakeInfo, WebS
 import reactor.core.publisher.{Flux, Mono}
 import reactor.netty.http.websocket.{WebsocketInbound, WebsocketOutbound}
 
+import java.net.InetSocketAddress
+import java.util.function
 import scala.collection.mutable.ArrayBuffer
 
 class GatewayWebSocketSessionConnection(val webSocketSession: ReactorNettyWebSocketSession, val user: String, startTime: Long)

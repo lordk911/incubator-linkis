@@ -17,13 +17,13 @@
  
 package org.apache.linkis.httpclient.dws.response
 
-import java.util
-
-import org.apache.linkis.httpclient.authentication.{Authentication, AuthenticationResult, HttpAuthentication}
-import org.apache.linkis.httpclient.exception.HttpMessageParseException
 import org.apache.http.HttpResponse
 import org.apache.http.cookie.Cookie
 import org.apache.http.util.EntityUtils
+import org.apache.linkis.httpclient.authentication.{Authentication, AuthenticationResult, HttpAuthentication}
+import org.apache.linkis.httpclient.exception.HttpMessageParseException
+
+import java.util
 
 class DWSAuthenticationResult(response: HttpResponse, serverUrl: String) extends AuthenticationResult with DWSResult {
 

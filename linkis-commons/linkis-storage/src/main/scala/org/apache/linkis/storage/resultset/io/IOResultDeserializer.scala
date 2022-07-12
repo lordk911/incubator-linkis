@@ -17,9 +17,9 @@
  
 package org.apache.linkis.storage.resultset.io
 
+import org.apache.commons.codec.binary.Base64
 import org.apache.linkis.common.io.resultset.ResultDeserializer
 import org.apache.linkis.storage.domain.Dolphin
-import org.apache.commons.codec.binary.Base64
 
 
 class IOResultDeserializer extends ResultDeserializer[IOMetaData, IORecord]{

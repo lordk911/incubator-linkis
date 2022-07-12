@@ -17,11 +17,10 @@
 
 package org.apache.linkis.manager.common.protocol.engine
 
-import java.util
-
 import org.apache.linkis.manager.common.protocol.OperateRequest
 import org.apache.linkis.protocol.message.RequestProtocol
 
+import java.util
 import scala.collection.JavaConverters.mapAsJavaMapConverter
 
 case class EngineOperateRequest(user: String,

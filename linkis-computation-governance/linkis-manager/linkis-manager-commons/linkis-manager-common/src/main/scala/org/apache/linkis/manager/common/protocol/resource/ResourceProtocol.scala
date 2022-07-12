@@ -19,11 +19,17 @@ package org.apache.linkis.manager.common.protocol.resource
 
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.manager.common.entity.resource.NodeResource
+import org.apache.linkis.protocol.RetryableProtocol
+import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.protocol.message.RequestProtocol
 
+import java.util
 
 trait ResourceProtocol extends RequestProtocol
 
 case class ResourceUsedProtocol(serviceInstance: ServiceInstance, engineResource: NodeResource, ticketId: String = null) extends RequestProtocol
 
+case class ResponseTaskYarnResource(execId: String, resourceMap: util.HashMap[String, ResourceWithStatus]) extends RequestProtocol
 
+case class ResponseTaskRunningInfo(execId: String, progress: Float, progressInfo: Array[JobProgressInfo],
+                                   resourceMap: util.HashMap[String, ResourceWithStatus], extraInfoMap: util.HashMap[String, Object]) extends RetryableProtocol with RequestProtocol

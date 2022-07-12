@@ -18,13 +18,13 @@
 package org.apache.linkis.rpc.conf
 
 import com.netflix.discovery.EurekaClient
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.rpc.RPCReceiveRestful
 import org.apache.linkis.rpc.interceptor.RPCServerLoader
 import org.apache.linkis.rpc.sender.eureka.EurekaRPCServerLoader
 import org.apache.linkis.server.conf.ServerConfiguration
-import org.apache.commons.lang.StringUtils
 import org.springframework.boot.autoconfigure.condition.{ConditionalOnClass, ConditionalOnMissingBean}
 import org.springframework.boot.context.event.ApplicationPreparedEvent
 import org.springframework.cloud.openfeign.EnableFeignClients

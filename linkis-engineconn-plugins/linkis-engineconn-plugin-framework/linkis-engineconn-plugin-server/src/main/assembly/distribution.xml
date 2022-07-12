@@ -23,6 +23,7 @@
     <id>linkis-application-manager</id>
     <formats>
         <format>dir</format>
+        <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <baseDirectory>linkis-engineconn-plugin-server</baseDirectory>
@@ -46,7 +47,6 @@
                 <exclude>org.springframework:spring-beans:jar</exclude>
                 <exclude>org.springframework:spring-core:jar</exclude>
                 <exclude>org.springframework:spring-jcl:jar</exclude>
-                <exclude>org.springframework:spring-tx:jar</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>

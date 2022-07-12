@@ -19,9 +19,13 @@ package org.apache.linkis.metadata.service;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public interface HiveMetaWithPermissionService {
 
     List<String> getDbsOptionalUserName(String userName);
 
     List<Map<String, Object>> getTablesByDbNameAndOptionalUserName(Map<String, String> map);
+
+    JsonNode getColumnsByDbTableNameAndOptionalUserName(Map<String, String> map);
 }

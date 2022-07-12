@@ -39,6 +39,9 @@ try:
 except ImportError:
   from io import StringIO
 
+import time
+import threading
+
 # for back compatibility
 
 class Logger(object):
@@ -54,6 +57,66 @@ class Logger(object):
   def flush(self):
     pass
 
+class ErrorLogger(object):
+    def __init__(self):
+        self.out = ""
+
+    def write(self, message):
+        intp.appendErrorOutput(message)
+
+    def reset(self):
+        self.out = ""
+
+    def flush(self):
+        pass
+
+def handler_stop_signals(sig, frame):
+  sys.exit("Got signal : " + str(sig))
+
+signal.signal(signal.SIGINT, handler_stop_signals)
+
+_pUserQueryNameSpace = {}
+client = GatewayClient(port=int(sys.argv[1]))
+
+#gateway = JavaGateway(client, auto_convert = True)
+gateway = JavaGateway(client)
+
+linkisOutput = Logger()
+errorOutput = ErrorLogger()
+sys.stdout = linkisOutput
+sys.stderr = errorOutput
+intp = gateway.entry_point
+
+def show_matplotlib(p, fmt="png", width="auto", height="auto",
+                    **kwargs):
+  """Matplotlib show function
+  """
+  if fmt == "png":
+    img = BytesIO()
+    p.savefig(img, format=fmt)
+    img_str = b"data:image/png;base64,"
+    img_str += base64.b64encode(img.getvalue().strip())
+    img_tag = "<img src={img} style='width={width};height:{height}'>"
+    # Decoding is necessary for Python 3 compability
+    img_str = img_str.decode("utf-8")
+    img_str = img_tag.format(img=img_str, width=width, height=height)
+  elif fmt == "svg":
+    img = StringIO()
+    p.savefig(img, format=fmt)
+    img_str = img.getvalue()
+  else:
+    raise ValueError("fmt must be 'png' or 'svg'")
+
+  html = "<div style='width:{width};height:{height}'>{img}<div>"
+  #print(html.format(width=width, height=height, img=img_str))
+  intp.showHTML(html.format(width=width, height=height, img=img_str))
+  img.close()
+
+def printlog(obj):
+    try:
+        intp.printLog(obj)
+    except Exception as e:
+        print("send log failed")
 
 class PythonContext(object):
   """ A context impl that uses Py4j to communicate to JVM
@@ -101,26 +164,7 @@ class PythonContext(object):
                       **kwargs):
     """Matplotlib show function
     """
-    if fmt == "png":
-      img = BytesIO()
-      p.savefig(img, format=fmt)
-      img_str = b"data:image/png;base64,"
-      img_str += base64.b64encode(img.getvalue().strip())
-      img_tag = "<img src={img} style='width={width};height:{height}'>"
-      # Decoding is necessary for Python 3 compability
-      img_str = img_str.decode("utf-8")
-      img_str = img_tag.format(img=img_str, width=width, height=height)
-    elif fmt == "svg":
-      img = StringIO()
-      p.savefig(img, format=fmt)
-      img_str = img.getvalue()
-    else:
-      raise ValueError("fmt must be 'png' or 'svg'")
-
-    html = "<div style='width:{width};height:{height}'>{img}<div>"
-    #print(html.format(width=width, height=height, img=img_str))
-    intp.showHTML(html.format(width=width, height=height, img=img_str))
-    img.close()
+    show_matplotlib(p, fmt,width, height, **kwargs)
 
   def configure_mpl(self, **kwargs):
     import mpl_config
@@ -134,54 +178,23 @@ class PythonContext(object):
     except ImportError:
       return
 
-
-def handler_stop_signals(sig, frame):
-  sys.exit("Got signal : " + str(sig))
-
-
-
-def show_matplotlib(self, p, fmt="png", width="auto", height="auto",
-                    **kwargs):
-  """Matplotlib show function
-  """
-  if fmt == "png":
-    img = BytesIO()
-    p.savefig(img, format=fmt)
-    img_str = b"data:image/png;base64,"
-    img_str += base64.b64encode(img.getvalue().strip())
-    img_tag = "<img src={img} style='width={width};height:{height}'>"
-    # Decoding is necessary for Python 3 compability
-    img_str = img_str.decode("utf-8")
-    img_str = img_tag.format(img=img_str, width=width, height=height)
-  elif fmt == "svg":
-    img = StringIO()
-    p.savefig(img, format=fmt)
-    img_str = img.getvalue()
-  else:
-    raise ValueError("fmt must be 'png' or 'svg'")
-
-  html = "<div style='width:{width};height:{height}'>{img}<div>"
-  #print(html.format(width=width, height=height, img=img_str))
-  intp.showHTML(html.format(width=width, height=height, img=img_str))
-  img.close()
-
-signal.signal(signal.SIGINT, handler_stop_signals)
-
-_pUserQueryNameSpace = {}
-client = GatewayClient(port=int(sys.argv[1]))
-
-#gateway = JavaGateway(client, auto_convert = True)
-gateway = JavaGateway(client)
-
-output = Logger()
-sys.stdout = output
-sys.stderr = output
-intp = gateway.entry_point
-
 show = __show__ = PythonContext(intp)
 __show__._setup_matplotlib()
 
 intp.onPythonScriptInitialized(os.getpid())
+
+def java_watchdog_thread(sleep=10):
+    while True :
+        time.sleep(sleep)
+        try:
+            intp.kind()
+        except Exception as e:
+            print("Failed to detect java daemon, now exit python process")
+            print(e)
+            sys.exit(1)
+watchdog_thread = threading.Thread(target=java_watchdog_thread)
+watchdog_thread.setDaemon(True)
+watchdog_thread.start()
 
 while True :
   req = intp.getStatements()
@@ -193,7 +206,7 @@ while True :
     final_code = None
 #     ori_code = req.statements()
 #     if ori_code:
-#         output.write(ori_code)
+#         linkisOutput.write(ori_code)
 
     for bdp_dwc_s in stmts:
       if bdp_dwc_s == None:
@@ -226,4 +239,4 @@ while True :
   except:
     intp.setStatementsFinished(traceback.format_exc(), True)
 
-  output.reset()
+  linkisOutput.reset()

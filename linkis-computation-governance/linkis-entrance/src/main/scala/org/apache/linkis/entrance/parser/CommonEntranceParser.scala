@@ -17,24 +17,23 @@
  
 package org.apache.linkis.entrance.parser
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.entrance.conf.EntranceConfiguration
 import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceIllegalParamException}
 import org.apache.linkis.entrance.persistence.PersistenceManager
+import org.apache.linkis.entrance.timeout.JobTimeoutManager
 import org.apache.linkis.governance.common.entity.job.JobRequest
-import org.apache.linkis.manager.label.builder.factory.{LabelBuilderFactory, LabelBuilderFactoryContext, StdLabelBuilderFactory}
+import org.apache.linkis.manager.label.builder.factory.{LabelBuilderFactory, LabelBuilderFactoryContext}
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{CodeLanguageLabel, UserCreatorLabel}
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.scheduler.queue.SchedulerEventState
-import org.apache.commons.lang.StringUtils
+
 import java.util
 import java.util.Date
-
-import org.apache.linkis.entrance.timeout.JobTimeoutManager
-
 import scala.collection.JavaConversions.mapAsScalaMap
 import scala.collection.JavaConverters._
 
@@ -155,13 +154,13 @@ class CommonEntranceParser(val persistenceManager: PersistenceManager) extends A
 
     val jobReq = new JobRequest
     jobReq.setCreatedTime(new Date(System.currentTimeMillis))
-    val umUser = params.get(TaskConstant.UMUSER).asInstanceOf[String]
+    val umUser = params.get(TaskConstant.EXECUTE_USER).asInstanceOf[String]
     val submitUser = params.get(TaskConstant.SUBMIT_USER).asInstanceOf[String]
     jobReq.setSubmitUser(submitUser)
     if (StringUtils.isBlank(submitUser)) {
       jobReq.setSubmitUser(umUser)
     }
-    if (umUser == null) throw new EntranceIllegalParamException(20005, "umUser can not be null")
+    if (umUser == null) throw new EntranceIllegalParamException(20005, "execute user can not be null")
     jobReq.setExecuteUser(umUser)
     var executionCode = params.get(TaskConstant.EXECUTIONCODE).asInstanceOf[String]
     val _params = params.get(TaskConstant.PARAMS)

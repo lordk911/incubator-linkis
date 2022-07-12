@@ -17,11 +17,10 @@
  
 package org.apache.linkis.ujes.client.response
 
-import java.util
-
 import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
 import org.apache.linkis.httpclient.dws.response.DWSResult
 
+import java.util
 import scala.beans.BeanProperty
 
 

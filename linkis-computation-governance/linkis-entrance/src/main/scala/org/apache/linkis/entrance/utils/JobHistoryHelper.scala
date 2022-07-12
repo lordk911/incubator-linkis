@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.entrance.utils
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
@@ -28,13 +29,11 @@ import org.apache.linkis.governance.common.protocol.job._
 import org.apache.linkis.protocol.query.cache.{CacheTaskResult, RequestReadCache}
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.queue.SchedulerEventState
-import java.util
-import java.util.Date
-
-import javax.servlet.http.HttpServletRequest
-import org.apache.commons.lang.StringUtils
 import sun.net.util.IPAddressUtil
 
+import java.util
+import java.util.Date
+import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConversions._
 
 object JobHistoryHelper extends Logging{
@@ -43,7 +42,7 @@ object JobHistoryHelper extends Logging{
 
   private val SUCCESS_FLAG = 0
 
-  def getCache(executionCode: String, user: String, labelStrList: util.List[String], readCacheBefore: Long): CacheTaskResult ={
+  def getCache(executionCode: String, user: String, labelStrList: util.List[String], readCacheBefore: Long): CacheTaskResult = {
     val requestReadCache = new RequestReadCache(executionCode, user, labelStrList, readCacheBefore)
     sender.ask(requestReadCache) match {
       case  c: CacheTaskResult => c
@@ -77,7 +76,7 @@ object JobHistoryHelper extends Logging{
    * 对于一个在内存中找不到这个任务的话，可以直接干掉
    * @param taskID
    */
-  def forceKill(taskID:Long):Unit = {
+  def forceKill(taskID: Long): Unit = {
     val subJobInfo = new SubJobInfo
     val subJobDetail = new SubJobDetail
     subJobDetail.setId(taskID)
@@ -98,7 +97,7 @@ object JobHistoryHelper extends Logging{
    * 批量强制kill
    * @param taskIdList
    */
-  def forceBatchKill(taskIdList: util.ArrayList[java.lang.Long]):Unit = {
+  def forceBatchKill(taskIdList: util.ArrayList[java.lang.Long]): Unit = {
     val subJobInfoList = new util.ArrayList[SubJobInfo]()
     val jobReqList = new util.ArrayList[JobRequest]()
     taskIdList.foreach(taskID => {
@@ -121,7 +120,7 @@ object JobHistoryHelper extends Logging{
     sender.ask(jobReqBatchUpdate)
   }
 
-  private def getTaskByTaskID(taskID:Long): JobRequest = {
+  private def getTaskByTaskID(taskID: Long): JobRequest = {
     val jobRequest = new JobRequest
     jobRequest.setId(taskID)
     jobRequest.setSource(null)
@@ -131,10 +130,10 @@ object JobHistoryHelper extends Logging{
       taskResponse match {
         case responsePersist: JobRespProtocol =>
           val status = responsePersist.getStatus
-          if (status != SUCCESS_FLAG){
+          if (status != SUCCESS_FLAG) {
             logger.error(s"query from jobHistory status failed, status is $status")
             throw JobHistoryFailedException("query from jobHistory status failed")
-          }else{
+          } else {
             val data = responsePersist.getData
             data.get(JobRequestConstants.JOB_HISTORY_LIST) match {
               case tasks: util.List[JobRequest] =>
@@ -148,12 +147,11 @@ object JobHistoryHelper extends Logging{
       }
     }{
       case errorException:ErrorException => throw errorException
-      case e:Exception => val e1 = JobHistoryFailedException(s"query taskId $taskID error")
+      case e: Exception => val e1 = JobHistoryFailedException(s"query taskId $taskID error")
         e1.initCause(e)
         throw e
     }
     task
   }
-
 
 }

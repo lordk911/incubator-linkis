@@ -17,10 +17,9 @@
  
 package org.apache.linkis.orchestrator.computation.operation.log
 
-import java.io.Closeable
-
 import org.apache.linkis.orchestrator.Orchestration
 
+import java.io.Closeable
 import scala.collection.mutable.ArrayBuffer
 
 /**

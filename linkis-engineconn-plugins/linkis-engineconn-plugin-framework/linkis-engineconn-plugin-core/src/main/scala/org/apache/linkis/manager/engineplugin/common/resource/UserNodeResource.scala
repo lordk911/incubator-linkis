@@ -17,9 +17,9 @@
 
 package org.apache.linkis.manager.engineplugin.common.resource
 
-import java.util.Date
-
 import org.apache.linkis.manager.common.entity.resource.{NodeResource, Resource, ResourceType}
+
+import java.util.Date
 
 
 class UserNodeResource extends NodeResource {
@@ -35,7 +35,6 @@ class UserNodeResource extends NodeResource {
   private var leftResource: Resource = _
   private var createTime: Date = _
   private var updateTime: Date = _
-
 
   def getUser = user
 

@@ -16,9 +16,6 @@
  */
  
 package org.apache.linkis.entrance.interceptor
-import java.io.ByteArrayInputStream
-import java.{lang, util}
-
 import org.apache.linkis.bml.client.BmlClientFactory
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.governance.common.entity.job.{JobRequest, OnceExecutorContent}
@@ -32,6 +29,8 @@ import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.server.BDPJettyServerHelper
 
+import java.io.ByteArrayInputStream
+import java.{lang, util}
 import scala.collection.convert.WrapAsJava._
 import scala.collection.convert.WrapAsScala._
 

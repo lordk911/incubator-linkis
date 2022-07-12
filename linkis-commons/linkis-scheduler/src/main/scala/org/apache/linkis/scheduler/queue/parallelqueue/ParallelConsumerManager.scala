@@ -17,14 +17,13 @@
  
 package org.apache.linkis.scheduler.queue.parallelqueue
 
-import java.util.concurrent.{ExecutorService, TimeUnit}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.scheduler.conf.SchedulerConfiguration
 import org.apache.linkis.scheduler.listener.ConsumerListener
 import org.apache.linkis.scheduler.queue._
 import org.apache.linkis.scheduler.queue.fifoqueue.FIFOUserConsumer
 
+import java.util.concurrent.{ExecutorService, TimeUnit}
 import scala.collection.mutable
 
 
@@ -51,9 +50,11 @@ class ParallelConsumerManager(maxParallelismUsers: Int, schedulerName: String) e
       override def run(): Unit = CONSUMER_LOCK.synchronized {
         info("Start to Clean up idle consumers ")
         val nowTime = System.currentTimeMillis()
-        consumerGroupMap.values.filter(_.isIdle)
-          .filter(consumer => nowTime - consumer.getLastTime > SchedulerConfiguration.FIFO_CONSUMER_MAX_IDLE_TIME)
-          .foreach(consumer => destroyConsumer(consumer.getGroup.getGroupName))
+        Utils.tryAndWarn {
+          consumerGroupMap.values.filter(_.isIdle)
+            .filter(consumer => nowTime - consumer.getLastTime > SchedulerConfiguration.FIFO_CONSUMER_MAX_IDLE_TIME)
+            .foreach(consumer => destroyConsumer(consumer.getGroup.getGroupName))
+        }
         info(s"Finished to clean up idle consumers for $schedulerName, cost ${System.currentTimeMillis() - nowTime} ms.")
       }
     },

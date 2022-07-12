@@ -21,22 +21,11 @@ import org.apache.linkis.engineconnplugin.flink.exception.FlinkInitFailedExcepti
 
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonMappingException;
 import org.apache.flink.table.client.config.ConfigUtil;
-import org.apache.flink.table.client.config.entries.CatalogEntry;
-import org.apache.flink.table.client.config.entries.ConfigurationEntry;
-import org.apache.flink.table.client.config.entries.DeploymentEntry;
-import org.apache.flink.table.client.config.entries.ExecutionEntry;
-import org.apache.flink.table.client.config.entries.FunctionEntry;
-import org.apache.flink.table.client.config.entries.ModuleEntry;
-import org.apache.flink.table.client.config.entries.TableEntry;
-import org.apache.flink.table.client.config.entries.ViewEntry;
+import org.apache.flink.table.client.config.entries.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Environment {
 

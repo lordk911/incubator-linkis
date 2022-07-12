@@ -17,20 +17,13 @@
  
 package org.apache.linkis.entrance.persistence
 
-import org.apache.linkis.common.io.resultset.ResultSet
-import org.apache.linkis.common.io.{FsPath, MetaData, Record}
-import org.apache.linkis.common.utils.{Logging, Utils}
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceErrorException}
-import org.apache.linkis.entrance.execute.StorePathExecuteRequest
-import org.apache.linkis.entrance.job.{EntranceExecuteRequest, EntranceExecutionJob}
 import org.apache.linkis.entrance.scheduler.cache.CacheOutputExecuteResponse
-import org.apache.linkis.governance.common.entity.job.SubJobDetail
 import org.apache.linkis.scheduler.executer.{AliasOutputExecuteResponse, OutputExecuteResponse}
 import org.apache.linkis.scheduler.queue.Job
-import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetWriter}
-import org.apache.linkis.storage.utils.FileSystemUtils
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringUtils
+import org.apache.linkis.storage.resultset.ResultSetFactory
 
 
 class EntranceResultSetEngine extends ResultSetEngine with Logging {

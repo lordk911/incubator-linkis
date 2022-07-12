@@ -22,13 +22,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.github.pjfanning.xlsx.StreamingReader;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.github.pjfanning.xlsx.StreamingReader;
 
 public class XlsxUtils {
 
@@ -42,14 +42,12 @@ public class XlsxUtils {
                         StreamingReader.builder()
                                 .rowCacheSize(
                                         2) // number of rows to keep in memory (defaults to 10)
-                                .setUseSstReadOnly(true)
                                 .open(inputStream);
             } else {
                 wb =
                         StreamingReader.builder()
                                 .rowCacheSize(
                                         2) // number of rows to keep in memory (defaults to 10)
-                                .setUseSstReadOnly(true)
                                 .open(file);
             }
             List<String> sheetNames = new ArrayList<>();

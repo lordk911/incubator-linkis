@@ -22,11 +22,11 @@ import org.apache.linkis.manager.common.entity.persistence.PersistenceLabel
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.em.EMInstanceLabel
 import org.apache.linkis.manager.label.entity.engine.EngineInstanceLabel
+import org.apache.linkis.manager.label.exception.LabelRuntimeException
 import org.apache.linkis.manager.label.service.{NodeLabelRemoveService, NodeLabelService}
 import org.apache.linkis.manager.persistence.LabelManagerPersistence
-import org.apache.linkis.message.annotation.Receiver
 import org.apache.linkis.protocol.label.NodeLabelRemoveRequest
-import org.apache.linkis.manager.label.conf.LabelCommonConfig
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -45,6 +45,9 @@ class DefaultNodeLabelRemoveService extends NodeLabelRemoveService with Logging 
   @Receiver
   override def removeNodeLabel(nodeLabelRemoveRequest: NodeLabelRemoveRequest): Unit = {
     info(s"Start to remove labels from node ${nodeLabelRemoveRequest.getServiceInstance}")
+    if(nodeLabelRemoveRequest.getServiceInstance == null) {
+      throw new LabelRuntimeException(130001, "ServiceInstance in request is null, please check label remove request!")
+    }
     nodeLabelService.removeLabelsFromNode(nodeLabelRemoveRequest.getServiceInstance)
     val persistenceLabel = if (nodeLabelRemoveRequest.isEngine) {
       val engineLabel = labelFactory.createLabel(classOf[EngineInstanceLabel])

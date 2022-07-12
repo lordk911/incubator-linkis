@@ -22,7 +22,7 @@ import org.apache.linkis.orchestrator.extensions.CheckRulerExtensions.CheckRuler
 import org.apache.linkis.orchestrator.extensions.OperationExtensions.OperationExtensionsBuilder
 import org.apache.linkis.orchestrator.extensions.catalyst.{CatalystExtensionsImpl, CheckRuler, CheckRulerExtensionsImpl, Transform}
 import org.apache.linkis.orchestrator.extensions.operation.{Operation, OperationExtensionsImpl}
-import org.apache.linkis.orchestrator.extensions.{Extensions, _}
+import org.apache.linkis.orchestrator.extensions._
 import org.apache.linkis.orchestrator.{Orchestrator, OrchestratorSession}
 
 import scala.collection.mutable

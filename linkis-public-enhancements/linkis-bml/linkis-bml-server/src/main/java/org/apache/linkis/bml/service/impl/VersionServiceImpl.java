@@ -36,11 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -48,6 +43,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class VersionServiceImpl implements VersionService {
@@ -101,11 +101,10 @@ public class VersionServiceImpl implements VersionService {
         String clientIp = params.get("clientIp").toString();
         // 生成新的version
         // String lastVersion = versionDao.getNewestVersion(resourceId);
-        long startByte = 0L;
         // 更新resource_version表
         ResourceVersion resourceVersion =
                 ResourceVersion.createNewResourceVersion(
-                        resourceId, path, md5String, clientIp, size, newVersion, startByte);
+                        resourceId, path, md5String, clientIp, size, newVersion, 1);
         versionDao.insertNewVersion(resourceVersion);
         // }
         return newVersion;

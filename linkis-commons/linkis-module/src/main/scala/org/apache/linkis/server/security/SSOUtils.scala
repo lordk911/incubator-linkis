@@ -17,19 +17,19 @@
  
 package org.apache.linkis.server.security
 
-import java.util.concurrent.{ConcurrentHashMap, TimeUnit}
-
+import org.apache.commons.lang.time.DateFormatUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, RSAUtils, Utils}
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.exception.{IllegalUserTicketException, LoginExpireException, NonLoginException}
+
+import java.util.concurrent.{ConcurrentHashMap, TimeUnit}
 import javax.servlet.http.Cookie
-import org.apache.commons.lang.time.DateFormatUtils
 import scala.collection.JavaConverters._
 
 object SSOUtils extends Logging {
 
-  private[security] val USER_TICKET_ID_STRING = "bdp-user-ticket-id"
+  private[security] val USER_TICKET_ID_STRING = ServerConfiguration.LINKIS_SERVER_SESSION_TICKETID_KEY.getValue
 
   private val sessionTimeout = ServerConfiguration.BDP_SERVER_WEB_SESSION_TIMEOUT.getValue.toLong
 
@@ -103,6 +103,7 @@ object SSOUtils extends Logging {
       cookie.setValue(null)
       cookie.setMaxAge(0)
     }
+    ProxyUserSSOUtils.removeProxyUser(cookies)
   }
 
   def removeLoginUserByAddCookie(addEmptyCookie: Cookie => Unit): Unit = {
@@ -111,6 +112,7 @@ object SSOUtils extends Logging {
     cookie.setPath("/")
     if(sslEnable) cookie.setSecure(true)
     addEmptyCookie(cookie)
+    ProxyUserSSOUtils.removeLoginUserByAddCookie(addEmptyCookie)
   }
 
   def removeLoginUser(removeKeyReturnValue: String => Option[String]): Unit = removeKeyReturnValue(USER_TICKET_ID_STRING).foreach{ t =>
@@ -150,5 +152,9 @@ object SSOUtils extends Logging {
       userTicketIdToLastAccessTime.put(userTicketId, System.currentTimeMillis)
     }
   }
+
+  def getSessionTimeOut(): Long = sessionTimeout
+
+
 
 }

@@ -17,13 +17,11 @@
  
 package org.apache.linkis.orchestrator.computation.physical
 
-import java.util.concurrent.TimeUnit
-
-import org.apache.linkis.common.exception.{ErrorException, LinkisRetryException, WarnException}
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.exception.{ErrorException, LinkisRetryException}
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.governance.common.protocol.task.{RequestTask, RequestTaskExecute}
-import org.apache.linkis.governance.common.utils.GovernanceConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.orchestrator.computation.conf.ComputationOrchestratorConf
 import org.apache.linkis.orchestrator.computation.execute.{CodeExecTaskExecutor, CodeExecTaskExecutorManager}
@@ -32,17 +30,18 @@ import org.apache.linkis.orchestrator.exception.{OrchestratorErrorCodeSummary, O
 import org.apache.linkis.orchestrator.execution.AsyncTaskResponse.NotifyListener
 import org.apache.linkis.orchestrator.execution.impl.DefaultFailedTaskResponse
 import org.apache.linkis.orchestrator.execution.{AsyncTaskResponse, TaskResponse}
+import org.apache.linkis.orchestrator.listener.task.TaskLogEvent
 import org.apache.linkis.orchestrator.plans.ast.QueryParams
-import org.apache.linkis.orchestrator.plans.physical.{AbstractExecTask, ExecTask, PhysicalContext, ReheatableExecTask, RetryExecTask}
+import org.apache.linkis.orchestrator.plans.physical.{AbstractExecTask, ExecTask, PhysicalContext}
 import org.apache.linkis.orchestrator.plans.unit.CodeLogicalUnit
 import org.apache.linkis.orchestrator.strategy.async.AsyncExecTask
 import org.apache.linkis.orchestrator.strategy.{ResultSetExecTask, StatusInfoExecTask}
 import org.apache.linkis.orchestrator.utils.OrchestratorIDCreator
 import org.apache.linkis.scheduler.executer.{ErrorExecuteResponse, SubmitResponse}
-import org.apache.commons.lang.StringUtils
 
-import scala.concurrent.duration.Duration
+import java.util.concurrent.TimeUnit
 import scala.collection.convert.decorateAsScala._
+import scala.concurrent.duration.Duration
 /**
   *
   *
@@ -82,9 +81,6 @@ class CodeLogicalUnitExecTask (parents: Array[ExecTask], children: Array[ExecTas
       val response = Utils.tryCatch(codeExecutor.getEngineConnExecutor.execute(requestTask)) {
         t: Throwable =>
           logger.error(s"Failed to submit ${getIDInfo()} to ${codeExecutor.getEngineConnExecutor.getServiceInstance}", t)
-          codeExecTaskExecutorManager.getByExecTaskId(this.getId).foreach { codeEngineConnExecutor =>
-            codeExecTaskExecutorManager.markECFailed(this, codeEngineConnExecutor)
-          }
           throw new LinkisRetryException(ECMPluginConf.ECM_ENGNE_CREATION_ERROR_CODE, t.getMessage)
       }
       response match {
@@ -92,6 +88,7 @@ class CodeLogicalUnitExecTask (parents: Array[ExecTask], children: Array[ExecTas
           //封装engineConnExecId信息
           codeExecutor.setEngineConnTaskId(engineConnExecId)
           codeExecTaskExecutorManager.addEngineConnTaskID(codeExecutor)
+          getPhysicalContext.pushLog(TaskLogEvent(this, LogUtils.generateInfo(s"Task submit to ec: ${codeExecutor.getEngineConnExecutor.getServiceInstance} get engineConnExecId is: ${engineConnExecId}")))
           new AsyncTaskResponse {
             override def notifyMe(listener: NotifyListener): Unit = null
 
@@ -189,7 +186,7 @@ class CodeLogicalUnitExecTask (parents: Array[ExecTask], children: Array[ExecTas
       if (StringUtils.isNotBlank(codeEngineConnExecutor.getEngineConnTaskId)) {
         info(s"execTask($getId) be killed, engineConn execId is${codeEngineConnExecutor.getEngineConnTaskId}")
         Utils.tryAndWarn(codeEngineConnExecutor.getEngineConnExecutor.killTask(codeEngineConnExecutor.getEngineConnTaskId))
-        Utils.tryAndWarn(codeExecTaskExecutorManager.unLockEngineConn(this, codeEngineConnExecutor))
+        //Utils.tryAndWarn(codeExecTaskExecutorManager.unLockEngineConn(this, codeEngineConnExecutor))
       }
     }
     isCanceled = true
@@ -215,18 +212,7 @@ class CodeLogicalUnitExecTask (parents: Array[ExecTask], children: Array[ExecTas
   override def clear(isSucceed: Boolean): Unit = {
 
     codeExecTaskExecutorManager.getByExecTaskId(this.getId).foreach { codeEngineConnExecutor =>
-      if (isSucceed) {
-        debug(s"ExecTask(${getIDInfo()}) execute  success executor be delete.")
-        Utils.tryAndWarn(codeExecTaskExecutorManager.delete(this, codeEngineConnExecutor))
-      } else {
-        if (StringUtils.isBlank(codeEngineConnExecutor.getEngineConnTaskId)) {
-          error(s"${getIDInfo()} Failed to submit running, now to remove  codeEngineConnExecutor, forceRelease")
-          codeExecTaskExecutorManager.markECFailed(this, codeEngineConnExecutor)
-        } else {
-          debug(s"ExecTask(${getIDInfo()}) execute  failed executor be unLock.")
-          Utils.tryAndWarn(codeExecTaskExecutorManager.unLockEngineConn(this, codeEngineConnExecutor))
-        }
-      }
+      codeExecTaskExecutorManager.markTaskCompleted(this, codeEngineConnExecutor, isSucceed)
     }
   }
 }

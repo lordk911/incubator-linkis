@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,12 +27,15 @@ import router from './router'
 import i18n from './common/i18n'
 import mixinDispatch from './common/service/moduleMixin'
 
-import API_PATH from './common/config/apiPath.js'
 import 'iview/dist/styles/iview.css'
 
 // Icon
 import './components/svgIcon/index.js'
 import './dss/module/index.js'
+
+// 水印
+import watermark from './utils/watermark.js'
+Vue.prototype.$watermark = watermark
 
 // moduleMixin
 if (apps.requireComponent) {
@@ -57,8 +60,6 @@ Vue.config.productionTip = false
 Vue.prototype.$Message.config({
   duration: 3
 })
-// 全局变量
-Vue.prototype.$API_PATH = API_PATH;
 
 new Vue({
   router,

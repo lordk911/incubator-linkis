@@ -17,10 +17,9 @@
  
 package org.apache.linkis.rpc.sender
 
-import java.util
-
 import org.apache.linkis.rpc.{Receiver, Sender}
 
+import java.util
 import scala.concurrent.duration.Duration
 
 

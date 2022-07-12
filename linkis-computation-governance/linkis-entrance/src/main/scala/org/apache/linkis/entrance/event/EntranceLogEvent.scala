@@ -18,8 +18,6 @@
 package org.apache.linkis.entrance.event
 
 import org.apache.linkis.common.listener.Event
-import org.apache.linkis.protocol.engine.JobProgressInfo
-import org.apache.linkis.scheduler.executer.Executor
 import org.apache.linkis.scheduler.queue.Job
 
 /**

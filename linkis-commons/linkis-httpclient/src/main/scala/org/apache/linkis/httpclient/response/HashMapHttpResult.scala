@@ -17,10 +17,10 @@
  
 package org.apache.linkis.httpclient.response
 
-import java.util
-
 import org.apache.linkis.common.utils.JsonUtils
 import org.apache.linkis.httpclient.exception.HttpClientResultException
+
+import java.util
 
 
 class HashMapHttpResult extends HttpResult {

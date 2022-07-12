@@ -24,7 +24,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Mapper
 public interface ResourceManagerMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     // @SelectKey(statement = "select last_insert_id() AS id", keyProperty = "id", before = false,

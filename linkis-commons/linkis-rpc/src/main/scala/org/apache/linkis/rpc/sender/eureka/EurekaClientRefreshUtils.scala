@@ -20,9 +20,10 @@ package org.apache.linkis.rpc.sender.eureka
 import com.netflix.discovery.{EurekaClient, DiscoveryClient => NetflixDiscoveryClient}
 import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.server.utils.AopTargetUtils
-import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+
+import javax.annotation.PostConstruct
 
 
 @Configuration

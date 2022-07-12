@@ -57,13 +57,11 @@
   </div>
 </template>
 <script>
-import { isEmpty } from "lodash";
 import storage from "@/common/helper/storage";
 import userMenu from "./userMenu.vue";
 import clickoutside from "@/common/helper/clickoutside";
 import mixin from '@/common/service/mixin';
 import util from '@/common/util';
-import { GetBaseInfo } from '@/common/service/apiCommonMethod.js';
 export default {
   directives: {
     clickoutside
@@ -85,14 +83,7 @@ export default {
   },
   methods: {
     init() {
-      GetBaseInfo().then(rst => {
-        if (!isEmpty(rst)) {
-          this.userName = rst.username;
-          storage.set("baseInfo", rst, "local");
-          this.$router.app.$emit("username", rst.username);
-          this.$emit("set-init");
-        }
-      });
+      this.userName = storage.get('userName');
     },
     handleOutsideClick() {
       this.isUserMenuShow = false;

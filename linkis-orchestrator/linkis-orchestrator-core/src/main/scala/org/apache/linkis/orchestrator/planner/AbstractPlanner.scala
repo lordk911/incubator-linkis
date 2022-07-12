@@ -17,7 +17,7 @@
  
 package org.apache.linkis.orchestrator.planner
 
-import org.apache.linkis.orchestrator.extensions.catalyst.{AnalyzeFactory, AnalyzeTransform, PlannerTransform, Transform, TransformFactory}
+import org.apache.linkis.orchestrator.extensions.catalyst._
 import org.apache.linkis.orchestrator.plans.ast.{ASTContext, ASTOrchestration, Job}
 import org.apache.linkis.orchestrator.plans.logical.{LogicalContext, Task}
 

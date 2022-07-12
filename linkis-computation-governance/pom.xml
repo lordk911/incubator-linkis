@@ -22,7 +22,7 @@
     <parent>
         <artifactId>linkis</artifactId>
         <groupId>org.apache.linkis</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,7 +38,7 @@
         <module>linkis-entrance</module>
         <module>linkis-client/linkis-computation-client</module>
         <module>linkis-client/linkis-cli</module>
-        <!-- <module>linkis-jdbc-driver</module>-->
+         <!--<module>linkis-jdbc-driver</module>-->
 
     </modules>
 

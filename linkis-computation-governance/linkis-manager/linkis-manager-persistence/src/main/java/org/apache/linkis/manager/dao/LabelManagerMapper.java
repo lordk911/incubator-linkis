@@ -25,7 +25,8 @@ import org.apache.linkis.manager.common.entity.persistence.PersistenceNode;
 import org.apache.linkis.manager.common.entity.persistence.PersistenceResource;
 import org.apache.linkis.manager.label.entity.Label;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,11 @@ public interface LabelManagerMapper {
 
     void registerLabelKeyValues(
             @Param("labelValueKeyAndContent") Map<String, String> labelValueKeyAndContent,
+            @Param("labelId") int labelId);
+
+    void replaceIntoLabelKeyValue(
+            @Param("labelKey") String labelKey,
+            @Param("labelStringValue") String labelStringValue,
             @Param("labelId") int labelId);
 
     PersistenceLabel getLabel(@Param("id") int id);

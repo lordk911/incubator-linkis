@@ -20,11 +20,12 @@ package org.apache.linkis.instance.label.client
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.protocol.label.{InsLabelAttachRequest, InsLabelRemoveRequest}
 import org.apache.linkis.rpc.Sender
-import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.serviceregistry.Registration
 import org.springframework.context.event.{ContextClosedEvent, EventListener}
 import org.springframework.stereotype.Component
+
+import javax.annotation.PostConstruct
 
 
 @Component

@@ -17,12 +17,12 @@
  
 package org.apache.linkis.common.utils
 
-import java.nio.charset.StandardCharsets
-import java.security.{KeyPair, KeyPairGenerator, PrivateKey, PublicKey}
-
-import javax.crypto.Cipher
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.net.util.Base64
+
+import java.nio.charset.StandardCharsets
+import java.security.{KeyPair, KeyPairGenerator, PrivateKey, PublicKey}
+import javax.crypto.Cipher
 
 
 object RSAUtils {

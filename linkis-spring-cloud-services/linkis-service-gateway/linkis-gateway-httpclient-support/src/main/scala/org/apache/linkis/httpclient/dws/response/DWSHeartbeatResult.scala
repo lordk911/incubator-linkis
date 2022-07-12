@@ -17,11 +17,11 @@
  
 package org.apache.linkis.httpclient.dws.response
 
-import java.util
-
-import org.apache.linkis.httpclient.discovery.HeartbeatResult
 import org.apache.http.HttpResponse
 import org.apache.http.util.EntityUtils
+import org.apache.linkis.httpclient.discovery.HeartbeatResult
+
+import java.util
 
 class DWSHeartbeatResult(response: HttpResponse, serverUrl: String) extends HeartbeatResult with DWSResult {
 

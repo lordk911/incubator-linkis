@@ -17,8 +17,6 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
-import java.util.concurrent.{Future, TimeUnit}
-
 import org.apache.flink.api.common.JobStatus
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.once.executor.{ManageableOnceExecutor, OnceExecutorExecutionContext}
@@ -27,6 +25,7 @@ import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration.{FL
 import org.apache.linkis.engineconnplugin.flink.exception.ExecutorInitException
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 
+import java.util.concurrent.{Future, TimeUnit}
 import scala.collection.convert.WrapAsScala._
 
 
@@ -47,8 +46,9 @@ trait FlinkOnceExecutor[T <: ClusterDescriptorAdapter] extends ManageableOnceExe
     }.toMap
     doSubmit(onceExecutorExecutionContext, options)
     if(isCompleted) return
-    if (null == clusterDescriptor.getClusterID)
+    if (null == clusterDescriptor.getClusterID) {
       throw new ExecutorInitException("The application start failed, since yarn applicationId is null.")
+    }
     setApplicationId(clusterDescriptor.getClusterID.toString)
     setApplicationURL(clusterDescriptor.getWebInterfaceUrl)
     info(s"Application is started, applicationId: $getApplicationId, applicationURL: $getApplicationURL.")
@@ -61,7 +61,9 @@ trait FlinkOnceExecutor[T <: ClusterDescriptorAdapter] extends ManageableOnceExe
 
   val id: Long
 
-  override def getId: String = "FlinkOnceApp_"+ id
+  def getClusterDescriptorAdapter: T = clusterDescriptor
+
+  override def getId: String = "FlinkOnceApp_" + id
 
   protected def closeDaemon(): Unit = {
     if (daemonThread != null) daemonThread.cancel(true)
@@ -78,14 +80,14 @@ trait FlinkOnceExecutor[T <: ClusterDescriptorAdapter] extends ManageableOnceExe
   }
 
   override protected def waitToRunning(): Unit = {
-    if(!isCompleted) daemonThread = Utils.defaultScheduler.scheduleAtFixedRate(new Runnable {
+    if (!isCompleted) daemonThread = Utils.defaultScheduler.scheduleAtFixedRate(new Runnable {
       private var lastStatus: JobStatus = JobStatus.INITIALIZING
-      private var lastPrintTime = 0l
+      private var lastPrintTime = 0L
       private val printInterval = math.max(FLINK_ONCE_APP_STATUS_FETCH_INTERVAL.getValue.toLong, 5 * 60 * 1000)
       private var fetchJobStatusFailedNum = 0
-      override def run(): Unit = if(!isCompleted) {
-        val jobStatus = Utils.tryCatch(clusterDescriptor.getJobStatus){t =>
-          if(fetchJobStatusFailedNum >= FLINK_ONCE_APP_STATUS_FETCH_FAILED_MAX.getValue) {
+      override def run(): Unit = if (!isCompleted) {
+        val jobStatus = Utils.tryCatch(clusterDescriptor.getJobStatus) {t =>
+          if (fetchJobStatusFailedNum >= FLINK_ONCE_APP_STATUS_FETCH_FAILED_MAX.getValue) {
             error(s"Fetch job status has failed max ${FLINK_ONCE_APP_STATUS_FETCH_FAILED_MAX.getValue} times, now stop this FlinkEngineConn.", t)
             tryFailed()
             close()

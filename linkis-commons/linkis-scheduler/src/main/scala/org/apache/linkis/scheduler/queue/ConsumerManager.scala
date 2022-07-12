@@ -17,10 +17,10 @@
  
 package org.apache.linkis.scheduler.queue
 
-import java.util.concurrent.ExecutorService
-
 import org.apache.linkis.scheduler.SchedulerContext
 import org.apache.linkis.scheduler.listener.ConsumerListener
+
+import java.util.concurrent.ExecutorService
 
 
 abstract class ConsumerManager {

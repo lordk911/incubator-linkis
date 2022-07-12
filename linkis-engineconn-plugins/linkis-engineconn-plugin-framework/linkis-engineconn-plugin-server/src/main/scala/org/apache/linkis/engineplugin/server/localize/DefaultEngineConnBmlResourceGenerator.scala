@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineplugin.server.localize
 
-import java.io.{File, FileInputStream, InputStream}
-
 import org.apache.linkis.common.utils.{Logging, Utils, ZipUtils}
 import org.apache.linkis.engineplugin.server.localize.EngineConnBmlResourceGenerator.NO_VERSION_MARK
 import org.apache.linkis.manager.engineplugin.common.exception.EngineConnPluginErrorException
+
+import java.io.{File, FileInputStream, InputStream}
 
 
 class DefaultEngineConnBmlResourceGenerator extends AbstractEngineConnBmlResourceGenerator with Logging {

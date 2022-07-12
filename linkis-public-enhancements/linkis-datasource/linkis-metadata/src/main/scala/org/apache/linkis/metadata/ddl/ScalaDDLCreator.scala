@@ -18,11 +18,11 @@
 package org.apache.linkis.metadata.ddl
 
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.metadata.conf.MdqConfiguration
 import org.apache.linkis.metadata.domain.mdq.bo.{MdqTableBO, MdqTableFieldsInfoBO}
 import org.apache.linkis.metadata.exception.MdqIllegalParamException
-import org.apache.commons.lang.StringUtils
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
@@ -75,6 +75,9 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging{
         append(RIGHT_PARENTHESES).append(SPACE)
     }
     createTableCode.append(STORED_AS).append(SPACE).append(MdqConfiguration.DEFAULT_STORED_TYPE.getValue).append(SPACE)
+    if (StringUtils.isNotBlank(tableInfo.getTableBaseInfo.getBase.getComment)) {
+      createTableCode.append(COMMENT).append(SPACE).append(SINGLE_MARK).append(tableInfo.getTableBaseInfo.getBase.getComment).append(SINGLE_MARK).append(SPACE)
+    }
     createTableCode.append(MARKS)
     createTableCode.append(RIGHT_PARENTHESES)
     val finalCode = createTableCode.toString()

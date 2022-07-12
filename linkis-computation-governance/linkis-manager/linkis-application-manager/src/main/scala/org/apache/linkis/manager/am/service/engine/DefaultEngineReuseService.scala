@@ -18,9 +18,6 @@
 package org.apache.linkis.manager.am.service.engine
 
 import org.apache.commons.lang.exception.ExceptionUtils
-
-import java.util
-import java.util.concurrent.{TimeUnit, TimeoutException}
 import org.apache.linkis.common.exception.LinkisRetryException
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
@@ -33,15 +30,18 @@ import org.apache.linkis.manager.common.entity.node.EngineNode
 import org.apache.linkis.manager.common.protocol.engine.{EngineReuseRequest, EngineStopRequest}
 import org.apache.linkis.manager.common.utils.ManagerUtils
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
-import org.apache.linkis.manager.label.entity.{EngineNodeLabel, Label}
 import org.apache.linkis.manager.label.entity.engine.ReuseExclusionLabel
 import org.apache.linkis.manager.label.entity.node.AliasServiceInstanceLabel
+import org.apache.linkis.manager.label.entity.{EngineNodeLabel, Label}
 import org.apache.linkis.manager.label.service.{NodeLabelService, UserLabelService}
 import org.apache.linkis.manager.label.utils.LabelUtils
-import org.apache.linkis.message.annotation.Receiver
+import org.apache.linkis.rpc.Sender
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import java.util
+import java.util.concurrent.{TimeUnit, TimeoutException}
 import scala.collection.JavaConversions._
 import scala.concurrent.duration.Duration
 
@@ -65,11 +65,9 @@ class DefaultEngineReuseService extends AbstractEngineService with EngineReuseSe
 
   @Receiver
   @throws[LinkisRetryException]
-  override def reuseEngine(engineReuseRequest: EngineReuseRequest): EngineNode = {
-    info(s"Start to reuse Engine for request: $engineReuseRequest")
-    //TODO Label Factory And builder
+  override def reuseEngine(engineReuseRequest: EngineReuseRequest, sender: Sender): EngineNode = {
+    logger.info(s"Start to reuse Engine for request: $engineReuseRequest")
     val labelBuilderFactory = LabelBuilderFactoryContext.getLabelBuilderFactory
-    //Label:传入的Label和用户默认的Label 去重
     var labelList: util.List[Label[_]] = LabelUtils.distinctLabel(labelBuilderFactory.getLabels(engineReuseRequest.getLabels),
       userLabelService.getUserLabels(engineReuseRequest.getUser))
 
@@ -129,9 +127,9 @@ class DefaultEngineReuseService extends AbstractEngineService with EngineReuseSe
       val engineNode = choseNode.get.asInstanceOf[EngineNode]
       logger.info(s"prepare to reuse engineNode: ${engineNode.getServiceInstance}")
       engine = Utils.tryCatch(getEngineNodeManager.reuseEngine(engineNode)) { t: Throwable =>
-          error(s"Failed to reuse engine ${engineNode.getServiceInstance}", t)
+          logger.info(s"Failed to reuse engine ${engineNode.getServiceInstance}", t)
           if (ExceptionUtils.getRootCause(t).isInstanceOf[TimeoutException]) {
-            error(s"Failed to reuse ${engineNode.getServiceInstance}, now to stop this")
+            logger.info(s"Failed to reuse ${engineNode.getServiceInstance}, now to stop this")
             val stopEngineRequest = new EngineStopRequest(engineNode.getServiceInstance, ManagerUtils.getAdminUser)
             engineStopService.asyncStopEngine(stopEngineRequest)
           }
@@ -151,15 +149,15 @@ class DefaultEngineReuseService extends AbstractEngineService with EngineReuseSe
       case e: TimeoutException =>
         throw new LinkisRetryException(AMConstant.ENGINE_ERROR_CODE, s"Waiting for Engine initialization failure, already waiting $timeout ms")
       case t: Throwable =>
-        info(s"Failed to reuse engineConn time taken ${System.currentTimeMillis() - startTime}")
+        logger.info(s"Failed to reuse engineConn time taken ${System.currentTimeMillis() - startTime}")
         throw t
     }
-    info(s"Finished to reuse Engine for request: $engineReuseRequest get EngineNode $engine, time taken ${System.currentTimeMillis() - startTime}")
+    logger.info(s"Finished to reuse Engine for request: $engineReuseRequest get EngineNode $engine, time taken ${System.currentTimeMillis() - startTime}")
     val engineServiceLabelList = instances.filter(kv => kv._1.getServiceInstance.equals(engine.getServiceInstance))
     if (null != engineServiceLabelList && engineServiceLabelList.nonEmpty) {
       engine.setLabels(engineServiceLabelList.head._2)
     } else {
-      error("Get choosen engineNode : " + AMUtils.GSON.toJson(engine) + " from engineLabelMap : " + AMUtils.GSON.toJson(instances))
+      logger.info("Get choosen engineNode : " + AMUtils.GSON.toJson(engine) + " from engineLabelMap : " + AMUtils.GSON.toJson(instances))
     }
     engine
   }

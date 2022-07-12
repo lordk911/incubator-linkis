@@ -17,6 +17,7 @@
  
 package org.apache.linkis.gateway.ujes.route
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.gateway.config.GatewayConfiguration
 import org.apache.linkis.gateway.exception.TooManyServiceException
@@ -24,7 +25,6 @@ import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.gateway.route.AbstractGatewayRouter
 import org.apache.linkis.gateway.ujes.parser.EntranceExecutionGatewayParser
 import org.apache.linkis.protocol.constants.TaskConstant
-import org.apache.commons.lang.StringUtils
 
 class EntranceGatewayRouter extends AbstractGatewayRouter {
 

@@ -17,9 +17,7 @@
  
 package org.apache.linkis.manager.engineplugin.io.executor
 
-import java.util
-import java.util.concurrent.atomic.AtomicLong
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.{Logging, OverloadUtils, Utils}
 import org.apache.linkis.engineconn.computation.executor.execute.{ConcurrentComputationExecutor, EngineExecutionContext}
@@ -38,9 +36,10 @@ import org.apache.linkis.storage.domain.{MethodEntity, MethodEntitySerializer}
 import org.apache.linkis.storage.exception.{StorageErrorCode, StorageErrorException}
 import org.apache.linkis.storage.fs.FileSystem
 import org.apache.linkis.storage.utils.StorageUtils
-import org.apache.commons.io.IOUtils
 import org.json4s.DefaultFormats
 
+import java.util
+import java.util.concurrent.atomic.AtomicLong
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
@@ -97,7 +96,7 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
       val method = MethodEntitySerializer.deserializer(code)
       val methodName = method.methodName
       val jobID = engineExecutionContext.getJobId.get
-      info(s"jobID($jobID):creator ${method.creatorUser} proxy user: ${method.proxyUser} to execute a method: ${method.methodName}.,fsId=${method.id}")
+      logger.info(s"jobID($jobID):creator ${method.creatorUser} proxy user: ${method.proxyUser} to execute a method: ${method.methodName}.,fsId=${method.id}")
       val executeResponse = methodName match {
         case "init" =>
           val fsId: Long = if (!existsUserFS(method)) {
@@ -105,7 +104,7 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
           } else {
             method.id
           }
-          info(s"jobID($jobID),user(${method.proxyUser}) execute init and fsID($fsId)")
+          logger.info(s"jobID($jobID),user(${method.proxyUser}) execute init and fsID($fsId)")
           AliasOutputExecuteResponse(fsId.toString, StorageUtils.serializerStringToResult(fsId.toString))
         case "close" => closeUserFS(method); SuccessExecuteResponse()
         case "read" =>
@@ -142,7 +141,7 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
         case _ =>
           invokeMethod(method, classOf[FsPath], jobID)
       }
-      info(s"jobID($jobID):creator ${method.creatorUser} proxy user: ${method.proxyUser} finished to  execute a method: ${method.methodName}.,fsId=${method.id}")
+      logger.info(s"jobID($jobID):creator ${method.creatorUser} proxy user: ${method.proxyUser} finished to  execute a method: ${method.methodName}.,fsId=${method.id}")
       executeResponse
     }
 
@@ -181,8 +180,8 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
 
   override def getId(): String = namePrefix + id
 
-  def getFSId():Long ={
-    if (fsIdCount.get() == FS_ID_LIMIT){
+  def getFSId(): Long = {
+    if (fsIdCount.get() == FS_ID_LIMIT) {
       fsIdCount.getAndSet(0)
     } else {
       fsIdCount.getAndIncrement()
@@ -218,12 +217,12 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
     var fsId = methodEntity.id
     val properties = methodEntity.params(0).asInstanceOf[Map[String, String]]
     val proxyUser = methodEntity.proxyUser
-    if(!fsProxyService.canProxyUser(methodEntity.creatorUser,proxyUser,methodEntity.fsType)){
-      throw new StorageErrorException(52002,s"FS Can not proxy to：$proxyUser")
+    if (!fsProxyService.canProxyUser(methodEntity.creatorUser,proxyUser,methodEntity.fsType)) {
+      throw new StorageErrorException(52002, s"FS Can not proxy to：$proxyUser")
     }
-    if(! userFSInfos.containsKey(proxyUser)) {
+    if (! userFSInfos.containsKey(proxyUser)) {
       userFSInfos synchronized {
-        if(!userFSInfos.containsKey(proxyUser)) {
+        if (!userFSInfos.containsKey(proxyUser)) {
           userFSInfos.put(proxyUser, ArrayBuffer[FSInfo]())
         }
       }
@@ -237,7 +236,7 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
         userFsInfo +=  new FSInfo(fsId, fs)
       }
     }
-    info(s"Creator ${methodEntity.creatorUser}为用户${methodEntity.proxyUser}初始化结束 fsId=$fsId")
+    logger.info(s"Creator ${methodEntity.creatorUser}为用户${methodEntity.proxyUser}初始化结束 fsId=$fsId")
     fsId
   }
 
@@ -260,7 +259,7 @@ class IoEngineConnExecutor(val id: Int, val outputLimit: Int = 10) extends Concu
     }
   }
 
-  private def invokeMethod[T](method:MethodEntity,methodParamType: Class[T],jobID:String):AliasOutputExecuteResponse={
+  private def invokeMethod[T](method:MethodEntity,methodParamType: Class[T],jobID:String): AliasOutputExecuteResponse = {
     val fs = getUserFS(method)
     val methodName = method.methodName
     val parameterSize = if(method.params == null) 0 else method.params.length

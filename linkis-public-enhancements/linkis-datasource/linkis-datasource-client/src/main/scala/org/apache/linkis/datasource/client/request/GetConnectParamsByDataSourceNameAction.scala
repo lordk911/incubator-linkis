@@ -17,12 +17,12 @@
 
 package org.apache.linkis.datasource.client.request
 
+import org.apache.linkis.datasource.client.config.DatasourceClientConfig.DATA_SOURCE_SERVICE_MODULE
+import org.apache.linkis.datasource.client.exception.DataSourceClientBuilderException
+import org.apache.linkis.httpclient.request.GetAction
+
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-
-import org.apache.linkis.datasource.client.exception.DataSourceClientBuilderException
-import org.apache.linkis.datasource.client.config.DatasourceClientConfig.DATA_SOURCE_SERVICE_MODULE
-import org.apache.linkis.httpclient.request.GetAction
 /**
   * Get version parameters from data source
  */

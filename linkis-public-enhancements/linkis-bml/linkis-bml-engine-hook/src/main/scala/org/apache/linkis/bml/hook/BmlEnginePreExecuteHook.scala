@@ -17,8 +17,7 @@
  
 package org.apache.linkis.bml.hook
 
-import java.io.File
-import java.util
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.bml.client.{BmlClient, BmlClientFactory}
 import org.apache.linkis.bml.exception.BmlHookDownloadException
 import org.apache.linkis.bml.utils.BmlHookUtils
@@ -30,8 +29,9 @@ import org.apache.linkis.engineconn.computation.executor.hook.ComputationExecuto
 import org.apache.linkis.engineconn.computation.executor.utlis.ComputationEngineConstant
 import org.apache.linkis.engineconn.core.util.EngineConnUtils
 import org.apache.linkis.governance.common.utils.GovernanceConstant
-import org.apache.commons.lang.StringUtils
 
+import java.io.File
+import java.util
 import scala.collection.JavaConversions.asScalaBuffer
 
 class BmlEnginePreExecuteHook extends ComputationExecutorHook with Logging{

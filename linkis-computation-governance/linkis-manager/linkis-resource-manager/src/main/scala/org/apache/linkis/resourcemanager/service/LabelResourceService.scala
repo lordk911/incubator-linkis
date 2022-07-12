@@ -17,12 +17,12 @@
  
 package org.apache.linkis.resourcemanager.service
 
-import java.util
-
 import org.apache.linkis.manager.common.entity.persistence.PersistenceResource
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.resourcemanager.domain.RMLabelContainer
+
+import java.util
 
 abstract class LabelResourceService {
 
@@ -44,5 +44,7 @@ abstract class LabelResourceService {
   def removeResourceByLabel(label: Label[_]): Unit
 
   def getLabelsByResource(resource: PersistenceResource): Array[Label[_]]
+
+  def getPersistenceResource(label: Label[_]): PersistenceResource
 
 }

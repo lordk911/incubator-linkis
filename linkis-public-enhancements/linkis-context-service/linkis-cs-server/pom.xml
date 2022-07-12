@@ -22,7 +22,7 @@
     <parent>
         <artifactId>linkis</artifactId>
         <groupId>org.apache.linkis</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -35,6 +35,13 @@
             <artifactId>linkis-cs-common</artifactId>
             <version>${linkis.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.linkis</groupId>
+            <artifactId>linkis-scheduler</artifactId>
+            <version>${linkis.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.linkis</groupId>
@@ -73,7 +80,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.linkis</groupId>
-                    <artifactId>linkis-message-scheduler</artifactId>
+                    <artifactId>linkis-rpc</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -85,16 +92,26 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.linkis</groupId>
-                    <artifactId>linkis-message-scheduler</artifactId>
+                    <artifactId>linkis-rpc</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.apache.linkis</groupId>
-            <artifactId>linkis-message-scheduler</artifactId>
+            <artifactId>linkis-rpc</artifactId>
             <version>${linkis.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jcl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

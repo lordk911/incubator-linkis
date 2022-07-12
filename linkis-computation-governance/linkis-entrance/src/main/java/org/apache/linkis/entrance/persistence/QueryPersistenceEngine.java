@@ -27,7 +27,9 @@ import org.apache.linkis.governance.common.constant.job.JobRequestConstants;
 import org.apache.linkis.governance.common.entity.job.JobRequest;
 import org.apache.linkis.governance.common.entity.job.SubJobDetail;
 import org.apache.linkis.governance.common.entity.job.SubJobInfo;
-import org.apache.linkis.governance.common.entity.task.*;
+import org.apache.linkis.governance.common.entity.task.RequestPersistTask;
+import org.apache.linkis.governance.common.entity.task.RequestReadAllTask;
+import org.apache.linkis.governance.common.entity.task.ResponsePersist;
 import org.apache.linkis.governance.common.protocol.job.*;
 import org.apache.linkis.protocol.constants.TaskConstant;
 import org.apache.linkis.protocol.message.RequestProtocol;
@@ -36,14 +38,14 @@ import org.apache.linkis.rpc.Sender;
 
 import org.springframework.beans.BeanUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QueryPersistenceEngine extends AbstractPersistenceEngine {
 
@@ -160,7 +162,7 @@ public class QueryPersistenceEngine extends AbstractPersistenceEngine {
 
     @Override
     public SubJobDetail retrieveJobDetailReq(Long jobDetailId)
-            throws EntranceIllegalParamException, QueryFailedException, EntranceRPCException {
+            throws EntranceIllegalParamException, EntranceRPCException {
 
         if (jobDetailId == null || jobDetailId < 0) {
             throw new EntranceIllegalParamException(20003, "taskID can't be null or less than 0");

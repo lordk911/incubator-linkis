@@ -17,13 +17,13 @@
  
 package org.apache.linkis.entrance.cache
 
-import java.util
-
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.governance.common.protocol.conf.{RequestQueryGlobalConfig, ResponseQueryConfig}
 import org.apache.linkis.protocol.CacheableProtocol
 import org.apache.linkis.rpc.RPCMapCache
+
+import java.util
 
 
 
@@ -31,7 +31,7 @@ object GlobalConfigurationKeyValueCache extends
   RPCMapCache[JobRequest, String, String](Configuration.CLOUD_CONSOLE_CONFIGURATION_SPRING_APPLICATION_NAME.getValue) {
 
   override protected def createRequest(jobReq: JobRequest): CacheableProtocol =
-    RequestQueryGlobalConfig(jobReq.getSubmitUser)
+    RequestQueryGlobalConfig(jobReq.getExecuteUser)
 
   override protected def createMap(any: Any): util.Map[String, String] = any match {
     case response: ResponseQueryConfig => response.getKeyAndValue

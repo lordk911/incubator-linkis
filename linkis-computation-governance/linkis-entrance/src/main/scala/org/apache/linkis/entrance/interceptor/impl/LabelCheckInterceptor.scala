@@ -17,16 +17,14 @@
  
 package org.apache.linkis.entrance.interceptor.impl
 
-import java.lang
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.entrance.interceptor.EntranceInterceptor
 import org.apache.linkis.entrance.interceptor.exception.LabelCheckException
 import org.apache.linkis.governance.common.entity.job.JobRequest
-import org.apache.linkis.governance.common.entity.task.RequestPersistTask
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineTypeLabel, UserCreatorLabel}
-import org.apache.linkis.protocol.task.Task
-import org.apache.commons.lang.StringUtils
 
+import java.lang
 import scala.collection.JavaConversions._
 
 
@@ -71,12 +69,13 @@ class LabelCheckInterceptor extends EntranceInterceptor {
       val userCreator = userCreatorLabelOption.get.asInstanceOf[UserCreatorLabel]
       if (StringUtils.isNotBlank(userCreator.getUser)) {
         val userInLabel = userCreator.getUser
-        if (userInLabel.equalsIgnoreCase(executeUser) && userInLabel.equalsIgnoreCase(submitUser)) {
+        if (userInLabel.equalsIgnoreCase(executeUser)) {
         return
         } else {
           throw LabelCheckException(50080, s"SubmitUser : ${submitUser} must be the same as ExecuteUser : ${executeUser} , and user : ${userInLabel} in userCreatorLabel.")
         }
       }
+      //TODO: need one more check to see if userCreatorLabel equals executeUser
     }
     throw LabelCheckException(50079, "UserCreatorLabel must be need")
   }

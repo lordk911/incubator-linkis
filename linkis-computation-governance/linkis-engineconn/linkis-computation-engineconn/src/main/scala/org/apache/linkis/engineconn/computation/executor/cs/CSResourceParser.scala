@@ -17,12 +17,11 @@
  
 package org.apache.linkis.engineconn.computation.executor.cs
 
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.cs.client.service.CSResourceService
+
 import java.util
 import java.util.regex.Pattern
-
-import org.apache.linkis.cs.client.service.CSResourceService
-import org.apache.commons.lang.StringUtils
-
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 

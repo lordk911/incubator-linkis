@@ -17,15 +17,16 @@
  
 package org.apache.linkis.storage.csv
 
-import java.io._
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{MetaData, Record}
 import org.apache.linkis.common.utils.Logging
+import org.apache.linkis.storage.domain.DataType
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord}
-import org.apache.commons.io.IOUtils
+
+import java.io._
 
 
-class StorageCSVWriter(val charset: String, val separator: String, val outputStream: OutputStream) extends CSVFsWriter with Logging {
+class StorageCSVWriter(val charset: String, val separator: String, val quoteRetouchEnable: Boolean, val outputStream: OutputStream) extends CSVFsWriter with Logging {
 
   private val delimiter = separator match {
     case "," => ','
@@ -42,8 +43,18 @@ class StorageCSVWriter(val charset: String, val separator: String, val outputStr
   }
 
   private def compact(row: Array[String]): String = {
-    val tmp = row.foldLeft("")((l, r) => l + delimiter + r)
-    tmp.substring(1, tmp.length) + "\n"
+    val quotationMarks: String = "\""
+    def decorateValue(v: String): String = {
+      if (v == null || "".equals(v.trim)) v
+      else {
+        if (quoteRetouchEnable) {
+          s"$quotationMarks${v.replaceAll(quotationMarks, "")}$quotationMarks"
+        }
+        else v
+      }
+    }
+
+    row.map(x => decorateValue(x)).toList.mkString(delimiter.toString) + "\n"
   }
 
   private def write(row: Array[String]) = {
@@ -57,9 +68,8 @@ class StorageCSVWriter(val charset: String, val separator: String, val outputStr
 
   @scala.throws[IOException]
   override def addRecord(record: Record): Unit = {
-    val body = record.asInstanceOf[TableRecord].row.map(_.toString) //read时候进行null替换等等
+    val body = record.asInstanceOf[TableRecord].row.map(DataType.valueToString)
     write(body)
-    //IOUtils.write(compact(body).getBytes(charset),outputStream)
   }
 
   override def flush(): Unit = {

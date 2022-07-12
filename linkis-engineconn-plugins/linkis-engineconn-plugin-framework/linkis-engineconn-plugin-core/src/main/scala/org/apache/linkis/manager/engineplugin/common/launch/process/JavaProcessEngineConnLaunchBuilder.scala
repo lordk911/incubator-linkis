@@ -18,22 +18,20 @@
 package org.apache.linkis.manager.engineplugin.common.launch.process
 
 
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.common.utils.Logging
+import org.apache.linkis.manager.common.protocol.bml.BmlResource
+import org.apache.linkis.manager.engineplugin.common.conf.EnvConfiguration.LINKIS_PUBLIC_MODULE_PATH
+import org.apache.linkis.manager.engineplugin.common.conf.{EngineConnPluginConf, EnvConfiguration}
+import org.apache.linkis.manager.engineplugin.common.exception.EngineConnBuildFailedException
+import org.apache.linkis.manager.engineplugin.common.launch.entity.{EngineConnBuildRequest, RicherEngineConnBuildRequest}
+import org.apache.linkis.manager.engineplugin.common.launch.process.Environment._
+import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants._
+import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
+
 import java.io.File
 import java.nio.file.Paths
 import java.util
-
-import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.manager.common.protocol.bml.BmlResource
-import org.apache.linkis.manager.engineplugin.common.conf.{EngineConnPluginConf, EnvConfiguration}
-import org.apache.linkis.manager.engineplugin.common.conf.EnvConfiguration.LINKIS_PUBLIC_MODULE_PATH
-import org.apache.linkis.manager.engineplugin.common.exception.EngineConnBuildFailedException
-import org.apache.linkis.manager.engineplugin.common.launch.entity.{EngineConnBuildRequest, RicherEngineConnBuildRequest}
-import org.apache.linkis.manager.engineplugin.common.launch.process.Environment.{variable, _}
-import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants._
-import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.time.DateFormatUtils
-
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 
@@ -56,7 +54,7 @@ abstract class JavaProcessEngineConnLaunchBuilder extends ProcessEngineConnLaunc
     commandLine += "-server"
     val engineConnMemory = EngineConnPluginConf.JAVA_ENGINE_REQUEST_MEMORY.getValue.toString
     commandLine += ("-Xmx" + engineConnMemory)
-    commandLine += ("-Xms" + engineConnMemory)
+    //commandLine += ("-Xms" + engineConnMemory)
     val javaOPTS = getExtractJavaOpts
     if (StringUtils.isNotEmpty(EnvConfiguration.ENGINE_CONN_DEFAULT_JAVA_OPTS.getValue))
       EnvConfiguration.ENGINE_CONN_DEFAULT_JAVA_OPTS.getValue.format(getGcLogDir(engineConnBuildRequest)).split("\\s+").foreach(commandLine += _)

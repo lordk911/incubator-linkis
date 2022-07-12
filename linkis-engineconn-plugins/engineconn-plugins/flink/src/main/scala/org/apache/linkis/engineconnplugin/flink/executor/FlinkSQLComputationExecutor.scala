@@ -17,10 +17,6 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
-import java.io.Closeable
-import java.util
-import java.util.concurrent.TimeUnit
-
 import org.apache.calcite.rel.metadata.{JaninoRelMetadataProvider, RelMetadataQueryBase}
 import org.apache.flink.api.common.JobStatus._
 import org.apache.flink.table.planner.plan.metadata.FlinkDefaultRelMetadataProvider
@@ -43,6 +39,9 @@ import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.scheduler.executer.{ErrorExecuteResponse, ExecuteResponse, SuccessExecuteResponse}
 import org.apache.linkis.storage.resultset.ResultSetFactory
 
+import java.io.Closeable
+import java.util
+import java.util.concurrent.TimeUnit
 import scala.collection.JavaConverters._
 
 
@@ -241,7 +240,7 @@ class DevFlinkSQLStreamingListener(jobOperation: JobOperation,
   }
 
   private val future = Utils.defaultScheduler.scheduleAtFixedRate(new Runnable {
-    override def run(): Unit = if (System.currentTimeMillis - lastPulledTime > maxWaitForResultTime) {
+    override def run(): Unit = if (System.currentTimeMillis - lastPulledTime >= maxWaitForResultTime) {
       warn(s"Job killed since reached the max time ${ByteTimeUtils.msDurationToString(maxWaitForResultTime)} of waiting for resultSet. Notice: only the dev environment will touch off the automatic kill.")
       stopJobOperation()
     }

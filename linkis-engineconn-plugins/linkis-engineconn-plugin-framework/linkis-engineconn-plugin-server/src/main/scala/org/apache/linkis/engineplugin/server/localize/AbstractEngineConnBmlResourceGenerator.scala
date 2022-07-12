@@ -17,15 +17,14 @@
  
 package org.apache.linkis.engineplugin.server.localize
 
-import java.io.File
-import java.nio.file.Paths
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.engineplugin.server.conf.EngineConnPluginConfiguration.ENGINE_CONN_HOME
 import org.apache.linkis.engineplugin.server.localize.EngineConnBmlResourceGenerator.NO_VERSION_MARK
 import org.apache.linkis.manager.engineplugin.common.exception.EngineConnPluginErrorException
 import org.apache.linkis.manager.label.entity.engine.EngineTypeLabel
-import org.apache.linkis.server.conf.ServerConfiguration
-import org.apache.commons.lang.StringUtils
+
+import java.io.File
+import java.nio.file.Paths
 
 
 abstract class AbstractEngineConnBmlResourceGenerator extends EngineConnBmlResourceGenerator {

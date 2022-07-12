@@ -17,18 +17,19 @@
  
 package org.apache.linkis.storage.excel
 
-import java.io.OutputStream
-
 import org.apache.linkis.common.io.FsWriter
+
+import java.io.OutputStream
 
 
 abstract class ExcelFsWriter extends FsWriter {
   val charset: String
   val sheetName: String
   val dateFormat: String
+  val autoFormat: Boolean
 }
 
 object ExcelFsWriter {
-  def getExcelFsWriter(charset: String, sheetName: String, dateFormat: String, outputStream: OutputStream): ExcelFsWriter = new StorageExcelWriter(charset, sheetName, dateFormat, outputStream: OutputStream)
+  def getExcelFsWriter(charset: String, sheetName: String, dateFormat: String, outputStream: OutputStream, autoFormat: Boolean): ExcelFsWriter = new StorageExcelWriter(charset, sheetName, dateFormat, outputStream: OutputStream, autoFormat: Boolean)
 }
 

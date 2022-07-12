@@ -18,7 +18,6 @@
 package org.apache.linkis.engineconnplugin.flink.listener
 
 import java.util
-
 import scala.collection.JavaConversions._
 
 

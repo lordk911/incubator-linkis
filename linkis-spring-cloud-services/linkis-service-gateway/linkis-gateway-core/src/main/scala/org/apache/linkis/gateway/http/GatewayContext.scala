@@ -17,9 +17,9 @@
  
 package org.apache.linkis.gateway.http
 
-import java.util
-
 import org.apache.linkis.server.JMap
+
+import java.util
 
 trait GatewayContext {
 

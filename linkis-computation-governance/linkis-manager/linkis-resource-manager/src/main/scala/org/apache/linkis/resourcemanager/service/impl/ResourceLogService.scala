@@ -14,106 +14,104 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.resourcemanager.service.impl
 
-import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.manager.common.entity.resource.{Resource, ResourceType}
-import org.apache.linkis.manager.label.entity.{CombinedLabel, Label}
+import org.apache.linkis.common.utils.{Logging, Utils}
+import org.apache.linkis.governance.common.utils.ECPathUtils
+import org.apache.linkis.manager.common.entity.persistence.ECResourceInfoRecord
+import org.apache.linkis.manager.common.entity.resource.Resource
+import org.apache.linkis.manager.dao.ECResourceRecordMapper
+import org.apache.linkis.manager.label.entity.CombinedLabel
 import org.apache.linkis.manager.label.entity.em.EMInstanceLabel
 import org.apache.linkis.manager.label.entity.engine.EngineInstanceLabel
-import org.apache.linkis.resourcemanager.service.LabelResourceService
+import org.apache.linkis.resourcemanager.domain.RMLabelContainer
+import org.apache.linkis.resourcemanager.utils.RMUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.io.File
+import java.util.Date
+
 @Component
-case class ResourceLogService() extends Logging{
+class ResourceLogService extends Logging {
+
 
   @Autowired
-  var labelResourceService: LabelResourceService = _
+  private var ecResourceRecordMapper: ECResourceRecordMapper = _
 
 
-
-  private def printLog(changeType: String, status: String, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null): String = {
+  private def printLog(changeType: String, resource: Resource, status: String, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null): String = {
     val logString = new StringBuilder(changeType + " ")
     logString ++= (status + ", ")
-    if (engineLabel != null) {
-      val engineResource = labelResourceService.getLabelResource(engineLabel)
-      var usedResource = Resource.initResource(ResourceType.Default)
-      if (engineResource != null && engineResource.getUsedResource != null) {
-        usedResource = engineResource.getUsedResource
-      }
+    if (engineLabel != null && resource != null) {
       logString ++= ("engine current resource:")
       logString ++= (engineLabel.getServiceInstance.getInstance)
-      logString ++= (usedResource.toJson + " ")
+      logString ++= (resource.toJson + " ")
     }
-    if (ecmLabel != null) {
-      val ecmResource = labelResourceService.getLabelResource(ecmLabel)
-      var usedResource = Resource.initResource(ResourceType.Default)
-      if (ecmResource != null && ecmResource.getUsedResource != null) {
-        usedResource = ecmResource.getUsedResource
-      }
+    if (ecmLabel != null & resource != null) {
       logString ++= ("ecm current resource:")
       logString ++= (ecmLabel.getServiceInstance.getInstance)
-      logString ++= (usedResource.toJson + " ")
+      logString ++= (resource.toJson + " ")
     }
     logString.toString()
   }
 
-  def failed(changeType: String, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null, exception: Exception = null): Unit = {
+  def failed(changeType: String, resource: Resource, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null, exception: Exception = null): Unit = Utils.tryAndWarn {
     if (changeType != null) {
       val log: String = changeType match {
         case ChangeType.ENGINE_INIT => {
-          printLog(changeType, ChangeType.FAILED, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, engineLabel, ecmLabel)
         }
         case ChangeType.ENGINE_CLEAR => {
-          printLog(changeType, ChangeType.FAILED, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, engineLabel, ecmLabel)
         }
         case ChangeType.ECM_INIT => {
-          printLog(changeType, ChangeType.FAILED, null, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, null, ecmLabel)
         }
         case ChangeType.ECM_CLEAR => {
-          printLog(changeType, ChangeType.FAILED, null, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, null, ecmLabel)
         }
         case ChangeType.ECM_RESOURCE_ADD => {
-          printLog(changeType, ChangeType.FAILED, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, engineLabel, ecmLabel)
         }
         case ChangeType.ECM_Resource_MINUS => {
-          printLog(changeType, ChangeType.FAILED, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.FAILED, engineLabel, ecmLabel)
         }
         case _ => " "
       }
       if (exception != null) {
-        error(log, exception)
+        logger.error(log, exception)
       } else {
-        error(log)
+        logger.error(log)
       }
     }
   }
-  def success(changeType: String, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null): Unit = {
+
+  def success(changeType: String, resource: Resource, engineLabel: EngineInstanceLabel = null, ecmLabel: EMInstanceLabel = null): Unit = Utils.tryAndWarn {
     if (changeType != null) {
       val log: String = changeType match {
         case ChangeType.ENGINE_INIT => {
-          printLog(changeType, ChangeType.SUCCESS, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, engineLabel, ecmLabel)
         }
         case ChangeType.ENGINE_CLEAR => {
-          printLog(changeType, ChangeType.SUCCESS, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, engineLabel, ecmLabel)
         }
         case ChangeType.ECM_INIT => {
-          printLog(changeType, ChangeType.SUCCESS, null, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, null, ecmLabel)
         }
         case ChangeType.ECM_CLEAR => {
-          printLog(changeType, ChangeType.SUCCESS, null, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, null, ecmLabel)
         }
         case ChangeType.ECM_RESOURCE_ADD => {
-          printLog(changeType, ChangeType.SUCCESS, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, engineLabel, ecmLabel)
         }
         case ChangeType.ECM_Resource_MINUS => {
-          printLog(changeType, ChangeType.SUCCESS, engineLabel, ecmLabel)
+          printLog(changeType, resource, ChangeType.SUCCESS, engineLabel, ecmLabel)
         }
         case _ => " "
       }
-      info(log)
+      logger.info(log)
     }
   }
 
@@ -127,8 +125,59 @@ case class ResourceLogService() extends Logging{
 
   def printNode(nodeLabel: EngineInstanceLabel, source: CombinedLabel): Unit = {
     val log = s"${nodeLabel.getInstance()}\t${source.getStringValue}"
-    info(log)
+    logger.info(log)
   }
+
+  def recordUserResourceAction(labelContainer: RMLabelContainer, ticketId: String, changeType: String, resource: Resource): Unit = if (RMUtils.RM_RESOURCE_ACTION_RECORD.getValue) Utils.tryAndWarn {
+    val userCreatorEngineType: CombinedLabel = labelContainer.getCombinedUserCreatorEngineTypeLabel
+    val engineInstanceLabel: EngineInstanceLabel = labelContainer.getEngineInstanceLabel
+    val eMInstanceLabel = labelContainer.getEMInstanceLabel
+    if (null == userCreatorEngineType) return
+    var ecResourceInfoRecord = ecResourceRecordMapper.getECResourceInfoRecord(ticketId)
+    if (ecResourceInfoRecord == null) {
+      val logDirSuffix = getECLogDirSuffix(labelContainer, ticketId)
+      val user = if (null != labelContainer.getUserCreatorLabel) labelContainer.getUserCreatorLabel.getUser else ""
+      ecResourceInfoRecord = new ECResourceInfoRecord(userCreatorEngineType.getStringValue, user, ticketId, resource, logDirSuffix)
+      ecResourceRecordMapper.insertECResourceInfoRecord(ecResourceInfoRecord)
+    }
+    if (null != engineInstanceLabel) {
+      ecResourceInfoRecord.setServiceInstance(engineInstanceLabel.getInstance)
+    }
+    if (null != eMInstanceLabel) {
+      ecResourceInfoRecord.setEcmInstance(eMInstanceLabel.getInstance())
+    }
+    changeType match {
+      case ChangeType.ENGINE_REQUEST =>
+        ecResourceInfoRecord.setRequestTimes(ecResourceInfoRecord.getRequestTimes + 1)
+        if (null != resource) {
+          ecResourceInfoRecord.setRequestResource(resource.toJson)
+        }
+      case ChangeType.ENGINE_INIT =>
+        ecResourceInfoRecord.setUsedTimes(ecResourceInfoRecord.getUsedTimes + 1)
+        if (null != resource) {
+          ecResourceInfoRecord.setUsedResource(resource.toJson)
+        }
+        ecResourceInfoRecord.setUsedTime(new Date(System.currentTimeMillis));
+      case ChangeType.ENGINE_CLEAR =>
+        ecResourceInfoRecord.setReleaseTimes(ecResourceInfoRecord.getReleaseTimes + 1)
+        if (null != resource) {
+          ecResourceInfoRecord.setReleasedResource(resource.toJson)
+        }
+        ecResourceInfoRecord.setReleaseTime(new Date(System.currentTimeMillis))
+    }
+    ecResourceRecordMapper.updateECResourceInfoRecord(ecResourceInfoRecord)
+  }
+
+  def getECLogDirSuffix(labelContainer: RMLabelContainer, ticketId: String): String = {
+    val engineTypeLabel = labelContainer.getEngineTypeLabel
+    val userCreatorLabel = labelContainer.getUserCreatorLabel
+    if (null == engineTypeLabel || null == userCreatorLabel) {
+      return ""
+    }
+    val suffix = ECPathUtils.getECWOrkDirPathSuffix(userCreatorLabel.getUser, ticketId, engineTypeLabel.getEngineType)
+    suffix + File.separator + "logs"
+  }
+
 }
 
 object ChangeType {

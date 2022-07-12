@@ -17,11 +17,10 @@
  
 package org.apache.linkis.manager.engineplugin.pipeline.executor
 
-import java.io.OutputStream
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.FsPath
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
-import org.apache.linkis.manager.engineplugin.pipeline.conf.PipelineEngineConfiguration.{PIPELINE_FIELD_SPLIT_STR, PIPELINE_OUTPUT_CHARSET_STR, PIPELINE_OUTPUT_ISOVERWRITE_SWITCH}
+import org.apache.linkis.manager.engineplugin.pipeline.conf.PipelineEngineConfiguration.{PIPELINE_FIELD_QUOTE_RETOUCH_ENABLE, PIPELINE_FIELD_SPLIT_STR, PIPELINE_OUTPUT_CHARSET_STR, PIPELINE_OUTPUT_ISOVERWRITE_SWITCH}
 import org.apache.linkis.manager.engineplugin.pipeline.constant.PipeLineConstant._
 import org.apache.linkis.manager.engineplugin.pipeline.exception.PipeLineErrorException
 import org.apache.linkis.scheduler.executer.ExecuteResponse
@@ -29,7 +28,8 @@ import org.apache.linkis.storage.FSFactory
 import org.apache.linkis.storage.csv.CSVFsWriter
 import org.apache.linkis.storage.source.FileSource
 import org.apache.linkis.storage.utils.StorageConfiguration.STORAGE_RS_FILE_SUFFIX
-import org.apache.commons.io.IOUtils
+
+import java.io.OutputStream
 
 class CSVExecutor extends PipeLineExecutor {
 
@@ -54,7 +54,7 @@ class CSVExecutor extends PipeLineExecutor {
     if (BLANK.equalsIgnoreCase(nullValue)) nullValue = ""
     val outputStream: OutputStream = destFs.write(destFsPath, PIPELINE_OUTPUT_ISOVERWRITE_SWITCH.getValue(options))
     OutputStreamCache.osCache.put(engineExecutionContext.getJobId.get, outputStream)
-    val cSVFsWriter = CSVFsWriter.getCSVFSWriter(PIPELINE_OUTPUT_CHARSET_STR.getValue(options), PIPELINE_FIELD_SPLIT_STR.getValue(options), outputStream)
+    val cSVFsWriter = CSVFsWriter.getCSVFSWriter(PIPELINE_OUTPUT_CHARSET_STR.getValue(options), PIPELINE_FIELD_SPLIT_STR.getValue(options), PIPELINE_FIELD_QUOTE_RETOUCH_ENABLE.getValue(options), outputStream)
     fileSource.addParams("nullValue", nullValue).write(cSVFsWriter)
     IOUtils.closeQuietly(cSVFsWriter)
     IOUtils.closeQuietly(fileSource)

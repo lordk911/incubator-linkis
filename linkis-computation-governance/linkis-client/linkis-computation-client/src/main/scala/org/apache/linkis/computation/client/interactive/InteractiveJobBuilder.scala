@@ -17,12 +17,12 @@
  
 package org.apache.linkis.computation.client.interactive
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.computation.client.AbstractLinkisJobBuilder
 import org.apache.linkis.computation.client.utils.LabelKeyUtils
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
 import org.apache.linkis.ujes.client.UJESClient
 import org.apache.linkis.ujes.client.request.JobSubmitAction
-import org.apache.commons.lang.StringUtils
 
 
 class InteractiveJobBuilder private[interactive]()
@@ -41,14 +41,15 @@ class InteractiveJobBuilder private[interactive]()
 
   def setCode(code: String): this.type = addJobContent("code", code)
 
-  def setRunType(runType: RunType): this.type= addJobContent("runType", runType.toString)
+  def setRunType(runType: RunType): this.type = addJobContent("runType", runType.toString)
 
   def setRunTypeStr(runType: String): this.type = addJobContent("runType", runType)
 
   override protected def validate(): Unit = {
-    if(labels != null && !labels.containsKey(LabelKeyUtils.USER_CREATOR_LABEL_KEY)
-      && StringUtils.isNotBlank(creator))
+    if (labels != null && !labels.containsKey(LabelKeyUtils.USER_CREATOR_LABEL_KEY)
+      && StringUtils.isNotBlank(creator)) {
       addLabel(LabelKeyUtils.USER_CREATOR_LABEL_KEY, executeUser + "-" + creator)
+    }
     super.validate()
   }
 

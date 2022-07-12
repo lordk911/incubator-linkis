@@ -18,11 +18,14 @@
 package org.apache.linkis.orchestrator.listener.task
 
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
+import org.apache.linkis.manager.common.protocol.resource.ResourceWithStatus
 import org.apache.linkis.orchestrator.core.ResultSet
 import org.apache.linkis.orchestrator.execution.CompletedTaskResponse
 import org.apache.linkis.orchestrator.listener.{OrchestratorAsyncEvent, OrchestratorSyncEvent}
 import org.apache.linkis.orchestrator.plans.physical.ExecTask
 import org.apache.linkis.protocol.engine.JobProgressInfo
+
+import java.util
 
 /**
   *
@@ -52,7 +55,7 @@ case class TaskResultSetSizeEvent(execTask: ExecTask, resultSize: Int) extends T
 
 case class TaskErrorResponseEvent(execTask: ExecTask, errorMsg: String) extends TaskInfoEvent with OrchestratorSyncEvent {
   override def toString: String = {
-    s"task ${execTask.getIDInfo()}, errorMsg ${errorMsg}"
+    s"task ${execTask.getIDInfo()}"
   }
 }
 
@@ -67,10 +70,14 @@ case class KillRootExecTaskEvent(execTask: ExecTask) extends  TaskInfoEvent with
 
 case class TaskReheaterEvent(execTask: ExecTask) extends TaskInfoEvent with OrchestratorAsyncEvent
 
-case class TaskProgressEvent(execTask: ExecTask, progress: Float, progressInfo: Array[JobProgressInfo]) extends TaskInfoEvent with OrchestratorAsyncEvent {
+case class TaskRunningInfoEvent(execTask: ExecTask, progress: Float, progressInfo: Array[JobProgressInfo],
+                                resourceMap: util.HashMap[String, ResourceWithStatus], infoMap: util.HashMap[String, Object]) extends TaskInfoEvent with OrchestratorAsyncEvent {
   override def toString: String = {
     s"task ${execTask.getIDInfo()}, progress ${progress}"
   }
 }
 
 case class TaskConsumerEvent(execTask: ExecTask) extends TaskInfoEvent with OrchestratorAsyncEvent
+
+case class TaskYarnResourceEvent(execTask: ExecTask, resourceMap: util.HashMap[String, ResourceWithStatus]) extends TaskInfoEvent with OrchestratorAsyncEvent
+

@@ -17,11 +17,7 @@
  
 package org.apache.linkis.entrance
 
-import java.text.SimpleDateFormat
-import java.util
-import java.util.Date
-import java.util.concurrent.TimeUnit
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.Utils
@@ -42,7 +38,11 @@ import org.apache.linkis.scheduler.queue.{Job, SchedulerEventState}
 import org.apache.linkis.server._
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.socket.controller.{ServerEvent, ServerEventService, SocketServerEvent}
-import org.apache.commons.lang.StringUtils
+
+import java.text.SimpleDateFormat
+import java.util
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 
 class EntranceWebSocketService extends ServerEventService with EntranceEventListener with EntranceLogListener {
@@ -120,7 +120,7 @@ class EntranceWebSocketService extends ServerEventService with EntranceEventList
   def dealExecute(event:ServerEvent):Message = {
     val params = event.getData.map{case (k, v) => k -> v.asInstanceOf[Any]}  //TODO Convert to a suitable Map(转换成合适的Map)
     val websocketTag = event.getWebsocketTag
-    params.put(TaskConstant.UMUSER, event.getUser)
+    params.put(TaskConstant.EXECUTE_USER, event.getUser)
     val jobId = entranceServer.execute(params)
     jobIdToEventId synchronized jobIdToEventId.put(jobId, event.getId)
     websocketTagJobID synchronized websocketTagJobID.put(jobId, websocketTag)

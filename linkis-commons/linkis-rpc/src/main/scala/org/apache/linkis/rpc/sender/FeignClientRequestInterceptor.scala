@@ -17,8 +17,8 @@
  
 package org.apache.linkis.rpc.sender
 
-import org.apache.linkis.server.security.{SSOUtils, SecurityFilter}
 import feign.{RequestInterceptor, RequestTemplate}
+import org.apache.linkis.server.security.{SSOUtils, SecurityFilter}
 import org.springframework.context.annotation.Configuration
 
 

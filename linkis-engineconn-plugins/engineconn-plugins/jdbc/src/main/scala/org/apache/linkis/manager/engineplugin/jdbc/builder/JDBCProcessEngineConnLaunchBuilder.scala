@@ -18,8 +18,6 @@
 package org.apache.linkis.manager.engineplugin.jdbc.builder
 
 import org.apache.linkis.manager.engineplugin.common.launch.process.JavaProcessEngineConnLaunchBuilder
-import org.apache.linkis.manager.label.entity.engine.UserCreatorLabel
-import org.apache.linkis.storage.utils.StorageConfiguration
 
 class JDBCProcessEngineConnLaunchBuilder extends JavaProcessEngineConnLaunchBuilder {
 

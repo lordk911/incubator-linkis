@@ -17,9 +17,6 @@
  
 package org.apache.linkis.entrance.timeout
 
-import java.util
-import java.util.concurrent.{ConcurrentHashMap, ConcurrentMap, TimeUnit}
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.conf.EntranceConfiguration
 import org.apache.linkis.entrance.exception.{EntranceErrorCode, EntranceIllegalParamException}
@@ -28,7 +25,8 @@ import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.entrance.{JobQueuingTimeoutLabel, JobRunningTimeoutLabel}
 
-
+import java.util
+import java.util.concurrent.{ConcurrentHashMap, ConcurrentMap, TimeUnit}
 import scala.collection.JavaConversions._
 
 
@@ -55,7 +53,6 @@ class JobTimeoutManager extends Logging {
     if (null != job) {
       info(s"Deleting Job: ${job.getId()}")
       synchronized {
-        job.kill()
         timeoutJobByName.remove(jobKey)
       }
     }
@@ -76,21 +73,24 @@ class JobTimeoutManager extends Logging {
   private def timeoutDetective(): Unit = {
     if (timeoutCheck) {
       def checkAndSwitch(job: EntranceJob): Unit = {
-        info(s"Checking whether the job timed out: ${job.getId()}")
-        val currentTime = System.currentTimeMillis() / 1000
-        val queuingTime = currentTime - job.getScheduledTime / 1000
-        val runningTime = currentTime - job.getStartTime / 1000
+        info(s"Checking whether the job id ${job.getJobRequest.getId()} timed out. ")
+        val currentTimeSeconds = System.currentTimeMillis() / 1000
+        // job.isWaiting == job in queue
+        val jobScheduleStartTimeSeconds = if (job.isWaiting) job.createTime / 1000 else currentTimeSeconds
+        val queuingTimeSeconds = currentTimeSeconds - jobScheduleStartTimeSeconds
+        val jobRunningStartTimeSeconds = if (job.getStartTime > 0) job.getStartTime / 1000 else currentTimeSeconds
+        val runningTimeSeconds = currentTimeSeconds - jobRunningStartTimeSeconds
         if (!job.isCompleted) {
           job.jobRequest.getLabels foreach {
             case queueTimeOutLabel: JobQueuingTimeoutLabel =>
-              if (queueTimeOutLabel.getQueuingTimeout > 0 && queuingTime >= queueTimeOutLabel.getQueuingTimeout) {
-                warn(s"Job queuing timeout, cancel it now: ${job.getId()}")
-                job.cancel()
+              if (job.isWaiting && queueTimeOutLabel.getQueuingTimeout > 0 && queuingTimeSeconds >= queueTimeOutLabel.getQueuingTimeout) {
+                logger.warn(s"Job ${job.getJobRequest.getId()} queued time : ${queuingTimeSeconds} seconds, which was over queueTimeOut : ${queueTimeOutLabel.getQueuingTimeout} seconds, cancel it now! ")
+                job.onFailure(s"Job queued ${queuingTimeSeconds} seconds over max queue time : ${queueTimeOutLabel.getQueuingTimeout} seconds.", null)
               }
             case jobRunningTimeoutLabel: JobRunningTimeoutLabel =>
-              if (jobRunningTimeoutLabel.getRunningTimeout > 0 && runningTime >= jobRunningTimeoutLabel.getRunningTimeout) {
-                warn(s"Job running timeout, cancel it now: ${job.getId()}")
-                job.cancel()
+              if (job.isRunning && jobRunningTimeoutLabel.getRunningTimeout > 0 && runningTimeSeconds >= jobRunningTimeoutLabel.getRunningTimeout) {
+                logger.warn(s"Job ${job.getJobRequest.getId()} run timeout ${runningTimeSeconds} seconds, which was over runTimeOut : ${jobRunningTimeoutLabel.getRunningTimeout} seconds, cancel it now! ")
+                job.onFailure(s"Job run ${runningTimeSeconds} seconds over max run time : ${jobRunningTimeoutLabel.getRunningTimeout} seconds.", null)
               }
             case _ =>
           }
@@ -98,7 +98,7 @@ class JobTimeoutManager extends Logging {
       }
 
       timeoutJobByName.foreach(item => {
-        info(s"Running timeout detection!")
+        logger.info(s"Running timeout detection!")
         synchronized {
           jobCompleteDelete(item._1)
           if (jobExist(item._1)) checkAndSwitch(item._2)

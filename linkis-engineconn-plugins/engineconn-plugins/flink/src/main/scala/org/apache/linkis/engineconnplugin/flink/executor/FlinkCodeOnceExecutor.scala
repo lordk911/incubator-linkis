@@ -17,12 +17,8 @@
  
 package org.apache.linkis.engineconnplugin.flink.executor
 
-import java.util
-import java.util.concurrent.Future
-import java.util.function.Supplier
-
 import org.apache.calcite.rel.metadata.{JaninoRelMetadataProvider, RelMetadataQueryBase}
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 import org.apache.flink.client.deployment.ClusterClientJobClientAdapter
 import org.apache.flink.client.program.{ClusterClient, ClusterClientProvider}
 import org.apache.flink.table.api.{ResultKind, TableResult}
@@ -39,6 +35,10 @@ import org.apache.linkis.engineconnplugin.flink.exception.{FlinkInitFailedExcept
 import org.apache.linkis.governance.common.paser.{CodeParserFactory, CodeType}
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.scheduler.executer.ErrorExecuteResponse
+
+import java.util
+import java.util.concurrent.Future
+import java.util.function.Supplier
 
 
 

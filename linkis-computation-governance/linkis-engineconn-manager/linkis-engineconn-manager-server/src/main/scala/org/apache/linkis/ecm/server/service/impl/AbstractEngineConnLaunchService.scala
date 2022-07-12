@@ -17,8 +17,7 @@
  
 package org.apache.linkis.ecm.server.service.impl
 
-import java.util.concurrent.TimeUnit
-
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.ecm.core.engineconn.{EngineConn, EngineConnInfo}
@@ -26,21 +25,20 @@ import org.apache.linkis.ecm.core.launch._
 import org.apache.linkis.ecm.server.LinkisECMApplication
 import org.apache.linkis.ecm.server.conf.ECMConfiguration._
 import org.apache.linkis.ecm.server.engineConn.DefaultEngineConn
-import org.apache.linkis.ecm.server.hook.{ECMHook, JarUDFLoadECMHook}
+import org.apache.linkis.ecm.server.hook.ECMHook
 import org.apache.linkis.ecm.server.listener.{EngineConnAddEvent, EngineConnStatusChangeEvent}
 import org.apache.linkis.ecm.server.service.{EngineConnLaunchService, ResourceLocalizationService}
 import org.apache.linkis.ecm.server.util.ECMUtils
 import org.apache.linkis.governance.common.conf.GovernanceCommonConf
+import org.apache.linkis.governance.common.utils.JobUtils
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus.Failed
 import org.apache.linkis.manager.common.entity.node.{AMEngineNode, EngineNode}
 import org.apache.linkis.manager.common.protocol.engine.EngineConnStatusCallbackToAM
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnLaunchRequest
 import org.apache.linkis.rpc.Sender
-import org.apache.commons.lang.exception.ExceptionUtils
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContextExecutorService, Future}
+import scala.concurrent.{ExecutionContextExecutorService, Future}
 import scala.util.{Failure, Success}
 
 
@@ -55,7 +53,7 @@ abstract class AbstractEngineConnLaunchService extends EngineConnLaunchService w
 
 
   def beforeLaunch(request: EngineConnLaunchRequest, conn: EngineConn, duration: Long): Unit = {
-    getECMHooks(request).foreach(_.beforeLaunch(request, conn))
+    Utils.tryAndWarn(getECMHooks(request).foreach(_.beforeLaunch(request, conn)))
   }
 
   def afterLaunch(request: EngineConnLaunchRequest, conn: EngineConn, duration: Long): Unit = {
@@ -64,7 +62,8 @@ abstract class AbstractEngineConnLaunchService extends EngineConnLaunchService w
 
   override def launchEngineConn(request: EngineConnLaunchRequest, duration: Long): EngineNode = {
     //1.创建engineConn和runner,launch 并设置基础属性
-    info(s"Try to launch a new EngineConn with $request.")
+    val taskId = JobUtils.getJobIdFromStringMap(request.creationDesc.properties)
+    logger.info(s"TaskId: $taskId try to launch a new EngineConn with $request.")
     val conn = createEngineConn
     val runner = createEngineConnLaunchRunner
     val launch = createEngineConnLaunch
@@ -92,28 +91,28 @@ abstract class AbstractEngineConnLaunchService extends EngineConnLaunchService w
           conn.setServiceInstance(serviceInstance)
         case _ =>
       }
+      afterLaunch(request, conn, duration)
+
 
       val future = Future {
-        afterLaunch(request, conn, duration)
+        logger.info(s"wait engineConn  ${conn.getServiceInstance} start")
+        waitEngineConnStart(request, conn, duration)
       }
 
       future onComplete {
         case Failure(t) =>
-          throw t
+          logger.error(s"TaskId: $taskId init ${conn.getServiceInstance} failed.${conn.getEngineConnLaunchRunner.getEngineConnLaunch.getEngineConnManagerEnv().engineConnWorkDir}")
+          LinkisECMApplication.getContext.getECMSyncListenerBus.postToAll(EngineConnStatusChangeEvent(conn.getTickedId, Failed))
         case Success(_) =>
-          info(s"init ${conn.getServiceInstance} succeed.")
+          logger.info(s"TaskId: $taskId init ${conn.getServiceInstance} succeed.${conn.getEngineConnLaunchRunner.getEngineConnLaunch.getEngineConnManagerEnv().engineConnWorkDir}")
       }
-      //超时忽略，如果状态翻转了则直接返回
-      Utils.tryQuietly(Await.result(future, Duration(WAIT_ENGINECONN_PID.getValue.toLong, TimeUnit.MILLISECONDS)))
-    }{
-      //failed，1.被ms打断，2.超时，3.普通错误，比如process
-      t: Throwable =>
-        error(s"init ${conn.getServiceInstance} failed, now stop and delete it. message: ${t.getMessage}")
-        conn.getEngineConnLaunchRunner.stop()
-        Sender.getSender(MANAGER_SPRING_NAME).send(EngineConnStatusCallbackToAM(conn.getServiceInstance,
-          NodeStatus.ShuttingDown, " wait init failed , reason " + ExceptionUtils.getRootCauseMessage(t)))
-        LinkisECMApplication.getContext.getECMSyncListenerBus.postToAll(EngineConnStatusChangeEvent(conn.getTickedId, Failed))
-        throw t
+    } { t =>
+      error(s"TaskId: $taskId init ${conn.getServiceInstance} failed, ${conn.getEngineConnLaunchRunner.getEngineConnLaunch.getEngineConnManagerEnv().engineConnWorkDir}, now stop and delete it. message: ${t.getMessage}", t)
+      conn.getEngineConnLaunchRunner.stop()
+      Sender.getSender(MANAGER_SPRING_NAME).send(EngineConnStatusCallbackToAM(conn.getServiceInstance,
+        NodeStatus.ShuttingDown, " wait init failed , reason " + ExceptionUtils.getRootCauseMessage(t)))
+      LinkisECMApplication.getContext.getECMSyncListenerBus.postToAll(EngineConnStatusChangeEvent(conn.getTickedId, Failed))
+      throw t
     }
     val engineNode = new AMEngineNode()
     engineNode.setLabels(conn.getLabels)
@@ -123,6 +122,8 @@ abstract class AbstractEngineConnLaunchService extends EngineConnLaunchService w
     engineNode.setMark("process")
     engineNode
   }
+
+  def waitEngineConnStart(request: EngineConnLaunchRequest, conn: EngineConn, duration: Long): Unit
 
   def createEngineConn: EngineConn = new DefaultEngineConn
 

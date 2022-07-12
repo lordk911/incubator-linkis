@@ -18,7 +18,6 @@
 package org.apache.linkis.bml.common;
 
 import org.apache.linkis.bml.conf.BmlServerConfiguration;
-import org.apache.linkis.bml.restful.RestfulUtils;
 import org.apache.linkis.bml.service.ResourceService;
 import org.apache.linkis.bml.service.VersionService;
 import org.apache.linkis.common.utils.Utils;
@@ -28,15 +27,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
-
 @Component
 public class ScheduledTask {
-
-    private static final Long SIZWE = 365 * RestfulUtils.DAY;
 
     @Autowired private ResourceService resourceService;
 

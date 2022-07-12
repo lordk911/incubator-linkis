@@ -17,9 +17,6 @@
  
 package org.apache.linkis.orchestrator.execution.impl
 
-import java.util
-import java.util.concurrent.CopyOnWriteArrayList
-
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.governance.common.entity.ExecutionNodeStatus
@@ -30,6 +27,8 @@ import org.apache.linkis.orchestrator.listener.execution.ExecutionTaskCompletedE
 import org.apache.linkis.orchestrator.listener.task._
 import org.apache.linkis.orchestrator.plans.physical.ExecTask
 
+import java.util
+import java.util.concurrent.CopyOnWriteArrayList
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -120,37 +119,33 @@ class DefaultTaskManager extends AbstractTaskManager with Logging {
     subTasks.nonEmpty
   }
 
+  def getRunnableExecutionTasksAndExecTask: (Array[ExecutionTask], Array[ExecTaskRunner]) = {
+    val execTaskRunners = ArrayBuffer[ExecTaskRunner]()
+    val runningExecutionTasks = getSuitableExecutionTasks.filter{ executionTask =>
+      val execTask = executionTask.getRootExecTask
+      val runnableSubTasks = new mutable.HashSet[ExecTask]()
+      getSubTasksRecursively(executionTask, execTask, runnableSubTasks)
+      if (runnableSubTasks.nonEmpty) {
+        val subExecTaskRunners = runnableSubTasks.map(execTaskToTaskRunner)
+        execTaskRunners ++= subExecTaskRunners
+        true
+      } else {
+        false
+      }
+    }
+    (runningExecutionTasks, execTaskRunners.toArray)
+  }
+
   protected def getSuitableExecutionTasks: Array[ExecutionTask] = {
     executionTasks.asScala.filter(executionTask => executionTask.getRootExecTask.canExecute
       && !ExecutionNodeStatus.isCompleted(executionTask.getStatus)).toArray
   }
 
-  /**
-    * Get runnable TaskRunner
-    * 1. Polling for all outstanding ExecutionTasks
-    * 2. Polling for unfinished subtasks of ExecutionTask corresponding to ExecTask tree
-    * 3. Get the subtask and determine whether it exceeds the maximum value of getRunnable. If it exceeds the maximum value, the maximum number of tasks will be returned
-    *
-    * @return
-    */
-  override def getRunnableTasks: Array[ExecTaskRunner] = {
-    val startTime = System.currentTimeMillis()
-    debug(s"Start to getRunnableTasks startTime: $startTime")
-    val execTaskRunners = ArrayBuffer[ExecTaskRunner]()
-    val runningExecutionTasks = getSuitableExecutionTasks
-    //1. Get all runnable TaskRunner
-    runningExecutionTasks.foreach { executionTask =>
-      val execTask = executionTask.getRootExecTask
-      val runnableSubTasks = new mutable.HashSet[ExecTask]()
-      getSubTasksRecursively(executionTask, execTask, runnableSubTasks)
-      val subExecTaskRunners = runnableSubTasks.map(execTaskToTaskRunner)
-      execTaskRunners ++= subExecTaskRunners
-    }
-
+  override def taskRunnableTasks(execTaskRunners: Array[ExecTaskRunner]): Array[ExecTaskRunner] = {
     //2. Take the current maximum number of runnables from the priority queue: Maximum limit-jobs that are already running
     val nowRunningNumber = executionTaskToRunningExecTask.values.map(_.length).sum
     val maxRunning = if (nowRunningNumber >= MAX_RUNNER_TASK_SIZE) 0 else MAX_RUNNER_TASK_SIZE - nowRunningNumber
-    val runnableTasks = if (maxRunning == 0) {
+    if (maxRunning == 0) {
       logger.warn(s"The current running has exceeded the maximum, now: $nowRunningNumber ")
       Array.empty[ExecTaskRunner]
     } else if (execTaskRunners.isEmpty) {
@@ -188,9 +183,32 @@ class DefaultTaskManager extends AbstractTaskManager with Logging {
       }
       runners.toArray
     }
+  }
+
+  /**
+   * Get runnable TaskRunner
+   * 1. Polling for all outstanding ExecutionTasks
+   * 2. Polling for unfinished subtasks of ExecutionTask corresponding to ExecTask tree
+   * 3. Get the subtask and determine whether it exceeds the maximum value of getRunnable. If it exceeds the maximum value, the maximum number of tasks will be returned
+   *
+   * @return
+   */
+  override def getRunnableTasks: Array[ExecTaskRunner] = {
+    val startTime = System.currentTimeMillis()
+    debug(s"Start to getRunnableTasks startTime: $startTime")
+    val execTaskRunners = ArrayBuffer[ExecTaskRunner]()
+    val runningExecutionTasks = getSuitableExecutionTasks
+    //1. Get all runnable TaskRunner
+    runningExecutionTasks.foreach { executionTask =>
+      val execTask = executionTask.getRootExecTask
+      val runnableSubTasks = new mutable.HashSet[ExecTask]()
+      getSubTasksRecursively(executionTask, execTask, runnableSubTasks)
+      val subExecTaskRunners = runnableSubTasks.map(execTaskToTaskRunner)
+      execTaskRunners ++= subExecTaskRunners
+    }
     val finishTime = System.currentTimeMillis()
     debug(s"Finished to getRunnableTasks finishTime: $finishTime, taken: ${finishTime - startTime}")
-    runnableTasks
+    taskRunnableTasks(execTaskRunners.toArray)
   }
 
   /**

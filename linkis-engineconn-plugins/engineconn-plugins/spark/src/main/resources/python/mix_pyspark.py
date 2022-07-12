@@ -41,6 +41,9 @@ try:
 except ImportError:
   from io import StringIO
 
+import time
+import threading
+
 # for back compatibility
 from pyspark.sql import SQLContext, HiveContext, Row
 
@@ -83,9 +86,9 @@ class SparkVersion(object):
     def isImportAllPackageUnderSparkSql(self):
         return self.version >= self.SPARK_1_3_0
 
-output = Logger()
+linkisOutput = Logger()
 errorOutput = ErrorLogger()
-sys.stdout = output
+sys.stdout = linkisOutput
 sys.stderr = errorOutput
 
 try:
@@ -211,6 +214,19 @@ class UDF(object):
 udf = UDF(intp, sqlc)
 intp.onPythonScriptInitialized(os.getpid())
 
+def java_watchdog_thread(sleep=10):
+    while True :
+        time.sleep(sleep)
+        try:
+            intp.getKind()
+        except Exception as e:
+            print("Failed to detect java daemon, now exit python process")
+            print(e)
+            sys.exit(1)
+watchdog_thread = threading.Thread(target=java_watchdog_thread)
+watchdog_thread.setDaemon(True)
+watchdog_thread.start()
+
 while True :
     req = intp.getStatements()
     try:
@@ -252,4 +268,4 @@ while True :
         msg = traceback.format_exc()
         intp.setStatementsFinished(msg, True)
 
-    output.reset()
+    linkisOutput.reset()

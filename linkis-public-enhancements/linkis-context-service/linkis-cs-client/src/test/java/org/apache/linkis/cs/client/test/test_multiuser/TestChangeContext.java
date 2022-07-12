@@ -27,11 +27,11 @@ import org.apache.linkis.cs.common.entity.source.*;
 import org.apache.linkis.cs.common.serialize.helper.ContextSerializationHelper;
 import org.apache.linkis.cs.common.serialize.helper.SerializationHelper;
 
-import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+
+import com.google.gson.Gson;
 
 public class TestChangeContext {
 
@@ -48,16 +48,17 @@ public class TestChangeContext {
                                 + " invalid.");
                 return;
             }
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String contextIDStr = null;
-            StringBuilder builder = new StringBuilder("");
-            java.lang.String tmp = br.readLine();
-            while (null != tmp) {
-                builder.append(tmp);
-                tmp = br.readLine();
+
+            String contextIDStr;
+            StringBuilder builder = new StringBuilder();
+            try (FileReader fr = new FileReader(file);
+                    BufferedReader br = new BufferedReader(fr)) {
+                java.lang.String tmp = br.readLine();
+                while (null != tmp) {
+                    builder.append(tmp);
+                    tmp = br.readLine();
+                }
             }
-            br.close();
             contextIDStr = builder.toString();
             System.out.println("Read contextID : " + contextIDStr);
 

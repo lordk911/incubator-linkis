@@ -17,11 +17,11 @@
 
 package org.apache.linkis.jobhistory.entity;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,8 +36,8 @@ public class JobHistoryTest {
 
         JobHistory jobHistory = new JobHistory();
         Date date = new Date(time);
-        jobHistory.setCreated_time(date);
-        jobHistory.setUpdated_time(date);
+        jobHistory.setCreatedTime(date);
+        jobHistory.setUpdatedTime(date);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String expectedStr = dateFormat.format(date);

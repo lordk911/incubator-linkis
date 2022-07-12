@@ -23,7 +23,7 @@ import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.utils.LabelUtils
-import org.apache.linkis.protocol.label.{InsLabelAttachRequest, InsLabelQueryRequest, InsLabelQueryResponse, InsLabelRemoveRequest, LabelInsQueryRequest, LabelInsQueryResponse}
+import org.apache.linkis.protocol.label._
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.rpc.conf.RPCConfiguration.PUBLIC_SERVICE_APPLICATION_NAME
 import org.apache.linkis.server.BDPJettyServerHelper

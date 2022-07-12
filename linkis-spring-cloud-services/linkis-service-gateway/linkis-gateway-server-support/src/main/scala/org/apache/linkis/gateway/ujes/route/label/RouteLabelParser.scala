@@ -17,8 +17,7 @@
  
 package org.apache.linkis.gateway.ujes.route.label
 
-import java.util
-
+import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
 import org.apache.linkis.manager.label.entity.Label
@@ -26,9 +25,11 @@ import org.apache.linkis.manager.label.entity.route.RouteLabel
 import org.apache.linkis.protocol.constants.TaskConstant
 import org.apache.linkis.server.BDPJettyServerHelper
 
+import java.util
 import scala.collection.JavaConversions._
 
 trait RouteLabelParser {
+
   /**
    * Parse main
    * @param gatewayContext context
@@ -36,14 +37,20 @@ trait RouteLabelParser {
   def parse(gatewayContext: GatewayContext): util.List[RouteLabel]
 }
 
-class GenericRoueLabelParser extends RouteLabelParser{
+class GenericRoueLabelParser extends RouteLabelParser with Logging {
 
   override def parse(gatewayContext: GatewayContext): util.List[RouteLabel] = {
     val requestBody = Option(gatewayContext.getRequest.getRequestBody)
     requestBody match {
       case Some(body) =>
         val labelBuilderFactory = LabelBuilderFactoryContext.getLabelBuilderFactory
-        val json = BDPJettyServerHelper.gson.fromJson(body, classOf[java.util.Map[String, Object]])
+        val json = Utils.tryCatch {
+          BDPJettyServerHelper.gson.fromJson(body, classOf[java.util.Map[String, Object]])
+        } {
+          case e: Exception =>
+            warn("Parse error. " + e.getMessage)
+            new util.HashMap[String, Object]()
+        }
         val labels: util.List[Label[_]] = json.get(TaskConstant.LABELS) match {
           case map: util.Map[String, Object] => labelBuilderFactory.getLabels(map)
           case map: util.Map[String, Any] => labelBuilderFactory.getLabels(map.asInstanceOf)

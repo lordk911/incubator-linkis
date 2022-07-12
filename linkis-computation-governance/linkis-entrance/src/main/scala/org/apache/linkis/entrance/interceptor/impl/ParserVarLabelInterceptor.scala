@@ -17,8 +17,6 @@
 
 package org.apache.linkis.entrance.interceptor.impl
 
-import java.{lang, util}
-
 import org.apache.linkis.entrance.interceptor.EntranceInterceptor
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.manager.label.builder.factory.LabelBuilderFactoryContext
@@ -26,6 +24,7 @@ import org.apache.linkis.manager.label.constant.LabelKeyConstant
 import org.apache.linkis.manager.label.entity.TenantLabel
 import org.apache.linkis.protocol.utils.TaskUtils
 
+import java.{lang, util}
 import scala.collection.JavaConversions._
 
 class ParserVarLabelInterceptor extends EntranceInterceptor{

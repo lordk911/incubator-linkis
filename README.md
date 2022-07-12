@@ -2,6 +2,7 @@ Linkis
 ==========
 
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![codecov](https://codecov.io/gh/apache/incubator-linkis/branch/master/graph/badge.svg)](https://codecov.io/gh/apache/incubator-linkis/branch/master)
 
 [English](README.md) | [中文](README_CN.md)
 
@@ -54,22 +55,39 @@ Since the first release of Linkis in 2019, it has accumulated more than **700** 
 
 # Ecosystem
 
-| Component | Description | Linkis 0.x(recommend 0.11.0) Compatible | Linkis 1.x(recommend 1.0.3) Compatible |
+| Component | Description | Linkis 0.x(recommend 0.11.0) Compatible | Linkis 1.x(recommend 1.1.1) Compatible |
 | --------------- | -------------------------------------------------------------------- | --------- | --------- |
-| [**DataSphereStudio**](https://github.com/WeBankFinTech/DataSphereStudio/blob/master/README.md) | DataSphere Studio (DSS for short) is WeDataSphere, a one-stop data application development management portal. | DSS 0.9.1[released] | **DSS 1.0.1[developing]** |
-| [**Scriptis**](https://github.com/WeBankFinTech/Scriptis) | Support online script writing such as SQL, Pyspark, HiveQL, etc., submit to [Linkis](https://github.com/apache/incubator-linkis) to perform data analysis web tools. | Scriptis merged in DSS（DSS 0.9.1[released]） | **In DSS 1.0.1[developing]** |
-| [**Schedulis**](https://github.com/WeBankFinTech/Schedulis) | Workflow task scheduling system based on Azkaban secondary development, with financial-grade features such as high performance, high availability and multi-tenant resource isolation. | Schedulis 0.6.1[released] |  **Schedulis0.6.2 [developing]** |
-| [**Qualitis**](https://github.com/WeBankFinTech/Qualitis) | Data quality verification tool, providing data verification capabilities such as data integrity and correctness  | Qualitis 0.8.0[released] | **Qualitis 0.9.0 [developing]** |
-| [**Streamis**](https://github.com/WeBankFinTech/Streamis) | Streaming application development management tool. It supports the release of Flink Jar and Flink SQL, and provides the development, debugging and production management capabilities of streaming applications, such as: start-stop, status monitoring, checkpoint, etc. | **No support** | **Streamis 0.1.0 [developing]** |
+| [**DataSphereStudio**](https://github.com/WeBankFinTech/DataSphereStudio/blob/master/README.md) | DataSphere Studio (DSS for short) is WeDataSphere, a one-stop data application development management portal. | DSS 0.9.1[released] | **DSS 1.0.1[released][Linkis recommend 1.1.0]** |
+| [**Scriptis**](https://github.com/WeBankFinTech/Scriptis) | Support online script writing such as SQL, Pyspark, HiveQL, etc., submit to [Linkis](https://github.com/apache/incubator-linkis) to perform data analysis web tools. | Scriptis merged in DSS（DSS 0.9.1[released]） | **In DSS 1.0.1[released]** |
+| [**Schedulis**](https://github.com/WeBankFinTech/Schedulis) | Workflow task scheduling system based on Azkaban secondary development, with financial-grade features such as high performance, high availability and multi-tenant resource isolation. | Schedulis 0.6.1[released] |  **Schedulis0.6.2 [released]** |
+| [**Qualitis**](https://github.com/WeBankFinTech/Qualitis) | Data quality verification tool, providing data verification capabilities such as data integrity and correctness  | Qualitis 0.8.0[released] | **Qualitis 0.9.1 [released]** |
+| [**Streamis**](https://github.com/WeBankFinTech/Streamis) | Streaming application development management tool. It supports the release of Flink Jar and Flink SQL, and provides the development, debugging and production management capabilities of streaming applications, such as: start-stop, status monitoring, checkpoint, etc. | **No support** | **Streamis 0.1.0 [released][Linkis recommend 1.1.0]** |
 | [**Exchangis**](https://github.com/WeBankFinTech/Exchangis) | A data exchange platform that supports data transmission between structured and unstructured heterogeneous data sources, the upcoming Exchangis1. 0, will be connected with DSS workflow | **No support** | **Exchangis 1.0.0 [developing]**|
 | [**Visualis**](https://github.com/WeBankFinTech/Visualis) | A data visualization BI tool based on the second development of Davinci, an open source project of CreditEase, provides users with financial-level data visualization capabilities in terms of data security. | Visualis 0.5.0[released]| **Visualis 1.0.0[developing]**|
-| [**Prophecis**](https://github.com/WeBankFinTech/Prophecis) | A one-stop machine learning platform that integrates multiple open source machine learning frameworks. Prophecis' MLFlow can be connected to DSS workflow through AppConn. | Prophecis 0.2.2[released] | **Prophecis 0.3.0 [developing]** |
+| [**Prophecis**](https://github.com/WeBankFinTech/Prophecis) | A one-stop machine learning platform that integrates multiple open source machine learning frameworks. Prophecis' MLFlow can be connected to DSS workflow through AppConn. | Prophecis 0.2.2[released] | **Prophecis 0.3.0 [released]** |
 
 # Download
 
 Please go to the [Linkis Releases Page](https://github.com/apache/incubator-linkis/releases) to download a compiled distribution or a source code package of Linkis.
 
 # Compile and deploy
+
+```shell
+
+## compile backend
+### Mac OS/Linux
+./mvnw -N install
+./mvnw  clean install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true
+
+### Windows
+mvnw.cmd -N install
+mvnw.cmd clean install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true
+
+## compile web
+cd incubator-linkis/web
+npm install
+npm run build
+```
 Please follow [Compile Guide](https://linkis.apache.org/docs/latest/development/linkis_compile_and_package) to compile Linkis from source code.  
 Please refer to [Deployment Documents](https://linkis.apache.org/docs/latest/deployment/quick_deploy) to do the deployment.
 
@@ -102,9 +120,9 @@ For code and documentation contributions, please follow the [contribution guide]
 # Contact Us
 
 Any questions or suggestions please kindly submit an issue.  
-You can scan the QR code below to join our WeChat and QQ group to get more immediate response.
+You can scan the QR code below to join our WeChat group to get more immediate response.
 
-![introduction05](https://user-images.githubusercontent.com/7869972/148767386-0663f833-547d-4c30-8876-081bb966ffb8.png)
+![WeChat](https://user-images.githubusercontent.com/11496700/173569063-8615c259-59ef-477a-9cee-825d28b54e7b.png)
 
 Meetup videos on [Bilibili](https://space.bilibili.com/598542776?from=search&seid=14344213924133040656).
 

@@ -17,9 +17,9 @@
  
 package org.apache.linkis.engineconn.executor.entity
 
-import java.util
-
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 trait LabelExecutor extends Executor {
 

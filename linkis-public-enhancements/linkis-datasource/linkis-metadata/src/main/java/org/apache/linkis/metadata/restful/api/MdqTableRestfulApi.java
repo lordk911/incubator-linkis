@@ -28,27 +28,23 @@ import org.apache.linkis.metadata.domain.mdq.vo.MdqTableStatisticInfoVO;
 import org.apache.linkis.metadata.exception.MdqIllegalParamException;
 import org.apache.linkis.metadata.service.MdqService;
 import org.apache.linkis.server.Message;
-import org.apache.linkis.server.security.SecurityFilter;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping(path = "/datasource")
@@ -66,7 +62,7 @@ public class MdqTableRestfulApi {
             @RequestParam(value = "database", required = false) String database,
             @RequestParam(value = "tableName", required = false) String tableName,
             HttpServletRequest req) {
-        String userName = SecurityFilter.getLoginUsername(req);
+        String userName = ModuleUserUtils.getOperationUser(req, "getTableBaseInfo " + tableName);
         MdqTableBaseInfoVO tableBaseInfo;
         if (mdqService.isExistInMdq(database, tableName, userName)) {
             tableBaseInfo = mdqService.getTableBaseInfoFromMdq(database, tableName, userName);
@@ -81,7 +77,7 @@ public class MdqTableRestfulApi {
             @RequestParam(value = "database", required = false) String database,
             @RequestParam(value = "tableName", required = false) String tableName,
             HttpServletRequest req) {
-        String userName = SecurityFilter.getLoginUsername(req);
+        String userName = ModuleUserUtils.getOperationUser(req, "getTableFieldsInfo " + tableName);
         List<MdqTableFieldsInfoVO> tableFieldsInfo;
         if (mdqService.isExistInMdq(database, tableName, userName)) {
             tableFieldsInfo = mdqService.getTableFieldsInfoFromMdq(database, tableName, userName);
@@ -100,9 +96,10 @@ public class MdqTableRestfulApi {
             @RequestParam(value = "partitionSort", defaultValue = "desc") String partitionSort,
             HttpServletRequest req)
             throws IOException {
-        String userName = SecurityFilter.getLoginUsername(req);
+        String userName =
+                ModuleUserUtils.getOperationUser(req, "getTableStatisticInfo " + tableName);
         MdqTableStatisticInfoVO tableStatisticInfo =
-                mdqService.getTableStatisticInfo(database, tableName, userName);
+                mdqService.getTableStatisticInfo(database, tableName, userName, partitionSort);
         int totalSize = 0;
         List<MdqTablePartitionStatisticInfoVO> partitionPage;
         List<MdqTablePartitionStatisticInfoVO> partitions = tableStatisticInfo.getPartitions();
@@ -156,7 +153,8 @@ public class MdqTableRestfulApi {
             @RequestParam(value = "partitionPath", required = false) String partitionName,
             HttpServletRequest req)
             throws IOException, MdqIllegalParamException {
-        String userName = SecurityFilter.getLoginUsername(req);
+        String userName =
+                ModuleUserUtils.getOperationUser(req, "getPartitionStatisticInfo " + tableName);
         MdqTablePartitionStatisticInfoVO partition =
                 mdqService.getPartitionStatisticInfo(database, tableName, userName, partitionName);
         return Message.ok().data("partitionStatisticInfo", partition);
@@ -173,7 +171,7 @@ public class MdqTableRestfulApi {
     @RequestMapping(path = "persistTable", method = RequestMethod.POST)
     public Message persistTable(HttpServletRequest req, @RequestBody JsonNode json)
             throws IOException {
-        String userName = SecurityFilter.getLoginUsername(req);
+        String userName = ModuleUserUtils.getOperationUser(req, "persistTable ");
         MdqTableBO table = mapper.treeToValue(json.get("table"), MdqTableBO.class);
         mdqService.persistTable(table, userName);
         return Message.ok();
@@ -181,7 +179,7 @@ public class MdqTableRestfulApi {
 
     @RequestMapping(path = "displaysql", method = RequestMethod.POST)
     public Message displaySql(HttpServletRequest request, @RequestBody JsonNode json) {
-        String userName = SecurityFilter.getLoginUsername(request);
+        String userName = ModuleUserUtils.getOperationUser(request, "displaysql ");
         logger.info("display sql for user {} ", userName);
         StringBuilder sb = new StringBuilder();
         String retSql = "";

@@ -17,6 +17,7 @@
  
 package org.apache.linkis.entrance.interceptor.impl
 
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.exception.ErrorException
 import org.apache.linkis.common.log.LogUtils
 import org.apache.linkis.common.utils.Utils
@@ -24,7 +25,6 @@ import org.apache.linkis.entrance.interceptor.EntranceInterceptor
 import org.apache.linkis.entrance.interceptor.exception.VarSubstitutionException
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.manager.label.utils.LabelUtil
-import org.apache.commons.lang.exception.ExceptionUtils
 
 /**
   * Description: For variable substitution(用于变量替换)
@@ -38,8 +38,7 @@ class VarSubstitutionInterceptor extends EntranceInterceptor {
         Utils.tryThrow {
           logAppender.append(LogUtils.generateInfo("Program is substituting variables for you") + "\n")
           val codeType = LabelUtil.getCodeType(jobRequest.getLabels)
-          val (result, code) = CustomVariableUtils.replaceCustomVar(jobRequest, codeType)
-          if (result) jobRequest.setExecutionCode(code)
+          jobRequest.setExecutionCode(CustomVariableUtils.replaceCustomVar(jobRequest, codeType))
           logAppender.append(LogUtils.generateInfo("Variables substitution ended successfully") + "\n")
           jobRequest
         } {

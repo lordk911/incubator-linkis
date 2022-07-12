@@ -17,10 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.factory
 
-import java.io.File
-import java.lang.reflect.Constructor
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
@@ -31,10 +28,13 @@ import org.apache.linkis.manager.engineplugin.common.creation.{ExecutorFactory, 
 import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 import org.apache.linkis.server.JMap
-import org.apache.commons.lang.StringUtils
 import org.apache.spark.sql.{SQLContext, SparkSession}
 import org.apache.spark.util.SparkUtils
 import org.apache.spark.{SparkConf, SparkContext}
+
+import java.io.File
+import java.lang.reflect.Constructor
+import java.util
 
 /**
  *
@@ -70,18 +70,16 @@ class SparkEngineConnFactory extends MultiExecutorEngineConnFactory with Logging
 
     val outputDir = createOutputDir(sparkConf)
 
-    // todo check scala sparkILoopInit
-    //Utils.waitUntil(() => scalaExecutor.sparkILoopInited == true && scalaExecutor.sparkILoop.intp != null, new TimeType("120s").toDuration)
-
-    info("print current thread name "+ Thread.currentThread().getContextClassLoader.toString)
+    info("print current thread name " + Thread.currentThread().getContextClassLoader.toString)
     val sparkSession = createSparkSession(outputDir, sparkConf)
     if (sparkSession == null) throw new SparkSessionNullException(40009, "sparkSession can not be null")
 
     val sc = sparkSession.sparkContext
-    val sqlContext = createSQLContext(sc,options.asInstanceOf[util.HashMap[String, String]], sparkSession)
-    sc.hadoopConfiguration.set("mapred.output.compress", SparkConfiguration.MAPRED_OUTPUT_COMPRESS.getValue(options))
-    sc.hadoopConfiguration.set("mapred.output.compression.codec", SparkConfiguration.MAPRED_OUTPUT_COMPRESSION_CODEC.getValue(options))
-    println("Application report for " + sc.applicationId)
+    val sqlContext = createSQLContext(sc, options.asInstanceOf[util.HashMap[String, String]], sparkSession)
+    if (SparkConfiguration.MAPRED_OUTPUT_COMPRESS.getValue(options)) {
+      sc.hadoopConfiguration.set("mapred.output.compress", SparkConfiguration.MAPRED_OUTPUT_COMPRESS.getValue(options).toString)
+      sc.hadoopConfiguration.set("mapred.output.compression.codec", SparkConfiguration.MAPRED_OUTPUT_COMPRESSION_CODEC.getValue(options))
+    }
     SparkEngineSession(sc, sqlContext, sparkSession, outputDir)
   }
 
@@ -156,7 +154,7 @@ class SparkEngineConnFactory extends MultiExecutorEngineConnFactory with Logging
 
   override protected def getEngineConnType: EngineType = EngineType.SPARK
 
-  private val executorFactoryArray =   Array[ExecutorFactory](new SparkSqlExecutorFactory, new SparkPythonExecutorFactory, new SparkScalaExecutorFactory)
+  private val executorFactoryArray =  Array[ExecutorFactory](new SparkSqlExecutorFactory, new SparkPythonExecutorFactory, new SparkScalaExecutorFactory)
 
   override def getExecutorFactories: Array[ExecutorFactory] = {
     executorFactoryArray

@@ -27,28 +27,24 @@ import org.apache.linkis.bml.service.*;
 import org.apache.linkis.bml.util.HttpRequestHelper;
 import org.apache.linkis.common.exception.ErrorException;
 import org.apache.linkis.server.Message;
-import org.apache.linkis.server.security.SecurityFilter;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.*;
 
 @RequestMapping(path = "/bml")
 @RestController
@@ -74,8 +70,10 @@ public class BmlProjectRestful {
 
     @RequestMapping(path = "createBmlProject", method = RequestMethod.POST)
     public Message createBmlProject(HttpServletRequest request, @RequestBody JsonNode jsonNode) {
-        String username = SecurityFilter.getLoginUsername(request);
+
         String projectName = jsonNode.get(PROJECT_NAME_STR).textValue();
+        String username =
+                ModuleUserUtils.getOperationUser(request, "createBmlProject" + projectName);
         LOGGER.info("{} begins to create a project {} in bml", username, projectName);
         JsonNode editUserNode = jsonNode.get(EDIT_USERS_STR);
         JsonNode accessUserNode = jsonNode.get(ACCESS_USERS_STR);
@@ -108,7 +106,7 @@ public class BmlProjectRestful {
             @RequestParam(name = "projectName") String projectName,
             @RequestParam(name = "file") List<MultipartFile> files)
             throws ErrorException {
-        String username = SecurityFilter.getLoginUsername(request);
+        String username = ModuleUserUtils.getOperationUser(request, "uploadShareResource");
         Message message;
         try {
             LOGGER.info(
@@ -173,13 +171,14 @@ public class BmlProjectRestful {
             @RequestParam("resourceId") String resourceId,
             @RequestParam("file") MultipartFile file)
             throws ErrorException {
-        String username = SecurityFilter.getLoginUsername(request);
+        String username =
+                ModuleUserUtils.getOperationUser(request, "updateShareResource:" + resourceId);
         if (StringUtils.isEmpty(resourceId) || !resourceService.checkResourceId(resourceId)) {
             LOGGER.error("the error resourceId  is {} ", resourceId);
             throw new BmlServerParaErrorException(
                     "the resourceId: "
                             + resourceId
-                            + "is Null, illegal, or deleted (resourceId: "
+                            + " is Null, illegal, or deleted (resourceId: "
                             + resourceId
                             + " 为空,非法或者已被删除!)");
         }
@@ -378,7 +377,7 @@ public class BmlProjectRestful {
     @RequestMapping(path = "attachResourceAndProject", method = RequestMethod.POST)
     public Message attachResourceAndProject(
             HttpServletRequest request, @RequestBody JsonNode jsonNode) throws ErrorException {
-        String username = SecurityFilter.getLoginUsername(request);
+        String username = ModuleUserUtils.getOperationUser(request, "attachResourceAndProject");
         String projectName = jsonNode.get(PROJECT_NAME_STR).textValue();
         String resourceId = jsonNode.get("resourceId").textValue();
         LOGGER.info("begin to attach {}  and {}", projectName, username);
@@ -389,7 +388,7 @@ public class BmlProjectRestful {
     @RequestMapping(path = "updateProjectUsers", method = RequestMethod.POST)
     public Message updateProjectUsers(HttpServletRequest request, @RequestBody JsonNode jsonNode)
             throws ErrorException {
-        String username = SecurityFilter.getLoginUsername(request);
+        String username = ModuleUserUtils.getOperationUser(request, "updateProjectUsers");
         String projectName = jsonNode.get("projectName").textValue();
         LOGGER.info("{} begins to update project users for {}", username, projectName);
         List<String> editUsers = new ArrayList<>();

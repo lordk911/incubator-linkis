@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.engineplugin.io
 
-import java.util
-
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
 import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
@@ -27,9 +25,15 @@ import org.apache.linkis.manager.engineplugin.io.builder.IoProcessEngineConnLaun
 import org.apache.linkis.manager.engineplugin.io.factory.IoEngineConnFactory
 import org.apache.linkis.manager.label.entity.Label
 
+import java.util
+
 class IoEngineConnPlugin extends EngineConnPlugin {
 
-  private val EP_CONTEXT_CONSTRUCTOR_LOCK = new Object()
+  private val resourceLocker = new Object()
+
+  private val engineLaunchBuilderLocker = new Object()
+
+  private val engineFactoryLocker = new Object()
 
   private var engineResourceFactory: EngineResourceFactory = _
 
@@ -48,22 +52,19 @@ class IoEngineConnPlugin extends EngineConnPlugin {
     runTypeLabel.setRunType(RunType.IO.toString)*/
   }
 
-  override def getEngineResourceFactory: EngineResourceFactory = EP_CONTEXT_CONSTRUCTOR_LOCK.synchronized {
-    if (null == engineResourceFactory) {
+  override def getEngineResourceFactory: EngineResourceFactory = {
+    if (null == engineResourceFactory) resourceLocker synchronized {
       engineResourceFactory = new GenericEngineResourceFactory
     }
     engineResourceFactory
   }
 
-  override def getEngineConnLaunchBuilder: EngineConnLaunchBuilder = EP_CONTEXT_CONSTRUCTOR_LOCK.synchronized {
-    if (null == engineLaunchBuilder) {
-      engineLaunchBuilder = new IoProcessEngineConnLaunchBuilder
-    }
-    engineLaunchBuilder
+  override def getEngineConnLaunchBuilder: EngineConnLaunchBuilder = {
+    new IoProcessEngineConnLaunchBuilder
   }
 
-  override def getEngineConnFactory: EngineConnFactory = EP_CONTEXT_CONSTRUCTOR_LOCK.synchronized {
-    if (null == engineFactory) {
+  override def getEngineConnFactory: EngineConnFactory = {
+    if (null == engineFactory) engineFactoryLocker synchronized {
       engineFactory = new IoEngineConnFactory
     }
     engineFactory

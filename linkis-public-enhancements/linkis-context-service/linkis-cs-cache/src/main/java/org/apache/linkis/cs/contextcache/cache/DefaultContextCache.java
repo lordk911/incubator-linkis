@@ -22,6 +22,7 @@ import org.apache.linkis.cs.common.entity.source.ContextID;
 import org.apache.linkis.cs.common.exception.CSErrorException;
 import org.apache.linkis.cs.contextcache.cache.csid.ContextIDValue;
 import org.apache.linkis.cs.contextcache.cache.csid.ContextIDValueGenerator;
+import org.apache.linkis.cs.contextcache.conf.ContextCacheConf;
 import org.apache.linkis.cs.contextcache.metric.ContextCacheMetric;
 import org.apache.linkis.cs.contextcache.metric.ContextIDMetric;
 import org.apache.linkis.cs.contextcache.metric.DefaultContextCacheMetric;
@@ -38,15 +39,16 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.apache.linkis.cs.listener.event.enumeration.OperateType.*;
 
@@ -71,7 +73,9 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
         listenerBus.addListener(this);
         this.cache =
                 CacheBuilder.newBuilder()
-                        .maximumSize(3000)
+                        .maximumSize(ContextCacheConf.MAX_CACHE_SIZE)
+                        .expireAfterWrite(
+                                Duration.ofMillis(ContextCacheConf.MAX_CACHE_READ_EXPIRE_MILLS))
                         .removalListener(contextIDRemoveListener)
                         .recordStats()
                         .build();
@@ -119,6 +123,7 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
     public void put(ContextIDValue contextIDValue) throws CSErrorException {
 
         if (contextIDValue != null && StringUtils.isNotBlank(contextIDValue.getContextID())) {
+            logger.info("update contextID:{}", contextIDValue.getContextID());
             cache.put(contextIDValue.getContextID(), contextIDValue);
         }
     }
@@ -181,14 +186,14 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
         logger.info("deal contextID ADD event of {}", contextIDEvent.getContextID());
         getContextCacheMetric().addCount();
         getContextCacheMetric().setCachedCount(getContextCacheMetric().getCachedCount() + 1);
-        logger.info("Now, The cachedCount is (%d)", getContextCacheMetric().getCachedCount());
+        logger.info("Now, The cachedCount is ({})", getContextCacheMetric().getCachedCount());
     }
 
     @Override
     public void onCSIDRemoved(ContextIDEvent contextIDEvent) {
         logger.info("deal contextID remove event of {}", contextIDEvent.getContextID());
         getContextCacheMetric().setCachedCount(getContextCacheMetric().getCachedCount() - 1);
-        logger.info("Now, The cachedCount is (%d)", getContextCacheMetric().getCachedCount());
+        logger.info("Now, The cachedCount is ({})", getContextCacheMetric().getCachedCount());
     }
 
     @Override

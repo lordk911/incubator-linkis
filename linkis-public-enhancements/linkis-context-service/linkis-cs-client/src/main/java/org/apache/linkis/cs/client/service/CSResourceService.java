@@ -27,12 +27,12 @@ import org.apache.linkis.cs.common.exception.ErrorCode;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CSResourceService implements ResourceService {
 
@@ -57,6 +57,7 @@ public class CSResourceService implements ResourceService {
     public Map<ContextKey, BMLResource> getAllUpstreamBMLResource(
             String contextIDStr, String nodeName) throws CSErrorException {
         if (StringUtils.isBlank(contextIDStr) || StringUtils.isBlank(nodeName)) {
+            logger.warn("contextIDStr or nodeName cannot null");
             return null;
         }
         try {
@@ -80,6 +81,7 @@ public class CSResourceService implements ResourceService {
             throws CSErrorException {
         List<BMLResource> rsList = new ArrayList<>();
         if (StringUtils.isBlank(contextIDStr) || StringUtils.isBlank(nodeName)) {
+            logger.warn("contextIDStr or nodeName cannot null");
             return rsList;
         }
         try {

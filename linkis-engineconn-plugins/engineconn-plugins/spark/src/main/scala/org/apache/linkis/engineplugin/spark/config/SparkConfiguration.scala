@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineplugin.spark.config
 
-import java.io.File
-
 import org.apache.linkis.common.conf.{CommonVars, TimeType}
 import org.apache.linkis.common.utils.{ClassUtils, Logging}
 import org.apache.linkis.engineplugin.spark.factory.SparkEngineConnFactory
+
+import java.io.File
 
 /**
   *
@@ -49,7 +49,7 @@ object SparkConfiguration extends Logging {
 
   val SPARK_SUBMIT_PATH = CommonVars[String]("wds.linkis.spark.sparksubmit.path", "spark-submit")
 
-  val MAPRED_OUTPUT_COMPRESS = CommonVars[String]("mapred.output.compress", "true", "Whether the map output is compressed（map输出结果是否压缩）")
+  val MAPRED_OUTPUT_COMPRESS = CommonVars[Boolean]("mapred.output.compress", false, "Whether the map output is compressed（map输出结果是否压缩）")
 
   val MAPRED_OUTPUT_COMPRESSION_CODEC = CommonVars[String]("mapred.output.compression.codec", "org.apache.hadoop.io.compress.GzipCodec", "Map output compression method（map输出结果压缩方式）")
 
@@ -61,7 +61,7 @@ object SparkConfiguration extends Logging {
 
   val ENGINE_JAR = CommonVars[String]("wds.linkis.enginemanager.core.jar", getMainJarName)
 
-  val DEFAULT_SPARK_JAR_NAME = CommonVars[String]("wds.linkis.ecp.spark.default.jar", "linkis-engineconn-core-1.1.0.jar")
+  val DEFAULT_SPARK_JAR_NAME = CommonVars[String]("wds.linkis.ecp.spark.default.jar", "linkis-engineconn-core-1.1.2.jar")
 
   val SPARK_DRIVER_CLASSPATH = CommonVars[String]("spark.driver.extraClassPath", "")
 
@@ -75,10 +75,20 @@ object SparkConfiguration extends Logging {
   val SQL_EXTENSION_TIMEOUT = CommonVars("wds.linkis.dws.ujes.spark.extension.timeout", 3000L)
   val SPARK_NF_FRACTION_LENGTH = CommonVars[Int]("wds.linkis.engine.spark.fraction.length", 30)
   val SHOW_DF_MAX_RES = CommonVars("wds.linkis.show.df.max.res", Int.MaxValue)
-  val MDQ_APPLICATION_NAME = CommonVars("wds.linkis.mdq.application.name", "linkis-ps-publicservice")
+  val MDQ_APPLICATION_NAME = CommonVars("wds.linkis.mdq.application.name", "linkis-ps-datasource")
   val DOLPHIN_LIMIT_LEN = CommonVars("wds.linkis.dolphin.limit.len", 5000)
 
   val IS_VIEWFS_ENV = CommonVars("wds.linkis.spark.engine.is.viewfs.env", true)
+
+  val ENGINE_SHUTDOWN_LOGS = CommonVars("wds.linkis.spark.engineconn.fatal.log", "error writing class;OutOfMemoryError")
+
+  val PYSPARK_PYTHON3_PATH = CommonVars[String]("pyspark.python3.path", "/appcom/Install/anaconda3/bin/python")
+
+  val ENABLE_REPLACE_PACKAGE_NAME = CommonVars("wds.linkis.spark.engine.scala.replace_package_header.enable", true)
+
+  val REPLACE_PACKAGE_HEADER = CommonVars("wds.linkis.spark.engine.scala.replace_package.header", "com.webank.wedatasphere.linkis")
+
+  val REPLACE_PACKAGE_TO_HEADER = "org.apache.linkis"
 
   private def getMainJarName(): String = {
     val somePath = ClassUtils.jarOfClass(classOf[SparkEngineConnFactory])

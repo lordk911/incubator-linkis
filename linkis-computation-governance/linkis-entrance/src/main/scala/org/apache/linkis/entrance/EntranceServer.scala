@@ -17,17 +17,17 @@
  
 package org.apache.linkis.entrance
 
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.exception.{ErrorException, LinkisException, LinkisRuntimeException}
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.exception.{EntranceErrorException, SubmitFailedException}
-import org.apache.linkis.entrance.execute.{EntranceExecutorManager, EntranceJob}
+import org.apache.linkis.entrance.execute.EntranceJob
 import org.apache.linkis.entrance.log.LogReader
 import org.apache.linkis.entrance.timeout.JobTimeoutManager
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.queue.{Job, SchedulerEventState}
 import org.apache.linkis.server.conf.ServerConfiguration
-import org.apache.commons.lang.exception.ExceptionUtils
 
 
 abstract class EntranceServer extends Logging {
@@ -102,9 +102,15 @@ abstract class EntranceServer extends Logging {
         t => logger.error("Failed to write init log, reason: ", t)
       }
 
+      /**
+       * job.afterStateChanged() method is only called in job.run(), and job.run() is called only after job is scheduled
+       * so it suggest that we lack a hook for job init, currently we call this to trigger JobListener.onJobinit()
+       * */
+      Utils.tryAndWarn(job.getJobListener.foreach(_.onJobInited(job)))
       getEntranceContext.getOrCreateScheduler().submit(job)
-      val msg = s"Job with jobId : ${job.getId} and execID : ${job.getId()} submitted "
+      val msg = s"Job with jobId : ${jobRequest.getId} and execID : ${job.getId()} submitted "
       logger.info(msg)
+
       job match {
         case entranceJob: EntranceJob =>
           entranceJob.getJobRequest.setReqId(job.getId())

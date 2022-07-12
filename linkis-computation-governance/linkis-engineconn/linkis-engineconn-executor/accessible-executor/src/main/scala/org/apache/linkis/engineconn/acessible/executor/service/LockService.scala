@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineconn.acessible.executor.service
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.acessible.executor.listener.ExecutorLockListener
 import org.apache.linkis.manager.common.protocol.{RequestEngineLock, RequestEngineUnlock, ResponseEngineLock, ResponseEngineUnlock}
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.lang.StringUtils
 
 trait LockService extends ExecutorLockListener with Logging {
 

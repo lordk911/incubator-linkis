@@ -18,7 +18,6 @@
 
 // vue.config.js
 const path = require('path')
-const fs = require('fs')
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 // const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
@@ -26,7 +25,7 @@ const VirtualModulesPlugin = require('webpack-virtual-modules');
 const apps = require('./src/config.json')
 
 const getVersion = () => {
-    return  process.env.VUE_APP_VERSION
+  return  process.env.VUE_APP_VERSION
 }
 
 // 指定module打包, 不指定则打包全部子应用
@@ -160,7 +159,7 @@ module.exports = {
               { source: './install.sh', destination: `./dist/install.sh`,toType: 'file' },
               { source: '../NOTICE-binary-ui', destination: `./dist/NOTICE`,toType: 'file'},
               { source: '../LICENSE-binary-ui', destination: `./dist/LICENSE`,toType: 'file'},
-              { source: '../DISCLAIMER-WIP', destination: `./dist/DISCLAIMER-WIP`,toType: 'file'},
+              { source: '../DISCLAIMER', destination: `./dist/DISCLAIMER`,toType: 'file'},
               { source: '../licenses-binary-ui', destination: `./dist/licenses` }
             ],
             // 先删除根目录下的zip包

@@ -19,6 +19,7 @@ package org.apache.linkis.cs.persistence.persistence.impl;
 
 import org.apache.linkis.cs.common.entity.source.ContextID;
 import org.apache.linkis.cs.common.exception.CSErrorException;
+import org.apache.linkis.cs.persistence.conf.PersistenceConf;
 import org.apache.linkis.cs.persistence.dao.ContextIDMapper;
 import org.apache.linkis.cs.persistence.entity.ExtraFieldClass;
 import org.apache.linkis.cs.persistence.entity.PersistenceContextID;
@@ -26,17 +27,20 @@ import org.apache.linkis.cs.persistence.persistence.ContextIDPersistence;
 import org.apache.linkis.cs.persistence.util.PersistenceUtils;
 import org.apache.linkis.server.BDPJettyServerHelper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.util.Pair;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 @Component
 public class ContextIDPersistenceImpl implements ContextIDPersistence {
@@ -55,6 +59,10 @@ public class ContextIDPersistenceImpl implements ContextIDPersistence {
             Pair<PersistenceContextID, ExtraFieldClass> pContextID =
                     PersistenceUtils.transfer(contextID, pClass);
             pContextID.getFirst().setSource(json.writeValueAsString(pContextID.getSecond()));
+            Date now = new Date();
+            pContextID.getFirst().setCreateTime(now);
+            pContextID.getFirst().setUpdateTime(now);
+            pContextID.getFirst().setAccessTime(now);
             contextIDMapper.createContextID(pContextID.getFirst());
             contextID.setContextId(pContextID.getFirst().getContextId());
             return contextID;
@@ -74,6 +82,9 @@ public class ContextIDPersistenceImpl implements ContextIDPersistence {
         // contextId和source没有设置更新点
         Pair<PersistenceContextID, ExtraFieldClass> pContextID =
                 PersistenceUtils.transfer(contextID, pClass);
+        if (null == pContextID.getFirst().getAccessTime()) {
+            pContextID.getFirst().setUpdateTime(new Date());
+        }
         contextIDMapper.updateContextID(pContextID.getFirst());
     }
 
@@ -82,6 +93,39 @@ public class ContextIDPersistenceImpl implements ContextIDPersistence {
         try {
             PersistenceContextID pContextID = contextIDMapper.getContextID(contextId);
             if (pContextID == null) return null;
+            if (PersistenceConf.ENABLE_CS_DESERIALIZE_REPLACE_PACKAGE_HEADER.getValue()) {
+                if (StringUtils.isBlank(pContextID.getSource())
+                        || StringUtils.isBlank(
+                                PersistenceConf.CS_DESERIALIZE_REPLACE_PACKAGE_HEADER.getValue())) {
+                    logger.error(
+                            "Source : {} of ContextID or CSID_REPLACE_PACKAGE_HEADER : {} cannot be empty.",
+                            pContextID.getSource(),
+                            PersistenceConf.CS_DESERIALIZE_REPLACE_PACKAGE_HEADER.getValue());
+                } else {
+                    if (pContextID
+                            .getSource()
+                            .contains(
+                                    PersistenceConf.CS_DESERIALIZE_REPLACE_PACKAGE_HEADER
+                                            .getValue())) {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug(
+                                    "Will replace package header of source : {} from : {} to : {}",
+                                    pContextID.getSource(),
+                                    PersistenceConf.CS_DESERIALIZE_REPLACE_PACKAGE_HEADER
+                                            .getValue(),
+                                    PersistenceConf.CSID_PACKAGE_HEADER);
+                        }
+                        pContextID.setSource(
+                                pContextID
+                                        .getSource()
+                                        .replaceAll(
+                                                PersistenceConf
+                                                        .CS_DESERIALIZE_REPLACE_PACKAGE_HEADER
+                                                        .getValue(),
+                                                PersistenceConf.CSID_PACKAGE_HEADER));
+                    }
+                }
+            }
             ExtraFieldClass extraFieldClass =
                     json.readValue(pContextID.getSource(), ExtraFieldClass.class);
             ContextID contextID = PersistenceUtils.transfer(extraFieldClass, pContextID);
@@ -90,5 +134,31 @@ public class ContextIDPersistenceImpl implements ContextIDPersistence {
             logger.error("readJson failed:", e);
             throw new CSErrorException(97000, e.getMessage());
         }
+    }
+
+    @Override
+    public List<PersistenceContextID> searchContextID(PersistenceContextID contextID)
+            throws CSErrorException {
+        PersistenceContextID persistenceContextID = new PersistenceContextID();
+        persistenceContextID.setContextId(contextID.getContextId());
+        persistenceContextID.setContextIDType(contextID.getContextIDType());
+        return contextIDMapper.searchContextID(persistenceContextID);
+    }
+
+    @Override
+    public List<PersistenceContextID> searchCSIDByTime(
+            Date createTimeStart,
+            Date createTimeEnd,
+            Date updateTimeStart,
+            Date updateTimeEnd,
+            Date accessTimeStart,
+            Date accessTimeEnd) {
+        return contextIDMapper.getAllContextIDByTime(
+                createTimeStart,
+                createTimeEnd,
+                updateTimeStart,
+                updateTimeEnd,
+                accessTimeStart,
+                accessTimeEnd);
     }
 }

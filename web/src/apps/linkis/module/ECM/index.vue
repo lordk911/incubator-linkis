@@ -22,7 +22,7 @@
       v-if="loading"
       size="large"
       fix/>
-    <Table class="table-content" border :width="tableWidth" :columns="columns" :data="pageDatalist">
+    <Table class="table-content ecm-table" border :width="tableWidth" :columns="columns" :data="pageDatalist">
       <template slot-scope="{row}" slot="instance">
         <a @click="getEngineConnList(row)">{{`${row.instance}`}}</a>
       </template>
@@ -32,12 +32,15 @@
       <template slot-scope="{row}" slot="maxResource">
         <span>{{ row.maxResource | formatResource }}</span>
       </template>
+      <template slot-scope="{row}" slot="lockedResource">
+        <span>{{ row.lockedResource | formatResource }}</span>
+      </template>
       <template slot-scope="{row}" slot="startTime">
         <span>{{ timeFormat(row) }}</span>
       </template>
       <template slot-scope="{row}" slot="labels">
-        <Tooltip v-for="(item, index) in row.labels" :key="index" :content="`${item.labelKey}-${item.stringValue}`" placement="top">
-          <Tag type="border" color="primary">{{`${item.labelKey}-${item.stringValue}`}}</Tag>
+        <Tooltip v-for="(item, index) in row.labels" :key="index" :content="`${item.stringValue}`" placement="top">
+          <Tag type="border" color="primary">{{`${item.stringValue}`}}</Tag>
         </Tooltip>
       </template>
     </Table>
@@ -52,11 +55,13 @@
         size="small"
         show-total
         show-sizer
+        :prev-text="$t('message.linkis.previousPage')" :next-text="$t('message.linkis.nextPage')"
         @on-change="change"
         @on-page-size-change="changeSize" />
     </div>
     <Modal
       @on-ok="submitTagEdit"
+      @on-visible-change="resetTagAdd"
       :title="$t('message.linkis.tagEdit')"
       v-model="isTagEdit"
       :mask-closable="false">
@@ -65,7 +70,7 @@
           <Input disabled v-model="formItem.instance" />
         </FormItem>
         <FormItem class="addTagClass" :label="`${$t('message.linkis.tableColumns.label')}：`">
-          <WbTag :tagList="formItem.labels" :selectList="keyList" @addEnter="addEnter" @onCloseTag="onCloseTag" @editEnter="editEnter" ></WbTag>
+          <WbTag ref="wbtags" :tagList="formItem.labels" :selectList="keyList" @addEnter="addEnter" @onCloseTag="onCloseTag" @editEnter="editEnter" ></WbTag>
         </FormItem>
         <FormItem :label="`${$t('message.linkis.tableColumns.status')}：`">
           <Select v-model="formItem.emStatus">
@@ -157,6 +162,13 @@ export default {
           minWidth: 150,
         },
         {
+          title: this.$t('message.linkis.tableColumns.lockedResource'), // 最大可用资源
+          key: 'lockedResource',
+          slot: 'lockedResource',
+          className: 'table-project-column',
+          minWidth: 150,
+        },
+        {
           title: this.$t('message.linkis.tableColumns.initiator'), // 启动者
           key: 'owner',
           className: 'table-project-column',
@@ -172,7 +184,7 @@ export default {
         {
           title: this.$t('message.linkis.tableColumns.control.title'),
           key: 'action',
-          width: '215',
+          width: '80',
           // fixed: 'right',
           align: 'center',
           render: (h, params) => {
@@ -228,7 +240,7 @@ export default {
         }
         return data;
       }
-      return  v && (v.cores !== undefined || v.memonry !== undefined) ? `Linkis:(${calcCompany(v.cores)}cores,${calcCompany(v.memory, true)}G)` : ''
+      return  v && (v.cores !== undefined || v.memonry !== undefined || v.instance !== undefined) ? `${calcCompany(v.cores)}cores,${calcCompany(v.memory, true)}G,${calcCompany(v.instance)}apps` : ''
     }
   },
   created() {
@@ -365,6 +377,11 @@ export default {
     // 时间格式转换
     timeFormat(row) {
       return moment(new Date(row.startTime)).format('YYYY-MM-DD HH:mm:ss')
+    },
+    resetTagAdd(v) {
+      if (v===false && this.$refs.wbtags) {
+        this.$refs.wbtags.resetTagAdd()
+      }
     }
   }
 }
@@ -372,3 +389,23 @@ export default {
 
 <style src="./index.scss" lang="scss" scoped></style>
 
+<style lang="scss">
+.ecm-table {
+  border: 0;
+  height: calc(100% - 110px);
+  overflow: auto;
+
+  .ivu-table:before {
+    height: 0
+  }
+  
+  .ivu-table:after {
+    width: 0
+  }
+
+  .ivu-table {
+    height: auto;
+    border: 1px solid #dcdee2;
+  }
+}
+</style>

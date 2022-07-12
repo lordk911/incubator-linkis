@@ -17,20 +17,19 @@
 
 package org.apache.linkis.engineplugin.spark.utils
 
-import java.io.{IOException, InputStream, OutputStream}
-import java.net.ServerSocket
-import java.util.HashMap
-
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.io.FsPath
-import org.apache.linkis.common.utils.Utils
+import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineplugin.spark.common.LineBufferedProcess
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.storage.resultset.ResultSetReader
 import org.apache.linkis.storage.utils.StorageUtils
 import org.apache.linkis.storage.{FSFactory, LineMetaData}
-import org.apache.linkis.common.utils.Logging
+
+import java.io.{IOException, InputStream, OutputStream}
+import java.net.ServerSocket
+import java.util.HashMap
 /**
  *
  */

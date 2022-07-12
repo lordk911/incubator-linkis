@@ -17,12 +17,11 @@
  
 package org.apache.linkis.cs.highavailable.ha.instancealias.impl
 
+import org.apache.commons.lang.StringUtils
+import org.apache.linkis.cs.highavailable.ha.instancealias.InstanceAliasConverter
+
 import java.util.Base64
 import java.util.regex.Pattern
-
-import org.apache.linkis.cs.highavailable.ha.instancealias.InstanceAliasConverter
-import org.apache.commons.lang.StringUtils
-import org.springframework.stereotype.Component
 
 
 //@Component

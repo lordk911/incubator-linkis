@@ -17,12 +17,13 @@
  
 package org.apache.linkis.storage.resultset
 
-import java.io.InputStream
 import org.apache.linkis.common.io.resultset.{ResultSet, ResultSetReader}
 import org.apache.linkis.common.io.{FsPath, MetaData, Record}
 import org.apache.linkis.storage.FSFactory
 import org.apache.linkis.storage.exception.StorageErrorException
 import org.apache.linkis.storage.resultset.table.{TableMetaData, TableRecord, TableResultSet}
+
+import java.io.InputStream
 
 
 object ResultSetReader {
@@ -45,7 +46,12 @@ object ResultSetReader {
       val resultSet = rsFactory.getResultSetByPath(resPath)
       val fs = FSFactory.getFs(resPath)
       fs.init(null)
-      ResultSetReader.getResultSetReader(resultSet, fs.read(resPath))
+      val reader = ResultSetReader.getResultSetReader(resultSet, fs.read(resPath))
+      reader match {
+        case storageResultSetReader: StorageResultSetReader[_, _] => storageResultSetReader.setFs(fs)
+        case _ =>
+      }
+      reader
     }
   }
 

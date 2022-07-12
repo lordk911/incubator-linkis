@@ -17,11 +17,11 @@
  
 package org.apache.linkis.engineplugin.hive.entity
 
-import java.io.ByteArrayOutputStream
-
 import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.hadoop.hive.ql.session.SessionState
 import org.apache.hadoop.security.UserGroupInformation
+
+import java.io.ByteArrayOutputStream
 
 case class HiveSession(sessionState: SessionState,
                        ugi: UserGroupInformation,

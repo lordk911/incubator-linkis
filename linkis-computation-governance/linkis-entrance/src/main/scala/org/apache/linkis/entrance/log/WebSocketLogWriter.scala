@@ -17,7 +17,7 @@
  
 package org.apache.linkis.entrance.log
 
-import org.apache.linkis.entrance.event.{EntranceEvent, EntranceEventListener, EntranceEventListenerBus, EntranceLogEvent, EntranceLogListener, EntranceLogListenerBus, EntrancePushLogEvent}
+import org.apache.linkis.entrance.event.{EntranceLogEvent, EntranceLogListener, EntranceLogListenerBus, EntrancePushLogEvent}
 import org.apache.linkis.scheduler.queue.Job
 
 

@@ -17,11 +17,11 @@
  
 package org.apache.linkis.jobhistory.conf
 
-import org.apache.linkis.common.conf.CommonVars
+import org.apache.linkis.common.conf.{CommonVars, Configuration}
 
 object JobhistoryConfiguration {
   //modify this param in linkis.properties
-  val GOVERNANCE_STATION_ADMIN = CommonVars("wds.linkis.governance.station.admin", "hadoop")
+  val GOVERNANCE_STATION_ADMIN = Configuration.GOVERNANCE_STATION_ADMIN
   val JOB_HISTORY_SAFE_TRIGGER = CommonVars("wds.linkis.jobhistory.safe.trigger", true).getValue
 
   val ENTRANCE_SPRING_NAME = CommonVars("wds.linkis.entrance.spring.name", "linkis-cg-entrance")
@@ -29,5 +29,9 @@ object JobhistoryConfiguration {
 
   val UPDATE_RETRY_TIMES = CommonVars("wds.linkis.jobhistory.update.retry.times", 3)
   val UPDATE_RETRY_INTERVAL = CommonVars("wds.linkis.jobhistory.update.retry.interval", 3 * 1000)
+
+  val UNDONE_JOB_MINIMUM_ID: CommonVars[Long] = CommonVars("wds.linkis.jobhistory.undone.job.minimum.id", 0L)
+
+  val UNDONE_JOB_REFRESH_TIME_DAILY: CommonVars[String] = CommonVars("wds.linkis.jobhistory.undone.job.refreshtime.daily", "00:15")
 
 }

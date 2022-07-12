@@ -18,29 +18,26 @@
 package org.apache.linkis.metadata.service.impl;
 
 import org.apache.linkis.common.utils.ByteTimeUtils;
+import org.apache.linkis.hadoop.common.conf.HadoopConf;
 import org.apache.linkis.hadoop.common.utils.HDFSUtils;
 import org.apache.linkis.metadata.hive.config.DSEnum;
 import org.apache.linkis.metadata.hive.config.DataSource;
 import org.apache.linkis.metadata.hive.dao.HiveMetaDao;
 import org.apache.linkis.metadata.service.DataSourceService;
 import org.apache.linkis.metadata.service.HiveMetaWithPermissionService;
+import org.apache.linkis.metadata.util.DWSConfig;
+import org.apache.linkis.metadata.utils.MdqConstants;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,10 +45,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class DataSourceServiceImpl implements DataSourceService {
 
-    private static final Logger logger = Logger.getLogger(DataSourceServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DataSourceServiceImpl.class);
 
     private static FileSystem rootHdfs = null;
 
@@ -60,6 +66,8 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Autowired HiveMetaWithPermissionService hiveMetaWithPermissionService;
 
     ObjectMapper jsonMapper = new ObjectMapper();
+
+    private static String dbKeyword = DWSConfig.DB_FILTER_KEYWORDS.getValue();
 
     @DataSource(name = DSEnum.FIRST_DATA_SOURCE)
     @Override
@@ -80,6 +88,10 @@ public class DataSourceServiceImpl implements DataSourceService {
         ArrayNode dbNodes = jsonMapper.createArrayNode();
         List<String> dbs = hiveMetaWithPermissionService.getDbsOptionalUserName(userName);
         for (String db : dbs) {
+            if (StringUtils.isBlank(db) || db.contains(dbKeyword)) {
+                logger.info("db  will be filter: " + db);
+                continue;
+            }
             ObjectNode dbNode = jsonMapper.createObjectNode();
             dbNode.put("databaseName", db);
             dbNode.put("tables", queryTables(db, userName));
@@ -124,6 +136,12 @@ public class DataSourceServiceImpl implements DataSourceService {
         param.put("dbName", dbName);
         param.put("tableName", tableName);
         List<Map<String, Object>> columns = hiveMetaDao.getColumns(param);
+        List<Map<String, Object>> partitionKeys = hiveMetaDao.getPartitionKeys(param);
+        return getJsonNodesFromColumnMap(columns, partitionKeys);
+    }
+
+    private ArrayNode getJsonNodesFromColumnMap(
+            List<Map<String, Object>> columns, List<Map<String, Object>> partitionKeys) {
         ArrayNode columnsNode = jsonMapper.createArrayNode();
         for (Map<String, Object> column : columns) {
             ObjectNode fieldNode = jsonMapper.createObjectNode();
@@ -133,7 +151,6 @@ public class DataSourceServiceImpl implements DataSourceService {
             fieldNode.put("partitioned", false);
             columnsNode.add(fieldNode);
         }
-        List<Map<String, Object>> partitionKeys = hiveMetaDao.getPartitionKeys(param);
         for (Map<String, Object> partitionKey : partitionKeys) {
             ObjectNode fieldNode = jsonMapper.createObjectNode();
             fieldNode.put("columnName", (String) partitionKey.get("PKEY_NAME"));
@@ -143,6 +160,19 @@ public class DataSourceServiceImpl implements DataSourceService {
             columnsNode.add(fieldNode);
         }
         return columnsNode;
+    }
+
+    @DataSource(name = DSEnum.FIRST_DATA_SOURCE)
+    @Override
+    public JsonNode queryTableMetaBySDID(String dbName, String tableName, String sdid) {
+        logger.info("getTableMetabysdid : sdid = {}", sdid);
+        Map<String, String> param = Maps.newHashMap();
+        param.put(MdqConstants.DB_NAME_KEY(), dbName);
+        param.put(MdqConstants.TABLE_NAME_KEY(), tableName);
+        param.put(MdqConstants.SDID_KEY(), sdid);
+        List<Map<String, Object>> columns = hiveMetaDao.getColumnsByStorageDescriptionID(param);
+        List<Map<String, Object>> partitionKeys = hiveMetaDao.getPartitionKeys(param);
+        return getJsonNodesFromColumnMap(columns, partitionKeys);
     }
 
     @DataSource(name = DSEnum.FIRST_DATA_SOURCE)
@@ -161,8 +191,7 @@ public class DataSourceServiceImpl implements DataSourceService {
 
         String tableSize = "";
         try {
-            FileStatus tableFile =
-                    getRootHdfs().getFileStatus(new Path(this.getTableLocation(dbName, tableName)));
+            FileStatus tableFile = getFileStatus(this.getTableLocation(dbName, tableName));
             if (tableFile.isDirectory()) {
                 tableSize =
                         ByteTimeUtils.bytesToString(
@@ -250,7 +279,47 @@ public class DataSourceServiceImpl implements DataSourceService {
         return partitionJson;
     }
 
+    private FileStatus getFileStatus(String location) throws IOException {
+        try {
+            return getRootHdfs().getFileStatus(new Path(location));
+        } catch (IOException e) {
+            String message = e.getMessage();
+            String rootCauseMessage = ExceptionUtils.getRootCauseMessage(e);
+            if ((message != null && message.matches(DWSConfig.HDFS_FILE_SYSTEM_REST_ERRS))
+                    || (rootCauseMessage != null
+                            && rootCauseMessage.matches(DWSConfig.HDFS_FILE_SYSTEM_REST_ERRS))) {
+                logger.info("Failed to getFileStatus, retry", e);
+                resetRootHdfs();
+                return getFileStatus(location);
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    private void resetRootHdfs() {
+        if (HadoopConf.HDFS_ENABLE_CACHE()) {
+            HDFSUtils.closeHDFSFIleSystem(
+                    HDFSUtils.getHDFSRootUserFileSystem(),
+                    HadoopConf.HADOOP_ROOT_USER().getValue(),
+                    true);
+            return;
+        }
+        if (rootHdfs != null) {
+            synchronized (this) {
+                if (rootHdfs != null) {
+                    IOUtils.closeQuietly(rootHdfs);
+                    logger.info("reset RootHdfs");
+                    rootHdfs = HDFSUtils.getHDFSRootUserFileSystem();
+                }
+            }
+        }
+    }
+
     private FileSystem getRootHdfs() {
+        if (HadoopConf.HDFS_ENABLE_CACHE()) {
+            return HDFSUtils.getHDFSRootUserFileSystem();
+        }
         if (rootHdfs == null) {
             synchronized (this) {
                 if (rootHdfs == null) {

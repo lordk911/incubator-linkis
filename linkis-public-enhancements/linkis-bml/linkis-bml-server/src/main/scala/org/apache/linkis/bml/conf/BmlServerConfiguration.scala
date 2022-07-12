@@ -17,10 +17,10 @@
  
 package org.apache.linkis.bml.conf
 
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.utils.Utils
+
+import java.util.concurrent.TimeUnit
 
 object BmlServerConfiguration {
   val BML_HDFS_PREFIX = CommonVars("wds.linkis.bml.hdfs.prefix", "/apps-data")

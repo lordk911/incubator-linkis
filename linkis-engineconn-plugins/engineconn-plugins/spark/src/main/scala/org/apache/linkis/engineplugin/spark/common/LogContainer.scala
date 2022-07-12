@@ -17,7 +17,6 @@
  
 package org.apache.linkis.engineplugin.spark.common
 
-import scala.collection.Iterable
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
 

@@ -17,8 +17,6 @@
 #Actively load user env
 source ~/.bash_profile
 
-source $LINKIS_CONF_DIR/linkis-env.sh
-
 export local_host="`hostname --fqdn`"
 
 ipaddr=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')
@@ -32,7 +30,7 @@ function isLocal(){
         return 0
     elif [ "$1" == $local_host ]; then
         return 0
-    elif [ "$1" == $ipaddr ]; then
+    elif [ `echo "$ipaddr" | grep  "^$1$" |wc -l` -gt 0 ]; then
         return 0
     fi
         return 1

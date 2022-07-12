@@ -37,13 +37,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.BiFunction;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class MetadataAppServiceImpl implements MetadataAppService {
@@ -151,7 +151,12 @@ public class MetadataAppServiceImpl implements MetadataAppService {
 
     @Override
     public MetaPartitionInfo getPartitionsByDsId(
-            String dataSourceId, String database, String table, String system, String userName)
+            String dataSourceId,
+            String database,
+            String table,
+            String system,
+            Boolean traverse,
+            String userName)
             throws ErrorException {
         DsInfoResponse dsInfoResponse = reqToGetDataSourceInfo(dataSourceId, system, userName);
         if (StringUtils.isNotBlank(dsInfoResponse.dsType())) {
@@ -159,7 +164,7 @@ public class MetadataAppServiceImpl implements MetadataAppService {
                     dsInfoResponse.dsType(),
                     "getPartitions",
                     new Object[] {
-                        dsInfoResponse.creator(), dsInfoResponse.params(), database, table
+                        dsInfoResponse.creator(), dsInfoResponse.params(), database, table, traverse
                     },
                     MetaPartitionInfo.class);
         }

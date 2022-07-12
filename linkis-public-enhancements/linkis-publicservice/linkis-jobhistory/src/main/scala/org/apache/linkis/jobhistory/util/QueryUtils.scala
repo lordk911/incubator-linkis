@@ -17,23 +17,22 @@
  
 package org.apache.linkis.jobhistory.util
 
-import java.io.{InputStream, OutputStream}
-import java.text.SimpleDateFormat
-import java.util.Date
-
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.time.DateFormatUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.io.FsPath
 import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.governance.common.entity.job.{JobRequest, SubJobDetail, SubJobInfo}
-import org.apache.linkis.governance.common.entity.task.RequestInsertTask
-import org.apache.linkis.governance.common.protocol.job.JobReqInsert
+import org.apache.linkis.governance.common.entity.job.{JobRequest, SubJobDetail}
 import org.apache.linkis.jobhistory.conf.JobhistoryConfiguration
-import org.apache.linkis.jobhistory.entity.{JobHistory, QueryTask}
+import org.apache.linkis.jobhistory.entity.JobHistory
 import org.apache.linkis.storage.FSFactory
 import org.apache.linkis.storage.fs.FileSystem
 import org.apache.linkis.storage.utils.{FileSystemUtils, StorageUtils}
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.time.DateFormatUtils
+
+import java.io.{InputStream, OutputStream}
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.regex.Pattern
 
 object QueryUtils extends Logging {
 
@@ -45,6 +44,8 @@ object QueryUtils extends Logging {
   private val CHARSET = "utf-8"
   private val CODE_SPLIT = ";"
   private val LENGTH_SPLIT = "#"
+  private val NAME_REGEX = "^[a-zA-Z\\d_\\.]+$"
+  private val nameRegexPattern = Pattern.compile(NAME_REGEX)
 
   private val dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
 
@@ -83,8 +84,8 @@ object QueryUtils extends Logging {
   // todo exchangeExecutionCode for subJobDetail
   def exchangeExecutionCode(queryTask: JobHistory): Unit = {
     import scala.util.control.Breaks._
-    if (queryTask.getExecution_code == null || !queryTask.getExecution_code.startsWith(StorageUtils.HDFS_SCHEMA)) return
-    val codePath = queryTask.getExecution_code
+    if (queryTask.getExecutionCode == null || !queryTask.getExecutionCode.startsWith(StorageUtils.HDFS_SCHEMA)) return
+    val codePath = queryTask.getExecutionCode
     val path = codePath.substring(0, codePath.lastIndexOf(CODE_SPLIT))
     val codeInfo = codePath.substring(codePath.lastIndexOf(CODE_SPLIT) + 1)
     val infos: Array[String] = codeInfo.split(LENGTH_SPLIT)
@@ -93,7 +94,7 @@ object QueryUtils extends Logging {
     val tub = new Array[Byte](1024)
     val executionCode: StringBuilder = new StringBuilder
     val fsPath: FsPath = new FsPath(path)
-    val fileSystem = FSFactory.getFsByProxyUser(fsPath, queryTask.getExecute_user).asInstanceOf[FileSystem]
+    val fileSystem = FSFactory.getFsByProxyUser(fsPath, queryTask.getExecuteUser).asInstanceOf[FileSystem]
     fileSystem.init(null)
     var is: InputStream = null
     if (!fileSystem.exists(fsPath)) return
@@ -113,15 +114,16 @@ object QueryUtils extends Logging {
       IOUtils.closeQuietly(is)
       if (fileSystem != null) Utils.tryAndWarn(fileSystem.close())
     }
-    queryTask.setExecution_code(executionCode.toString())
+    queryTask.setExecutionCode(executionCode.toString())
   }
 
   private def getCodeStorePath(user: String): String = {
     val date: String = DateFormatUtils.format(new Date, "yyyyMMdd")
+    val suffix: String = DateFormatUtils.format(System.currentTimeMillis, "HH_mm_ss_SSS") + "_scripts"
     if (IS_VIEW_FS_ENV.getValue) {
-      s"${CODE_STORE_PREFIX_VIEW_FS.getValue}${user}${CODE_STORE_SUFFIX.getValue}/executionCode/${date}/_scripts"
-    }else{
-      s"${CODE_STORE_PREFIX.getValue}${user}${CODE_STORE_SUFFIX.getValue}/executionCode/${date}/_scripts"
+      s"${CODE_STORE_PREFIX_VIEW_FS.getValue}${user}${CODE_STORE_SUFFIX.getValue}/executionCode/${date}/$suffix"
+    } else {
+      s"${CODE_STORE_PREFIX.getValue}${user}${CODE_STORE_SUFFIX.getValue}/executionCode/${date}/$suffix"
     }
   }
 
@@ -136,4 +138,9 @@ object QueryUtils extends Logging {
   def dateToString(date: Date): String = {
     dateFormat.format(date)
   }
+
+  def checkNameValid(param: String): Boolean = {
+    nameRegexPattern.matcher(param).find()
+  }
+
 }

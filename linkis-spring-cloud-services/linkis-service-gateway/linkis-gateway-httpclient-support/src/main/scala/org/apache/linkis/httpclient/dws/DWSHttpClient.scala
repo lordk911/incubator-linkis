@@ -17,30 +17,32 @@
  
 package org.apache.linkis.httpclient.dws
 
-import java.util
-
+import org.apache.commons.beanutils.BeanUtils
+import org.apache.commons.lang.{ClassUtils, StringUtils}
+import org.apache.http.{HttpException, HttpResponse}
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.{JsonUtils, Logging}
 import org.apache.linkis.httpclient.AbstractHttpClient
 import org.apache.linkis.httpclient.discovery.Discovery
-import org.apache.linkis.httpclient.dws.config.DWSClientConfig
-import org.apache.linkis.httpclient.dws.discovery.DWSGatewayDiscovery
+import org.apache.linkis.httpclient.dws.config.{DWSClientConfig, GatewayHttpClientConf}
+import org.apache.linkis.httpclient.dws.discovery.{DWSGatewayDiscovery, DefaultConfigDiscovery}
 import org.apache.linkis.httpclient.dws.request.DWSHttpAction
 import org.apache.linkis.httpclient.dws.response.{DWSHttpMessageFactory, DWSHttpMessageResultInfo, DWSResult}
 import org.apache.linkis.httpclient.request.HttpAction
 import org.apache.linkis.httpclient.response.impl.DefaultHttpResult
 import org.apache.linkis.httpclient.response.{HttpResult, ListResult, Result}
-import org.apache.commons.beanutils.BeanUtils
-import org.apache.commons.lang.{ClassUtils, StringUtils}
-import org.apache.http.{HttpException, HttpResponse}
 
+import java.util
 import scala.collection.JavaConversions
 
 class DWSHttpClient(clientConfig: DWSClientConfig, clientName: String)
-  extends AbstractHttpClient(clientConfig, clientName) with  Logging{
+  extends AbstractHttpClient(clientConfig, clientName) with  Logging {
 
-  override protected def createDiscovery(): Discovery = new DWSGatewayDiscovery
-
+  override protected def createDiscovery(): Discovery = if (GatewayHttpClientConf.enableDefaultDiscovery) {
+    new DefaultConfigDiscovery
+  } else {
+    new DWSGatewayDiscovery
+  }
 
   override protected def prepareAction(requestAction: HttpAction): HttpAction = {
     requestAction match {

@@ -26,11 +26,11 @@ import org.apache.linkis.cs.common.exception.CSErrorException;
 import org.apache.linkis.cs.common.exception.ErrorCode;
 import org.apache.linkis.cs.common.utils.CSCommonUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CSWorkServiceImpl implements CSWorkService {
 
@@ -68,6 +68,7 @@ public class CSWorkServiceImpl implements CSWorkService {
             for (WorkType type : workTypes) {
                 contextClient.removeAllValueByKeyPrefix(contextID, getWorkTypePrefix(type));
             }
+            logger.info("contextID: {} initContextServiceInfo", contextID.getContextId());
         } catch (Exception e) {
             logger.error(
                     "InitContextInfo error. contextIDStr : {}, workTypes : {}" + contextIDStr,

@@ -17,9 +17,9 @@
  
 package org.apache.linkis.scheduler.queue
 
-import java.io.Closeable
-import java.util.concurrent.Future
-
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.linkis.common.exception.{ErrorException, LinkisRetryException}
 import org.apache.linkis.common.listener.ListenerEventBus
 import org.apache.linkis.common.log.LogUtils
@@ -30,9 +30,9 @@ import org.apache.linkis.scheduler.exception.LinkisJobRetryException
 import org.apache.linkis.scheduler.executer._
 import org.apache.linkis.scheduler.future.BDPFuture
 import org.apache.linkis.scheduler.listener._
-import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang.exception.ExceptionUtils
+
+import java.io.Closeable
+import java.util.concurrent.Future
 
 
 
@@ -137,6 +137,8 @@ abstract class Job extends Runnable with SchedulerEvent with Closeable with Logg
   protected def getExecutor = executor
 
   def setJobListener(jobListener: JobListener) = this.jobListener = Some(jobListener)
+
+  def getJobListener = jobListener
 
   def setLogListener(logListener: LogListener) = this.logListener = Some(logListener)
 

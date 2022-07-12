@@ -9,15 +9,17 @@
       "name": "Name",
       "order": "Order",
       "addParameterConfig": "Add parameter configuration",
+      "addEngineType": "Add engine type",
       "editDescriptionEngineConfig": "Edit description engine config",
       "addAppType": "Add application type",
       "editContents": "Add contents",
-      "eurekeRegisterCenter": "Eureke Register Center",
+      "ConfirmEdit": "Done",
+      "eurekaRegisterCenter": "Eureka Register Center",
       "addTags": "Add Tags",
       "unfold": "Unfold",
       "fold": "Fold",
       "jumpPage": "Please check in the jump page...",
-      "initiator": "Initiator",
+      "initiator": "Created From",
       "find": "Find",
       "errorCode": "Error code",
       "errorDescription": "Error description",
@@ -41,6 +43,9 @@
       "instanceName": "Instance Name",
       "resources": "Resources",
       "reset": "Reset",
+      "clearSearch": "Clear",
+      "showOperations": "Show Operations",
+      "resetAll": "Reset All",
       "remove": "Remove",
       "submit": "Submit",
       "search": "Search",
@@ -49,12 +54,23 @@
       "cancel": "Cancel",
       "create": "Create",
       "noDataText": "No data yet",
+      "jobId": "JobID",
       "userName": "Username",
+      "password": "Password",
       "unselect": "Please select task",
+      "noselection": "Please select first",
       "searchName": "Please enter username to search",
       "generalView": "Switch to the common view",
       "manageView": "Switch to the admin view",
       "back": "Back",
+      "prev": "Previous Step",
+      "complete": "Complete",
+      "udfName": "UDF Name",
+      "udfType": "UDF Type",
+      "nextPage": "Next Page",
+      "previousPage": "Previous Page",
+      "all": "All",
+      "common": "Common",
       "warning": {
         "api": "Requesting API, please hold on!",
         "data": "Requesting data, please hold on!",
@@ -66,7 +82,7 @@
       "resourceManagement": {
         "resourceUsage": "Resource usage",
         "applicationList": "Application List"
-      },
+    },
       "time": {
         "second": "Second",
         "minute": "Minute",
@@ -78,13 +94,16 @@
         "initiator": "Initiator",
         "engineInstance": "Engine instance",
         "engineType": "Engine type",
-        "taskID": "Task ID",
+        "serveType": "Serve Type",
+        "appType": "App Type",
+        "taskID": "JobID",
         "fileName": "Source",
         "executionCode": "Execution Code",
         "status": "Status",
         "label": "Label",
         "engineVersion": "Engine Version",
         "engineVersionCannotBeNull": "Engine Version Cannot Be Null",
+        "lockedResource": "Locked resources",
         "usedResources": "Used resources",
         "maximumAvailableResources": "Maximum available resources",
         "minimumAvailableResources": "Minimum available resources",
@@ -99,7 +118,13 @@
         "control": {
           "title": "Handle",
           "label": "View"
-        }
+        },
+        "queenRemain": "Queen Remain",
+        "queueUsed": "Queue Used",
+        "queueTop": "Queue Top",
+        "engineRemain": "Engine Remain",
+        "engineUsed": "Engine Used",
+        "engineTop": "Engine Top"
       },
       "logLoading": "Requesting logs, please hold on",
       "title": "Linkis Control Panel",
@@ -122,7 +147,10 @@
             "globalValiable": "Frequently Asked",
             "microserviceManage": "Microservice management",
             "ECMManage": "ECM Management",
-            "dataSourceManage": "DataSource Manage"
+            "udfFunctionTitle": "UDF Function",
+            "udfFunctionManage": "UDF Management",
+            "dataSourceManage": "DataSource Manage",
+            "userResourceManagement": "User Resource Management"
           }
         }
       },
@@ -134,12 +162,18 @@
           "label": " Start Date",
           "placeholder": "Please choose the start date"
         },
+        "creator": {
+          "label": "Creator",
+          "placeholder": "Please search by entering the creator"
+        },
         "engine": {
           "label": "Engine"
         },
         "status": {
           "label": "Status"
-        }
+        },
+        "appType": "App Type",
+        "engineType": "Engine"
       },
       "columns": {
         "taskID": "Task ID",
@@ -168,9 +202,9 @@
         "username": "Username"
       },
       "shortcuts": {
-        "week": "Recent Week",
-        "month": "Recent Month",
-        "threeMonths": "Recent Three Months"
+        "week": "1Week",
+        "month": "1Month",
+        "threeMonths": "3Months"
       },
       "statusType": {
         "all": "All",
@@ -238,21 +272,26 @@
       "success": {
         "update": "Successfully updated global variables!"
       },
+      "searchAppType": "Please enter App Type",
+      "resetTip": "Are you sure to reset the resource?",
+      "resetAllTip": "Whether to reset all user resources (this operation will only clean up user resource records, not the resources that have been generated)?",
+      "viewlog": "View Log",
       "datasource": {
         "pleaseInput": "Please input",
         "datasourceSrc": "Datasource",
         "connectTest": "Test connection",
         "sourceName": "Data source name",
         "sourceDec": "Data source description",
-        "sourceType": "Data source type:",
-        "creator": "Creator:",
+        "sourceType": "Data source type",
+        "creator": "Creator",
         "create": "add source",
-        "exports": "export source",
+        "exports": "export sources",
         "imports": "importing sources",
         "overdue": "Expire",
         "versionList": "Version list",
         "dataSourceName": "Data source name",
         "dataSourceType": "Data source type",
+        "createSystem": "Create system",
         "dataSourceEnv": "Available Space",
         "status": "Status",
         "permissions": "Permissions",
@@ -272,7 +311,8 @@
         "unpublish": "Unpublished",
         "cannotPublish": "Cannot publish",
         "used": "Available",
-        "commentValue": "Roll back from version {text}"
+        "commentValue": "Roll back from version {text}",
+        "undefinedVersion": "Cannot find the version of data source"
       }
     }
   }

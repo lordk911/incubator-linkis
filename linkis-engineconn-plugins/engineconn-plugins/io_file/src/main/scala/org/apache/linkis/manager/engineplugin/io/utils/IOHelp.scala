@@ -17,6 +17,7 @@
  
 package org.apache.linkis.manager.engineplugin.io.utils
 
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.storage.domain.{MethodEntity, MethodEntitySerializer}
@@ -24,7 +25,6 @@ import org.apache.linkis.storage.exception.StorageErrorException
 import org.apache.linkis.storage.resultset.io.{IOMetaData, IORecord}
 import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetReader, ResultSetWriter}
 import org.apache.linkis.storage.utils.{StorageConfiguration, StorageUtils}
-import org.apache.commons.io.IOUtils
 
 object IOHelp {
 

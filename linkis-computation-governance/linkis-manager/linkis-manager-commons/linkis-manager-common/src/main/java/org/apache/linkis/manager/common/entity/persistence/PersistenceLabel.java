@@ -83,10 +83,12 @@ public class PersistenceLabel extends GenericLabel {
         this.creator = creator;
     }
 
+    @Override
     public void setStringValue(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    @Override
     public String getStringValue() {
         return this.stringValue == null ? LabelUtils.Jackson.toJson(value, null) : this.stringValue;
     }
@@ -94,8 +96,11 @@ public class PersistenceLabel extends GenericLabel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        } else if (!super.equals(o)) {
+            return false;
+        }
 
         PersistenceLabel that = (PersistenceLabel) o;
 

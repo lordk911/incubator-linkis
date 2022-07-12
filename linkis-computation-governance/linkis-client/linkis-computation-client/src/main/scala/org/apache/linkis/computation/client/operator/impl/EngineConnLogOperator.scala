@@ -18,8 +18,7 @@
 
 package org.apache.linkis.computation.client.operator.impl
 
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.computation.client.LinkisJob
 import org.apache.linkis.computation.client.once.action.{ECMOperateAction, EngineConnOperateAction}
@@ -28,7 +27,8 @@ import org.apache.linkis.computation.client.once.simple.SubmittableSimpleOnceJob
 import org.apache.linkis.computation.client.operator.OnceJobOperator
 import org.apache.linkis.computation.client.utils.LabelKeyUtils
 import org.apache.linkis.ujes.client.exception.UJESJobException
-import org.apache.commons.lang.StringUtils
+
+import java.util
 
 
 class EngineConnLogOperator extends OnceJobOperator[EngineConnLogs]  {

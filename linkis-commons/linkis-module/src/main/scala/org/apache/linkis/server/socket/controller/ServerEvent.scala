@@ -17,11 +17,11 @@
  
 package org.apache.linkis.server.socket.controller
 
-import java.util
-
 import org.apache.linkis.common.listener.Event
 import org.apache.linkis.server.BDPJettyServerHelper
 import org.apache.linkis.server.socket.ServerSocket
+
+import java.util
 
 
 class ServerEvent() extends Event {

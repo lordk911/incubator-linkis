@@ -15,7 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-  
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.apache.linkis.configuration.dao.ConfigMapper">
@@ -128,32 +128,29 @@
         WHERE v.config_label_id = #{labelId}
     </select>
 
+
+
     <select id="getConfigById" resultMap="ConfigKeyValueMap">
         SELECT <include refid="Config_Key_Column"/>
         FROM linkis_ps_configuration_config_key
         WHERE id = #{id}
     </select>
 
-    <select id="seleteKeyByKeyName" resultMap="ConfigKeyValueMap">
+    <select id="seleteKeyByKeyName" resultMap="ConfigKeyMap">
         SELECT <include refid="Config_Key_Column"/>
         FROM linkis_ps_configuration_config_key
-        WHERE key = #{keyName}
+        WHERE `key` = #{keyName}
     </select>
 
     <select id="listKeyByStringValue" resultMap="ConfigKeyMap">
         SELECT <include refid="Config_Key_Column"/>
         FROM linkis_ps_configuration_config_key
-        WHERE id IN (SELECT id FROM linkis_cg_manager_label WHERE label_value = #{stringValue})
+        WHERE id IN (SELECT b.config_key_id FROM linkis_cg_manager_label a JOIN linkis_ps_configuration_key_engine_relation b
+        ON a.label_value = #{stringValue} AND a.id = b.engine_type_label_id)
     </select>
 
 
-    <!--ConfigValue-->
-    <insert id="insertValue" useGeneratedKeys="true" keyProperty="id" parameterType="org.apache.linkis.configuration.entity.ConfigValue">
-        INSERT INTO linkis_ps_configuration_config_value(
-        id, config_key_id, config_value, config_label_id, create_time, update_time)
-        VALUES (
-        #{id},#{configKeyId},#{configValue}, #{configLabelId}, now(), now())
-    </insert>
+
 
     <insert id="insertValueList" useGeneratedKeys="true" keyProperty="id" parameterType="org.apache.linkis.configuration.entity.ConfigValue">
         INSERT INTO linkis_ps_configuration_config_value(
@@ -181,17 +178,37 @@
         </foreach>
     </update>
 
+    <!--ConfigValue-->
+    <insert id="insertValue"  parameterType="org.apache.linkis.configuration.entity.ConfigValue">
+        REPLACE INTO linkis_ps_configuration_config_value(
+            id, config_key_id, config_value, config_label_id, create_time, update_time)
+        VALUES (
+                   #{id},#{configKeyId},#{configValue}, #{configLabelId}, now(), now())
+    </insert>
+
     <select id="getConfigValueById" resultMap="ConfigValueMap">
         SELECT * FROM linkis_ps_configuration_config_value
         WHERE id = #{id}
     </select>
+
+    <select id="getConfigValueByKeyAndLabel" resultMap="ConfigValueMap">
+        SELECT * FROM linkis_ps_configuration_config_value
+        WHERE  config_key_id=#{configKeyId}
+        AND config_label_id = #{configLabelId}
+    </select>
+
+    <delete id="deleteConfigKeyValue" >
+        DELETE FROM linkis_ps_configuration_config_value
+        WHERE  config_key_id=#{configKeyId}
+        AND config_label_id = #{configLabelId}
+    </delete>
 
     <!--Category-->
     <select id="getCategory" resultMap="CategoryMap">
         SELECT c.id AS category_id, c.level, c.description, c.tag, c.update_time, c.create_time,
         l.id, l.label_key, l.label_value, l.label_feature, l.label_value_size
         FROM linkis_ps_configuration_category AS c
-        LEFT OUTER JOIN linkis_cg_manager_label as l on c.label_id = l.id
+        INNER JOIN linkis_cg_manager_label as l on c.label_id = l.id
     </select>
 
     <select id="getCategoryById" resultMap="CategoryMap">

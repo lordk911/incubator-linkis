@@ -17,6 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.mdq
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineplugin.spark.common.SparkKind
@@ -27,10 +28,9 @@ import org.apache.linkis.protocol.mdq.{DDLCompleteResponse, DDLExecuteResponse}
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.executer.{ExecuteResponse, SuccessExecuteResponse}
 import org.apache.linkis.storage.utils.StorageUtils
+import org.springframework.stereotype.Component
 
 import javax.annotation.PostConstruct
-import org.apache.commons.lang.StringUtils
-import org.springframework.stereotype.Component
 
 
 @Component

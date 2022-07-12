@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.am.conf
 
-import java.util
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.{EngineTypeLabel, UserCreatorLabel}
@@ -26,6 +24,7 @@ import org.apache.linkis.server.JMap
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.{Bean, Configuration}
 
+import java.util
 import scala.collection.JavaConversions._
 
 
@@ -43,10 +42,6 @@ class DefaultEngineConnConfigurationService extends EngineConnConfigurationServi
     val engineTypeLabelOption = label.find(_.isInstanceOf[EngineTypeLabel])
     if (userCreatorLabelOption.isDefined) {
       val userCreatorLabel = userCreatorLabelOption.get.asInstanceOf[UserCreatorLabel]
-      val globalConfig = Utils.tryAndWarn(ConfigurationMapCache.globalMapCache.getCacheMap(userCreatorLabel))
-      if (null != globalConfig) {
-        properties.putAll(globalConfig)
-      }
       if (engineTypeLabelOption.isDefined) {
         val engineTypeLabel = engineTypeLabelOption.get.asInstanceOf[EngineTypeLabel]
         val engineConfig = Utils.tryAndWarn(ConfigurationMapCache.engineMapCache.getCacheMap((userCreatorLabel, engineTypeLabel)))

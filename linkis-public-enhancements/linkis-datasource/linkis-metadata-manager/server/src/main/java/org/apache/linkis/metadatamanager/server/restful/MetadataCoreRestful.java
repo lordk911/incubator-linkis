@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping(
@@ -190,6 +190,8 @@ public class MetadataCoreRestful {
             @PathVariable("database") String database,
             @PathVariable("table") String table,
             @RequestParam("system") String system,
+            @RequestParam(name = "traverse", required = false, defaultValue = "false")
+                    Boolean traverse,
             HttpServletRequest request) {
         try {
             if (StringUtils.isBlank(system)) {
@@ -201,6 +203,7 @@ public class MetadataCoreRestful {
                             database,
                             table,
                             system,
+                            traverse,
                             SecurityFilter.getLoginUsername(request));
             return Message.ok().data("props", partitionInfo);
         } catch (Exception e) {

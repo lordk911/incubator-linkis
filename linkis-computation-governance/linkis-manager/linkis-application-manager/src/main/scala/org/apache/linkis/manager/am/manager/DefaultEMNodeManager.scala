@@ -17,8 +17,6 @@
  
 package org.apache.linkis.manager.am.manager
 
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.manager.common.entity.node._
@@ -34,6 +32,7 @@ import org.apache.linkis.resourcemanager.service.ResourceManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import java.util
 import scala.collection.JavaConversions._
 
 
@@ -62,10 +61,10 @@ class DefaultEMNodeManager extends EMNodeManager with Logging {
     nodeMetricManagerPersistence.addOrupdateNodeMetrics(metricsConverter.getInitMetric(emNode.getServiceInstance))
   }
 
-  override def addEMNodeInstance(emNode: EMNode):Unit = {
-    Utils.tryCatch(nodeManagerPersistence.addNodeInstance(emNode)){
+  override def addEMNodeInstance(emNode: EMNode): Unit = {
+    Utils.tryCatch(nodeManagerPersistence.addNodeInstance(emNode)) {
       case e: NodeInstanceDuplicateException =>
-        warn(s"em instance had exists, $emNode")
+        warn(s"em instance had exists, $emNode.")
         nodeManagerPersistence.updateEngineNode(emNode.getServiceInstance, emNode)
       case t: Throwable => throw t
     }
@@ -113,7 +112,7 @@ class DefaultEMNodeManager extends EMNodeManager with Logging {
         emNode.setServiceInstance(scoreServiceInstances.getServiceInstance)
         emNode
     }
-    //1. 增加nodeMetrics  2 增加RM信息
+    // 1. add nodeMetrics  2 add RM info
     val resourceInfo = resourceManager.getResourceInfo(scoreServiceInstances.map(_.getServiceInstance))
     val nodeMetrics = nodeMetricManagerPersistence.getNodeMetrics(emNodes.toList)
     emNodes.map { emNode =>

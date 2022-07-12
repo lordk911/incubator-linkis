@@ -17,9 +17,7 @@
  
 package org.apache.linkis.engineplugin.spark.Interpreter
 
-import java.io._
-import java.nio.file.Files
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.common.io.FsPath
 import org.apache.linkis.common.utils.{Logging, Utils}
@@ -27,7 +25,6 @@ import org.apache.linkis.engineplugin.spark.common.LineBufferedStream
 import org.apache.linkis.engineplugin.spark.config.SparkConfiguration
 import org.apache.linkis.engineplugin.spark.utils.EngineUtils
 import org.apache.linkis.storage.FSFactory
-import org.apache.commons.io.IOUtils
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.catalyst.expressions.Attribute
 import org.apache.spark.{SparkContext, SparkException}
@@ -36,6 +33,8 @@ import org.json4s.jackson.Serialization
 import org.json4s.{DefaultFormats, JValue}
 import py4j.GatewayServer
 
+import java.io._
+import java.nio.file.Files
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

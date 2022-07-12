@@ -16,15 +16,14 @@
  */
  
 package org.apache.linkis.gateway.ujes.route
-import java.util
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.gateway.exception.GatewayErrorException
 import org.apache.linkis.gateway.http.GatewayContext
 import org.apache.linkis.gateway.ujes.route.label.RouteLabelParser
 import org.apache.linkis.manager.label.entity.route.RouteLabel
-import org.apache.commons.lang.StringUtils
 
+import java.util
 import scala.collection.JavaConversions._
 import scala.util.Random
 

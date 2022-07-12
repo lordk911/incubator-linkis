@@ -17,17 +17,20 @@
  
 package org.apache.linkis.engineconnplugin.flink.factory
 
+import org.apache.flink.yarn.configuration.YarnConfigOptions
 import org.apache.linkis.engineconn.common.conf.EngineConnConf
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.EngineConn
 import org.apache.linkis.engineconn.computation.executor.creation.ComputationExecutorFactory
 import org.apache.linkis.engineconn.computation.executor.execute.ComputationExecutor
+import org.apache.linkis.engineconnplugin.flink.config.FlinkEnvConfiguration
 import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext
 import org.apache.linkis.engineconnplugin.flink.executor.FlinkSQLComputationExecutor
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.RunType
 import org.apache.linkis.manager.label.entity.engine.RunType.RunType
-import org.apache.flink.yarn.configuration.YarnConfigOptions
+
+import scala.collection.JavaConverters._
 
 
 class FlinkSQLExecutorFactory extends ComputationExecutorFactory {
@@ -38,8 +41,9 @@ class FlinkSQLExecutorFactory extends ComputationExecutorFactory {
                            labels: Array[Label[_]]): ComputationExecutor = engineConn.getEngineConnSession match {
     case context: FlinkEngineConnContext =>
       context.getEnvironmentContext.getFlinkConfig.set(YarnConfigOptions.PROPERTIES_FILE_LOCATION, EngineConnConf.getWorkHome)
-      val executor = new FlinkSQLComputationExecutor(id, context)
-      executor
+      context.getEnvironmentContext.getDefaultEnv
+        .setExecution(Map("max-table-result-rows" -> FlinkEnvConfiguration.FLINK_SQL_DEV_SELECT_MAX_LINES.getValue.asInstanceOf[Object]).asJava)
+      new FlinkSQLComputationExecutor(id, context)
   }
 
 

@@ -17,10 +17,10 @@
  
 package org.apache.linkis.engineconn.core.hook
 
+import org.apache.linkis.common.utils.Logging
+
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
-
-import org.apache.linkis.common.utils.Logging
 
 class ShutdownHook extends Logging {
 

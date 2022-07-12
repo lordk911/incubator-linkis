@@ -24,7 +24,7 @@ import org.apache.linkis.orchestrator.exception.OrchestratorErrorCodeSummary.ORC
 import org.apache.linkis.orchestrator.exception.{OrchestratorErrorCodeSummary, OrchestratorErrorException}
 import org.apache.linkis.orchestrator.execution.AsyncTaskResponse.NotifyListener
 import org.apache.linkis.orchestrator.execution._
-import org.apache.linkis.orchestrator.execution.impl.{DefaultFailedTaskResponse, DefaultResultSetTaskResponse}
+import org.apache.linkis.orchestrator.execution.impl.DefaultResultSetTaskResponse
 import org.apache.linkis.orchestrator.plans.ast.ASTContext
 import org.apache.linkis.orchestrator.plans.physical.{AbstractExecTask, ExecTask, PhysicalContext}
 import org.apache.linkis.orchestrator.utils.OrchestratorIDCreator

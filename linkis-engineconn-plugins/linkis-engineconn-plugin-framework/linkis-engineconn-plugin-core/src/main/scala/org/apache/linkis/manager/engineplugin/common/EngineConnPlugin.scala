@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.engineplugin.common
 
-import java.util
-
 import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.resource.EngineResourceFactory
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait EngineConnPlugin {

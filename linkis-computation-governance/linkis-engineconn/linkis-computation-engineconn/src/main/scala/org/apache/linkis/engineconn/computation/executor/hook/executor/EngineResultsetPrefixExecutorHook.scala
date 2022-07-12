@@ -21,12 +21,8 @@ import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.computation.executor.execute.EngineExecutionContext
 import org.apache.linkis.engineconn.computation.executor.hook.ComputationExecutorHook
-import org.apache.linkis.engineconn.computation.executor.utlis.ComputationEngineConstant.JOB_IN_RUNTIME_MAP_KEY
 import org.apache.linkis.governance.common.utils.GovernanceConstant
-import org.apache.linkis.protocol.utils.TaskUtils
 import org.apache.linkis.server.BDPJettyServerHelper
-
-import java.util
 
 
 class EngineResultsetPrefixExecutorHook extends ComputationExecutorHook with Logging {

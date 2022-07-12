@@ -17,14 +17,14 @@
  
 package org.apache.linkis.engineconn.acessible.executor.log
 
-import java.util
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.engineconn.acessible.executor.conf.AccessibleExecutorConfiguration
 import org.apache.linkis.engineconn.acessible.executor.listener.LogListener
 import org.apache.linkis.engineconn.acessible.executor.listener.event.TaskLogUpdateEvent
 import org.apache.linkis.engineconn.core.EngineConnObject
+
+import java.util
+import java.util.concurrent.TimeUnit
 import scala.collection.JavaConversions._
 
 object LogHelper extends Logging {

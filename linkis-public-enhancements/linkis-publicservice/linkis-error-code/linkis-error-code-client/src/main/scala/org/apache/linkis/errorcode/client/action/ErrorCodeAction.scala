@@ -17,12 +17,12 @@
  
 package org.apache.linkis.errorcode.client.action
 
-import java.lang
-import java.lang.reflect.Type
-
-import com.google.gson.{GsonBuilder, JsonElement, JsonPrimitive, JsonSerializationContext, JsonSerializer}
+import com.google.gson._
 import org.apache.linkis.errorcode.common.CommonConf
 import org.apache.linkis.httpclient.request.{GetAction, POSTAction, UserAction}
+
+import java.lang
+import java.lang.reflect.Type
 
 
 trait ErrorCodeAction extends UserAction{

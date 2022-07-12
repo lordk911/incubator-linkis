@@ -17,13 +17,12 @@
  
 package org.apache.linkis.storage.script.reader
 
-import java.io._
-
+import org.apache.commons.io.IOUtils
 import org.apache.linkis.common.io.{FsPath, MetaData, Record}
 import org.apache.linkis.storage.script._
 import org.apache.linkis.storage.utils.StorageUtils
-import org.apache.commons.io.IOUtils
 
+import java.io._
 import scala.collection.mutable.ArrayBuffer
 
 
@@ -66,7 +65,11 @@ class StorageScriptFsReader(val path: FsPath, val charset: String, val inputStre
   }
 
   @scala.throws[IOException]
-  override def skip(recordNum: Int): Int = -1
+  override def skip(recordNum: Int): Int = {
+    if(recordNum < 0 ) return -1
+    if(metadata == null) getMetaData
+    try bufferedReader.skip(recordNum).toInt catch { case t: Throwable => recordNum }
+  }
 
   @scala.throws[IOException]
   override def getPosition: Long = -1L

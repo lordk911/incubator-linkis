@@ -17,8 +17,6 @@
  
 package org.apache.linkis.orchestrator.core
 
-import java.util
-
 import org.apache.linkis.common.conf.CommonVars
 import org.apache.linkis.orchestrator.OrchestratorSession
 import org.apache.linkis.orchestrator.extensions.Extensions
@@ -26,6 +24,7 @@ import org.apache.linkis.orchestrator.extensions.catalyst._
 import org.apache.linkis.orchestrator.extensions.operation.Operation
 import org.apache.linkis.orchestrator.listener.{OrchestratorAsyncListenerBus, OrchestratorListenerBusContext, OrchestratorSyncListenerBus}
 
+import java.util
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.ClassTag
 

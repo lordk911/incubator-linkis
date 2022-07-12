@@ -17,8 +17,7 @@
  
 package org.apache.linkis.manager.engineplugin.python.executor
 
-import java.util
-
+import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineconn.computation.executor.execute.{ComputationExecutor, EngineExecutionContext}
 import org.apache.linkis.engineconn.core.EngineConnObject
 import org.apache.linkis.engineconn.launch.EngineConnServer
@@ -30,8 +29,8 @@ import org.apache.linkis.protocol.engine.JobProgressInfo
 import org.apache.linkis.rpc.Sender
 import org.apache.linkis.scheduler.executer.{ExecuteResponse, SuccessExecuteResponse}
 
+import java.util
 import scala.collection.mutable.ArrayBuffer
-
 
 class PythonEngineConnExecutor(id: Int, pythonSession: PythonSession, outputPrintLimit: Int) extends ComputationExecutor(outputPrintLimit) {
 
@@ -53,6 +52,8 @@ class PythonEngineConnExecutor(id: Int, pythonSession: PythonSession, outputPrin
     info(s" EngineExecutionContext user python.version = > ${pythonVersion}")
     System.getProperties.put("python.version", pythonVersion)
     info(s" System getProperties python.version = > ${System.getProperties.getProperty("python.version")}")
+    //System.getProperties.put("python.application.pyFiles", engineExecutionContext.getProperties.getOrDefault("python.application.pyFiles", "file:///mnt/bdap/test/test/test.zip").toString)
+    pythonSession.lazyInitGageWay()
     if(engineExecutionContext != this.engineExecutionContext){
       this.engineExecutionContext = engineExecutionContext
       pythonSession.setEngineExecutionContext(engineExecutionContext)
@@ -130,12 +131,17 @@ class PythonEngineConnExecutor(id: Int, pythonSession: PythonSession, outputPrin
 
 
   override def killTask(taskID: String): Unit = {
-    warn(s"Kill task : $taskID")
+    info(s"Start to kill python task $taskID")
     super.killTask(taskID)
+    info(s"To close python cli task $taskID")
+    Utils.tryAndError(close())
   }
 
   override def close(): Unit = {
-    pythonSession.close
+    Utils.tryAndError(pythonSession.close)
+    info(s"To delete python executor")
+    //Utils.tryAndError(ExecutorManager.getInstance.removeExecutor(getExecutorLabels().asScala.toArray))
+    info(s"Finished to kill python")
   }
 
 }

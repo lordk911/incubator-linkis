@@ -34,6 +34,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,9 +44,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @ExtendWith({SpringExtension.class})
 @AutoConfigureMockMvc
@@ -183,14 +183,14 @@ class MetadataCoreRestfulTest {
             params.add("system", "hive");
             Mockito.when(
                             metadataAppService.getPartitionsByDsId(
-                                    dataSourceId, database, table, ",hive", null))
+                                    dataSourceId, database, table, ",hive", false, null))
                     .thenReturn(new MetaPartitionInfo());
             res = mvcUtils.getMessage(mvcUtils.buildMvcResultGet(url, params));
             Assertions.assertTrue(MessageStatus.SUCCESS() == res.getStatus());
 
             Mockito.doThrow(new ErrorException(1, ""))
                     .when(metadataAppService)
-                    .getPartitionsByDsId(dataSourceId, database, table, ",hive", null);
+                    .getPartitionsByDsId(dataSourceId, database, table, ",hive", false, null);
             res = mvcUtils.getMessage(mvcUtils.buildMvcResultGet(url, params));
             Assertions.assertTrue(
                     MessageStatus.ERROR() == res.getStatus()

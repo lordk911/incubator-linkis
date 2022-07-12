@@ -17,10 +17,10 @@
  
 package org.apache.linkis.computation.client
 
-import java.io.Closeable
-
 import org.apache.linkis.computation.client.interactive.InteractiveJob
 import org.apache.linkis.computation.client.once.OnceJob
+
+import java.io.Closeable
 
 
 /**
@@ -35,7 +35,7 @@ object LinkisJobClient extends Closeable {
   val once = OnceJob
 
   override def close(): Unit = {
-    if(config.justGetDefaultUJESClient != null) {
+    if (config.justGetDefaultUJESClient != null) {
       config.justGetDefaultUJESClient.close()
     }
   }

@@ -17,9 +17,6 @@
  
 package org.apache.linkis.manager.engineplugin.common.launch.process
 
-import java.util
-
-import org.apache.linkis.engineconn.common.conf.EngineConnConf
 import org.apache.linkis.manager.common.protocol.bml.BmlResource
 import org.apache.linkis.manager.engineplugin.common.conf.EnvConfiguration
 import org.apache.linkis.manager.engineplugin.common.exception.EngineConnBuildFailedException
@@ -27,6 +24,7 @@ import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuil
 import org.apache.linkis.manager.engineplugin.common.launch.entity._
 import org.apache.linkis.manager.label.entity.engine.UserCreatorLabel
 
+import java.util
 import scala.collection.JavaConversions._
 
 

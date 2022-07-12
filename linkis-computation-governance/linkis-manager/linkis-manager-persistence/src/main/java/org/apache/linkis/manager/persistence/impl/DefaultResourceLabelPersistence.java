@@ -31,14 +31,14 @@ import org.apache.linkis.manager.util.PersistenceUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.google.common.collect.Iterables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.google.common.collect.Iterables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultResourceLabelPersistence implements ResourceLabelPersistence {
 
@@ -68,26 +68,20 @@ public class DefaultResourceLabelPersistence implements ResourceLabelPersistence
      * @return
      */
     @Override
+    @Deprecated
     public List<PersistenceLabel> getResourceLabels(List<LabelKeyValue> labelKeyValues) {
         if (CollectionUtils.isEmpty(labelKeyValues)) return Collections.emptyList();
-        return labelManagerMapper.listResourceLabelByValues(labelKeyValues).stream()
-                .map(PersistenceUtils::setValue)
-                .collect(Collectors.toList());
+        return Collections.emptyList();
     }
 
     @Override
+    @Deprecated
     public List<PersistenceLabel> getResourceLabels(
             Map<String, Map<String, String>> labelKeyAndValuesMap,
             Label.ValueRelation valueRelation) {
         if (PersistenceUtils.KeyValueMapIsEmpty(labelKeyAndValuesMap))
             return Collections.emptyList();
-        return labelManagerMapper
-                .dimlistResourceLabelByKeyValueMap(
-                        PersistenceUtils.filterEmptyKeyValueMap(labelKeyAndValuesMap),
-                        valueRelation.name())
-                .stream()
-                .map(PersistenceUtils::setValue)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -193,7 +187,7 @@ public class DefaultResourceLabelPersistence implements ResourceLabelPersistence
                     blankIds.stream()
                             .map(PersistenceUtils::entryToTunple)
                             .collect(Collectors.toMap(Tunple::getKey, Tunple::getValue));
-            labelManagerMapper.batchDeleteResourceByLabelKeyValuesMaps(keyValueMaps);
+            // labelManagerMapper.batchDeleteResourceByLabelKeyValuesMaps(keyValueMaps);
         }
     }
 }

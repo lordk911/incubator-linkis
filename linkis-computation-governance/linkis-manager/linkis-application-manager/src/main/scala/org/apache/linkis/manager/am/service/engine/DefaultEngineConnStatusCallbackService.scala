@@ -18,8 +18,6 @@
 package org.apache.linkis.manager.am.service.engine
 
 import org.apache.commons.lang.StringUtils
-
-import java.util
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.manager.am.conf.AMConfiguration
 import org.apache.linkis.manager.common.constant.AMConstant
@@ -27,10 +25,12 @@ import org.apache.linkis.manager.common.entity.metrics.AMNodeMetrics
 import org.apache.linkis.manager.common.protocol.engine.EngineConnStatusCallbackToAM
 import org.apache.linkis.manager.persistence.NodeMetricManagerPersistence
 import org.apache.linkis.manager.service.common.metrics.MetricsConverter
-import org.apache.linkis.message.annotation.Receiver
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.apache.linkis.server.BDPJettyServerHelper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
+import java.util
 
 @Service
 class DefaultEngineConnStatusCallbackService extends EngineConnStatusCallbackService with Logging {
@@ -46,14 +46,17 @@ class DefaultEngineConnStatusCallbackService extends EngineConnStatusCallbackSer
   @Receiver
   override def dealEngineConnStatusCallback(engineConnStatusCallbackToAM: EngineConnStatusCallbackToAM): Unit = {
 
-    info(s"Start to deal engineConnStatusCallbackToAM $engineConnStatusCallbackToAM")
+    if (null == engineConnStatusCallbackToAM.serviceInstance) {
+      logger.warn(s"call back service instance is null")
+    }
+    logger.info(s"Start to deal engineConnStatusCallbackToAM $engineConnStatusCallbackToAM")
     val nodeMetrics = new AMNodeMetrics
     val heartBeatMsg: java.util.Map[String, Any] = new util.HashMap[String, Any]()
     heartBeatMsg.put(AMConstant.START_REASON, engineConnStatusCallbackToAM.initErrorMsg)
     if (engineConnStatusCallbackToAM.canRetry) {
       heartBeatMsg.put(AMConstant.EC_CAN_RETRY, engineConnStatusCallbackToAM.canRetry)
-    } else if (matchRetryLog(engineConnStatusCallbackToAM.initErrorMsg)){
-      info(s"match canRetry log ${engineConnStatusCallbackToAM.serviceInstance}")
+    } else if (matchRetryLog(engineConnStatusCallbackToAM.initErrorMsg)) {
+      logger.info(s"match canRetry log ${engineConnStatusCallbackToAM.serviceInstance}")
       heartBeatMsg.put(AMConstant.EC_CAN_RETRY, engineConnStatusCallbackToAM.canRetry)
     }
 
@@ -63,7 +66,7 @@ class DefaultEngineConnStatusCallbackService extends EngineConnStatusCallbackSer
 
 
     nodeMetricManagerPersistence.addOrupdateNodeMetrics(nodeMetrics)
-    info(s"Finished to deal engineConnStatusCallbackToAM $engineConnStatusCallbackToAM")
+    logger.info(s"Finished to deal engineConnStatusCallbackToAM $engineConnStatusCallbackToAM")
 
   }
 
@@ -74,7 +77,7 @@ class DefaultEngineConnStatusCallbackService extends EngineConnStatusCallbackSer
       val errorMsgLowCase = errorMsg.toLowerCase
       canRetryLogs.foreach(canRetry =>
         if (  errorMsgLowCase.contains(canRetry) ) {
-          error(s"match engineConn log fatal logs,is $canRetry")
+          logger.error(s"match engineConn log fatal logs,is $canRetry")
           flag = true
         }
       )

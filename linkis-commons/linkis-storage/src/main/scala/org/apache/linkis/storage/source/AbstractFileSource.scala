@@ -17,12 +17,11 @@
  
 package org.apache.linkis.storage.source
 
-import java.util
-
-import org.apache.linkis.common.io.{FsWriter, MetaData, Record}
 import org.apache.commons.io.IOUtils
 import org.apache.commons.math3.util.Pair
+import org.apache.linkis.common.io.{FsWriter, MetaData, Record}
 
+import java.util
 import scala.collection.JavaConversions._
 
 
@@ -61,5 +60,7 @@ abstract class AbstractFileSource(var fileSplits: Array[FileSplit]) extends File
   override def getTotalLine: Int = this.fileSplits.map(_.totalLine).sum
 
   override def getTypes: Array[String] = this.fileSplits.map(_.`type`)
+
+  override def getFileInfo(needToCountRowNumber: Int = 5000): Array[Pair[Int, Int]] = fileSplits.map(_.getFileInfo(needToCountRowNumber))
 
 }

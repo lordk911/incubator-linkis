@@ -20,9 +20,10 @@ package org.apache.linkis.configuration.receiver
 import org.apache.linkis.configuration.service.ConfigurationService
 import org.apache.linkis.governance.common.protocol.conf.ConfigProtocol
 import org.apache.linkis.rpc.{RPCMessageEvent, Receiver, ReceiverChooser}
-import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+
+import javax.annotation.PostConstruct
 
 @Component
 class ConfigurationReceiverChooser extends ReceiverChooser {

@@ -17,26 +17,17 @@
  
 package org.apache.linkis.ujes.jdbc
 
-import java.sql.{Blob, CallableStatement, Clob, Connection, DatabaseMetaData, NClob, PreparedStatement, ResultSet, SQLException, SQLWarning, SQLXML, Savepoint, Statement, Struct}
+import java.sql._
 import java.util.Properties
 import java.util.concurrent.Executor
 import java.{sql, util}
-
-import org.apache.linkis.common.utils.{Logging, Utils}
-import org.apache.linkis.ujes.client.UJESClient
-import org.apache.linkis.ujes.client.request.JobExecuteAction.EngineType
-import org.apache.linkis.ujes.jdbc.UJESSQLDriverMain._
-import org.apache.commons.lang.StringUtils
-
-import scala.collection.{JavaConversions, mutable}
-
 
 class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Properties) extends Connection with Logging {
   private[jdbc] var creator = "IDE"
   private[jdbc] val variableMap = {
     val params = props.getProperty(PARAMS)
     val map = new mutable.HashMap[String, Any]
-    if(params != null){
+    if (params != null) {
       params.split(PARAM_SPLIT).map(_.split(KV_SPLIT)).foreach {
         case Array(k, v) if k.startsWith(VARIABLE_HEADER) =>
           map += k.substring(VARIABLE_HEADER.length) -> v
@@ -61,8 +52,8 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
 
   private val engineTypeMap: mutable.HashMap[String, EngineType] = new mutable.HashMap()
 
-  private[jdbc] def getEngineType : EngineType = {
-    if(engineTypeMap.isEmpty){
+  private[jdbc] def getEngineType: EngineType = {
+    if (engineTypeMap.isEmpty) {
       engineTypeMap.put(EngineType.SPARK.toString, EngineType.SPARK)
       engineTypeMap.put(EngineType.HIVE.toString, EngineType.HIVE)
       engineTypeMap.put(EngineType.JDBC.toString, EngineType.JDBC)
@@ -70,8 +61,8 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
       engineTypeMap.put(EngineType.SHELL.toString, EngineType.SHELL)
       engineTypeMap.put(EngineType.PRESTO.toString, EngineType.PRESTO)
     }
-    val engineType: EngineType = EngineType.SPARK
-    if(props.containsKey(PARAMS)){
+    val engineType: EngineType = EngineType.PRESTO
+    if (props.containsKey(PARAMS)) {
       val params = props.getProperty(PARAMS)
       if (params != null & params.length() > 0) {
         params.split(PARAM_SPLIT).map(_.split(KV_SPLIT)).foreach {
@@ -83,22 +74,22 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
     engineType
   }
 
-
   private[jdbc] def throwWhenClosed[T](op: => T): T =
-    if(isClosed) throw new UJESSQLException(UJESSQLErrorCode.CONNECTION_CLOSED)
+    if (isClosed) throw new UJESSQLException(UJESSQLErrorCode.CONNECTION_CLOSED)
     else op
 
-  private def createStatementAndAdd[T<:Statement](op: => T): T = throwWhenClosed {
+  private def createStatementAndAdd[T <: Statement](op: => T): T = throwWhenClosed {
 
     val statement = op
     runningSQLStatements.add(statement)
-    if (! inited) {
+    if (!inited) {
       inited = true
       Utils.tryAndWarn(statement.execute(s"USE $dbName"))
     }
     statement
   }
-  def getProps : Properties = props
+
+  def getProps: Properties = props
 
   def removeStatement(statement: UJESSQLStatement): Unit = runningSQLStatements.remove(statement)
 
@@ -125,7 +116,6 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
   override def getMetaData: DatabaseMetaData = throwWhenClosed(new UJESSQLDatabaseMetaData(this))
 
   override def close(): Unit = {
-    ujesClient.close()
     JavaConversions.asScalaBuffer(runningSQLStatements).foreach(statement => Utils.tryQuietly(statement.close()))
     closed = true
   }
@@ -169,12 +159,6 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
 
   override def setHoldability(holdability: Int): Unit = throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_CONNECTION, "setHoldability not supported")
 
-  /**
-    * Modify by owenxu 2019/8/30
-    * have to return a default value instead of throwing an exception to
-    * add the jdbc as a source
-    * @return
-    */
   override def getHoldability: Int = 0
 
   override def setSavepoint(): Savepoint = throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_CONNECTION, "setSavepoint not supported")
@@ -223,13 +207,13 @@ class UJESSQLConnection(private[jdbc] val ujesClient: UJESClient, props: Propert
   override def createStruct(typeName: String, attributes: Array[AnyRef]): Struct = throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_CONNECTION, "createStruct not supported")
 
   override def setSchema(schema: String): Unit = throwWhenClosed {
-    if(StringUtils.isBlank(schema)) throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_STATEMENT, "schema is empty!")
+    if (StringUtils.isBlank(schema)) throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_STATEMENT, "schema is empty!")
     createStatement().execute("use " + schema)
   }
 
   override def getSchema: String = throwWhenClosed {
     val resultSet = createStatement().executeQuery("SELECT current_database()")
-    if(!resultSet.next()) throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_STATEMENT, "Get schema failed!")
+    if (!resultSet.next()) throw new UJESSQLException(UJESSQLErrorCode.NOSUPPORT_STATEMENT, "Get schema failed!")
     resultSet.getString(1)
   }
 

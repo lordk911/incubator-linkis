@@ -18,8 +18,6 @@
 package org.apache.linkis.manager.engineplugin.common.creation
 
 
-import java.util
-
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.common.creation.EngineCreationContext
 import org.apache.linkis.engineconn.common.engineconn.{DefaultEngineConn, EngineConn}
@@ -28,6 +26,7 @@ import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.entity.engine.EngineConnModeLabel
 import org.apache.linkis.manager.label.entity.engine.EngineType.EngineType
 
+import java.util
 import scala.collection.JavaConversions.asScalaBuffer
 
 

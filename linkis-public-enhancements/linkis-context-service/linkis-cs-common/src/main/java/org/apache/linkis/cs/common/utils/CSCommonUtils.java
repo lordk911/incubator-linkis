@@ -19,6 +19,10 @@ package org.apache.linkis.cs.common.utils;
 
 import org.apache.linkis.common.conf.CommonVars;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -75,6 +79,8 @@ public class CSCommonUtils {
 
     public static final String PROJECT_VARIABLE_PREFIX = PROJECT_PREFIX + VARIABLE_PREFIX;
 
+    public static final int CONTEXT_MAX_PAGE_SIZE = 5000;
+
     public static String getVariableKey(String nodeName, String varName) {
 
         return CSCommonUtils.NODE_PREFIX + nodeName + "." + CSCommonUtils.VARIABLE_PREFIX + varName;
@@ -84,4 +90,14 @@ public class CSCommonUtils {
 
         return CSCommonUtils.NODE_PREFIX + nodeName + "." + CSCommonUtils.TABLE_PREFIX + tableName;
     }
+
+    public static Date localDatetimeToDate(LocalDateTime ldt) {
+        if (null != ldt) {
+            return new Date(ldt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        } else {
+            return null;
+        }
+    }
+
+    public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }

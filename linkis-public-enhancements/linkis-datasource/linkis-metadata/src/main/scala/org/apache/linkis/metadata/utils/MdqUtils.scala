@@ -17,10 +17,10 @@
  
 package org.apache.linkis.metadata.utils
 
+import com.google.gson._
+
 import java.lang.reflect.Type
 import java.util.Date
-
-import com.google.gson._
 
 
 object MdqUtils {

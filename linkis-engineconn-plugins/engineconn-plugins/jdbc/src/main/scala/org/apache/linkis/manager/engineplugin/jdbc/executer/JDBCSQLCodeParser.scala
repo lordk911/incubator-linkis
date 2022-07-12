@@ -17,8 +17,8 @@
  
 package org.apache.linkis.manager.engineplugin.jdbc.executer
 
-import org.apache.linkis.manager.engineplugin.jdbc.conf.JDBCConfiguration
 import org.apache.commons.lang.StringUtils
+import org.apache.linkis.manager.engineplugin.jdbc.conf.JDBCConfiguration
 
 import scala.collection.mutable.ArrayBuffer
 

@@ -24,18 +24,19 @@ import org.apache.linkis.engineconnplugin.flink.client.config.entries.ExecutionE
 
 object FlinkEnvConfiguration {
 
+  val SPARK_LIB_PATH = CommonVars("spark.lib.path", CommonVars("SPARK_HOME", "/appcom/Install/spark").getValue + "/jars")
   val FLINK_HOME_ENV = "FLINK_HOME"
   val FLINK_CONF_DIR_ENV = "FLINK_CONF_DIR"
   val FLINK_VERSION = CommonVars("flink.version", "1.12.2")
   val FLINK_HOME = CommonVars("flink.home", CommonVars(FLINK_HOME_ENV, "/appcom/Install/flink").getValue)
   val FLINK_CONF_DIR = CommonVars("flink.conf.dir", CommonVars(FLINK_CONF_DIR_ENV, "/appcom/config/flink-config").getValue)
   val FLINK_DIST_JAR_PATH = CommonVars("flink.dist.jar.path", FLINK_HOME.getValue + s"/lib/flink-dist_2.11-${FLINK_VERSION.getValue}.jar")
-  val FLINK_LIB_REMOTE_PATH = CommonVars("flink.lib.path", "")
-  val FLINK_USER_LIB_REMOTE_PATH = CommonVars("flink.user.lib.path", "", "The hdfs lib path of each user in Flink EngineConn.")
+  val FLINK_PROVIDED_LIB_PATH = CommonVars("flink.lib.path", "")
+  val FLINK_PROVIDED_USER_LIB_PATH = CommonVars("flink.user.lib.path", "", "The hdfs lib path of each user in Flink EngineConn.")
   val FLINK_LIB_LOCAL_PATH = CommonVars("flink.local.lib.path", "/appcom/Install/flink/lib", "The local lib path of Flink EngineConn.")
   val FLINK_USER_LIB_LOCAL_PATH = CommonVars("flink.user.local.lib.path", "/appcom/Install/flink/lib", "The local lib path of each user in Flink EngineConn.")
   val FLINK_SHIP_DIRECTORIES = CommonVars("flink.yarn.ship-directories", "")
-
+  val FLINK_SHIP_REMOTE_DIRECTORIES = CommonVars("flink.yarn.remote.ship-directories", "")
 
   val FLINK_CHECK_POINT_ENABLE = CommonVars("flink.app.checkpoint.enable", false)
   val FLINK_CHECK_POINT_INTERVAL = CommonVars("flink.app.checkpoint.interval", 3000)
@@ -64,4 +65,14 @@ object FlinkEnvConfiguration {
   val FLINK_REPORTER_CLASS = CommonVars("linkis.flink.reporter.class", "")
   val FLINK_REPORTER_INTERVAL = CommonVars("linkis.flink.reporter.interval", new TimeType("60s"))
 
+  val FLINK_EXECUTION_ATTACHED = CommonVars("linkis.flink.execution.attached", true)
+  val FLINK_CONFIG_PREFIX = "_FLINK_CONFIG_."
+
+  val FLINK_KERBEROS_ENABLE = CommonVars("linkis.flink.kerberos.enable", false)
+  val FLINK_KERBEROS_LOGIN_CONTEXTS = CommonVars("linkis.flink.kerberos.login.contexts", "Client,KafkaClient")
+  val FLINK_KERBEROS_LOGIN_KEYTAB = CommonVars("linkis.flink.kerberos.login.keytab", "")
+  val FLINK_KERBEROS_LOGIN_PRINCIPAL = CommonVars("linkis.flink.kerberos.login.principal", "")
+  val FLINK_KERBEROS_CONF_PATH = CommonVars("linkis.flink.kerberos.krb5-conf.path", "")
+
+  val FLINK_PARAMS_BLANK_PLACEHOLER = CommonVars("linkis.flink.params.placeholder.blank", "\\0x001")
 }

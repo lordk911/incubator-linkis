@@ -17,13 +17,13 @@
  
 package org.apache.linkis.httpclient
 
+import org.apache.http.HttpResponse
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.httpclient.config.ClientConfig
 import org.apache.linkis.httpclient.discovery.Discovery
 import org.apache.linkis.httpclient.exception.HttpMethodNotSupportException
 import org.apache.linkis.httpclient.request.HttpAction
 import org.apache.linkis.httpclient.response.{HashMapHttpResult, Result}
-import org.apache.http.HttpResponse
 
 
 class GenericHttpClient(clientConfig: ClientConfig, clientName: String) extends AbstractHttpClient(clientConfig, clientName) {

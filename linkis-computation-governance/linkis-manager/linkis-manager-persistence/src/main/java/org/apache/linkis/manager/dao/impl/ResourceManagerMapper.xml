@@ -19,15 +19,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.apache.linkis.manager.dao.ResourceManagerMapper">
-<!--    <sql id="resource">-->
-<!--        `id`,`max_resource`,`min_resource`,`used_resource`,`left_resource`,`expected_resource`,`locked_resource`,`resourceType`,`ticketId`,`update_time`,`create_time`,`updator`,`creator`-->
-<!--    </sql>-->
-<!--    <insert id="registerResource" useGeneratedKeys="true" keyProperty="id"-->
-<!--            parameterType="org.apache.linkis.manager.common.entity.persistence.PersistenceResource">-->
-<!--        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">-->
-<!--            SELECT LAST_INSERT_ID() AS id-->
-<!--        </selectKey>-->
-<!--        INSERT INTO  linkis_cg_manager_linkis_resources(<include refid="resource"/>)-->
-<!--        VALUES (#{id},#{maxResource},#{minResource},#{usedResource},#{leftResource},#{expectedResource},#{lockedResource},#{resourceType},#{ticketId},#{updateTime},#{createTime},#{updator},#{creator})-->
-<!--    </insert>-->
+
+    <delete id="deleteResourceById">
+        DELETE FROM linkis_cg_manager_linkis_resources WHERE id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteResourceRelByResourceId">
+        DELETE FROM linkis_cg_manager_label_resource WHERE resource_id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getResourceById" resultType="org.apache.linkis.manager.common.entity.persistence.PersistenceResource">
+        SELECT * FROM linkis_cg_manager_linkis_resources WHERE id = #{id}
+    </select>
+
+
 </mapper>

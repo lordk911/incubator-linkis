@@ -18,13 +18,13 @@
 package org.apache.linkis.scheduler.queue.fifoqueue
 
 
-import java.util.concurrent.{ExecutorService, ThreadPoolExecutor}
-
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.scheduler.SchedulerContext
 import org.apache.linkis.scheduler.exception.SchedulerErrorException
 import org.apache.linkis.scheduler.listener.ConsumerListener
 import org.apache.linkis.scheduler.queue.{Consumer, ConsumerManager, Group, LoopArrayQueue}
+
+import java.util.concurrent.{ExecutorService, ThreadPoolExecutor}
 
 
 class FIFOConsumerManager(groupName: String) extends ConsumerManager {

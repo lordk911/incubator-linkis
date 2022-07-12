@@ -19,9 +19,9 @@ package org.apache.linkis.governance.common.utils
 
 import org.apache.linkis.governance.common.entity.job.OnceExecutorContent
 import org.apache.linkis.governance.common.exception.GovernanceErrorException
-import java.util
-
 import org.apache.linkis.protocol.constants.TaskConstant
+
+import java.util
 
 
 object OnceExecutorContentUtils {

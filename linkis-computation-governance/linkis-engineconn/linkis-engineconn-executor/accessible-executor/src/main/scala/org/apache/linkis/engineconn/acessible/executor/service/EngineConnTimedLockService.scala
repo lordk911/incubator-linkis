@@ -17,6 +17,7 @@
  
 package org.apache.linkis.engineconn.acessible.executor.service
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.engineconn.acessible.executor.conf.AccessibleExecutorConfiguration
 import org.apache.linkis.engineconn.acessible.executor.entity.AccessibleExecutor
@@ -28,9 +29,8 @@ import org.apache.linkis.governance.common.exception.engineconn.{EngineConnExecu
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.protocol.engine.EngineLockType
 import org.apache.linkis.manager.common.protocol.{RequestEngineLock, RequestEngineUnlock, ResponseEngineLock, ResponseEngineUnlock}
-import org.apache.linkis.message.annotation.Receiver
+import org.apache.linkis.rpc.message.annotation.Receiver
 import org.apache.linkis.server.BDPJettyServerHelper
-import org.apache.commons.lang.StringUtils
 
 
 class EngineConnTimedLockService extends LockService with Logging {
@@ -109,7 +109,7 @@ class EngineConnTimedLockService extends LockService with Logging {
             })
           } else {
             error("No valid executors while adding lock.")
-          accessibleExecutor.transition(NodeStatus.Idle)
+            accessibleExecutor.transition(NodeStatus.Idle)
           }
           ExecutorListenerBusContext.getExecutorListenerBusContext().getEngineConnAsyncListenerBus.post(ExecutorLockEvent(accessibleExecutor, lockString))
           Some(lockString)

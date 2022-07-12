@@ -2,6 +2,7 @@ Linkis
 ============
 
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![codecov](https://codecov.io/gh/apache/incubator-linkis/branch/master/graph/badge.svg)](https://codecov.io/gh/apache/incubator-linkis/branch/master)
 
 [English](README.md) | [中文](README_CN.md)
 
@@ -47,22 +48,38 @@ Linkis 自2019年开源发布以来，已累计积累了700多家试验企业和
 
 # 生态组件
 
-| 应用工具     | 描述                                                          | Linkis 0.X(推荐0.11.0) 兼容版本   | Linkis 1.X(推荐1.0.3) 兼容版本    | 
+| 应用工具     | 描述                                                          | Linkis 0.X(推荐0.11.0) 兼容版本   | Linkis 1.X(推荐1.1.1) 兼容版本    | 
 | --------------- | -------------------------------------------------------------------- | --------- | ---------- | 
-| [**DataSphere Studio**](https://github.com/WeBankFinTech/DataSphereStudio/blob/master/README-ZH.md)  | DataSphere Studio（简称 DSS）数据应用开发管理集成框架    | DSS 0.9.1[已发布] | **DSS 1.0.1[开发中]** |
-| [**Scriptis**](https://github.com/WeBankFinTech/Scriptis)   | 支持在线写 SQL、Pyspark、HiveQL 等脚本，提交给[Linkis](https://github.com/apache/incubator-linkis)执行的数据分析 Web 工具。 | Scriptis合并在DSS中（DSS 0.9.1[已发布]） | 在DSS 1.0.1中[开发中] |
-| [**Schedulis**](https://github.com/WeBankFinTech/Schedulis) | 基于 Azkaban 二次开发的工作流任务调度系统,具备高性能，高可用和多租户资源隔离等金融级特性。 | Schedulis 0.6.1[已发布] | **Schedulis0.6.2 [开发中]** |
-| [**Qualitis**](https://github.com/WeBankFinTech/Qualitis)   | 数据质量校验工具，提供数据完整性、正确性等数据校验能力 | Qualitis 0.8.0[已发布] | **Qualitis 0.9.0 [开发中]** |
-| [**Streamis**](https://github.com/WeBankFinTech/Streamis)  | 流式应用开发管理工具。支持发布 Flink Jar 和 Flink SQL ，提供流式应用的开发调试和生产管理能力，如：启停、状态监控、checkpoint 等。 | 不支持 | **Streamis 0.1.0 [开发中]** |
+| [**DataSphere Studio**](https://github.com/WeBankFinTech/DataSphereStudio/blob/master/README-ZH.md)  | DataSphere Studio（简称 DSS）数据应用开发管理集成框架    | DSS 0.9.1[已发布] | **DSS 1.0.1[已发布][Linkis 推荐1.1.0]** |
+| [**Scriptis**](https://github.com/WeBankFinTech/Scriptis)   | 支持在线写 SQL、Pyspark、HiveQL 等脚本，提交给[Linkis](https://github.com/apache/incubator-linkis)执行的数据分析 Web 工具。 | Scriptis合并在DSS中（DSS 0.9.1[已发布]） | 在DSS 1.0.1中[已发布] |
+| [**Schedulis**](https://github.com/WeBankFinTech/Schedulis) | 基于 Azkaban 二次开发的工作流任务调度系统,具备高性能，高可用和多租户资源隔离等金融级特性。 | Schedulis 0.6.1[已发布] | **Schedulis0.6.2 [已发布]** |
+| [**Qualitis**](https://github.com/WeBankFinTech/Qualitis)   | 数据质量校验工具，提供数据完整性、正确性等数据校验能力 | Qualitis 0.8.0[已发布] | **Qualitis 0.9.0 [已发布]** |
+| [**Streamis**](https://github.com/WeBankFinTech/Streamis)  | 流式应用开发管理工具。支持发布 Flink Jar 和 Flink SQL ，提供流式应用的开发调试和生产管理能力，如：启停、状态监控、checkpoint 等。 | 不支持 | **Streamis 0.1.0 [已发布][Linkis 推荐1.1.0]** |
 | [**Exchangis**](https://github.com/WeBankFinTech/Exchangis) | 支持对结构化及无结构化的异构数据源之间的数据传输的数据交换平台，即将发布的 Exchangis1.0，将与 DSS 工作流打通 | 不支持 | **Exchangis 1.0.0 [开发中]** |
 | [**Visualis**](https://github.com/WeBankFinTech/Visualis)   | 基于宜信开源项目 Davinci 二次开发的数据可视化 BI 工具，为用户在数据安全方面提供金融级数据可视化能力。 | Visualis 0.5.0[已发布] | **Visualis 1.0.0[开发中]** |
-| [**Prophecis**](https://github.com/WeBankFinTech/Prophecis)     | 一站式机器学习平台，集成多种开源机器学习框架。Prophecis 的 MLFlow 通过 AppConn 可以接入到 DSS 工作流中。      | Prophecis 0.2.2[已发布] | **Prophecis 0.3.0 [开发中]** |
+| [**Prophecis**](https://github.com/WeBankFinTech/Prophecis)     | 一站式机器学习平台，集成多种开源机器学习框架。Prophecis 的 MLFlow 通过 AppConn 可以接入到 DSS 工作流中。      | Prophecis 0.2.2[已发布] | **Prophecis 0.3.0 [已发布]** |
 
 # 下载
 
 请前往[Linkis releases 页面](https://github.com/apache/incubator-linkis/releases) 下载Linkis 的已编译版本或源码包。
 
 # 编译和安装部署
+```shell
+
+## 后端编译
+### Mac OS/Linux
+./mvnw -N install
+./mvnw  clean install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true
+
+### Windows
+mvnw.cmd -N install
+mvnw.cmd clean install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true
+
+## 前端编译
+cd incubator-linkis/web
+npm install
+npm run build
+```
 请参照[编译指引](https://linkis.apache.org/zh-CN/docs/latest/development/linkis_compile_and_package) 来编译Linkis 源码。  
 请参考[安装部署文档](https://linkis.apache.org/zh-CN/docs/latest/deployment/quick_deploy) 来部署Linkis。
 
@@ -108,8 +125,8 @@ Linkis 基于微服务架构开发，其服务可以分为3类:计算治理服�
 # 联系我们
 
 对Linkis 的任何问题和建议，敬请提交issue，以便跟踪处理和经验沉淀共享。  
-您也可以扫描下面的二维码，加入我们的微信/QQ群，以获得更快速的响应。
-![introduction05](https://user-images.githubusercontent.com/7869972/148767386-0663f833-547d-4c30-8876-081bb966ffb8.png)
+您也可以扫描下面的二维码，加入我们的微信群，以获得更快速的响应。
+![WeChat](https://user-images.githubusercontent.com/11496700/173569063-8615c259-59ef-477a-9cee-825d28b54e7b.png)
 
 Meetup 视频 [Bilibili](https://space.bilibili.com/598542776?from=search&seid=14344213924133040656).
 

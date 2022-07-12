@@ -17,8 +17,8 @@
  
 package org.apache.linkis.rpc
 
-import java.util
-
+import feign.slf4j.Slf4jLogger
+import feign.{Feign, Retryer}
 import org.apache.linkis.DataWorkCloudApplication
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.exception.WarnException
@@ -29,9 +29,8 @@ import org.apache.linkis.rpc.interceptor._
 import org.apache.linkis.rpc.transform.{RPCConsumer, RPCProduct}
 import org.apache.linkis.server.Message
 import org.apache.linkis.server.conf.ServerConfiguration
-import feign.slf4j.Slf4jLogger
-import feign.{Feign, Retryer}
 
+import java.util
 import scala.concurrent.duration.Duration
 import scala.runtime.BoxedUnit
 

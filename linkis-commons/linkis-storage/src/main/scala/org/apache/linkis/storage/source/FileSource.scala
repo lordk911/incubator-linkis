@@ -17,15 +17,16 @@
  
 package org.apache.linkis.storage.source
 
-import java.io.{Closeable, InputStream}
-import java.util
-
+import org.apache.commons.math3.util.Pair
 import org.apache.linkis.common.io._
+import org.apache.linkis.storage.conf.LinkisStorageConf
 import org.apache.linkis.storage.exception.StorageErrorException
 import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetReader}
 import org.apache.linkis.storage.script.ScriptFsReader
 import org.apache.linkis.storage.utils.StorageConfiguration
-import org.apache.commons.math3.util.Pair
+
+import java.io.{Closeable, InputStream}
+import java.util
 
 
 trait FileSource extends Closeable {
@@ -35,6 +36,8 @@ trait FileSource extends Closeable {
   def page(page: Int, pageSize: Int): FileSource
 
   def collect(): Array[Pair[Object, util.ArrayList[Array[String]]]]
+
+  def getFileInfo(needToCountRowNumber: Int = 5000): Array[Pair[Int, Int]]
 
   def write[K <: MetaData, V <: Record](fsWriter: FsWriter[K, V]): Unit
 
@@ -53,7 +56,7 @@ trait FileSource extends Closeable {
 
 object FileSource {
 
-  private val fileType = Array("dolphin", "sql", "scala", "py", "hql", "python", "out", "log", "text", "sh", "jdbc", "ngql", "psql", "fql")
+  private val fileType = LinkisStorageConf.getFileTypeArr
   private val suffixPredicate = (path: String, suffix: String) => path.endsWith(s".$suffix")
 
   def isResultSet(path: String): Boolean = {

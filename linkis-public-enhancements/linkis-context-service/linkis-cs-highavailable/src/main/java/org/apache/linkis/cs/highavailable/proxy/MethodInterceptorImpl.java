@@ -25,16 +25,17 @@ import org.apache.linkis.cs.highavailable.exception.CSErrorCode;
 
 import org.apache.commons.lang.StringUtils;
 
-import net.sf.cglib.proxy.MethodInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import net.sf.cglib.proxy.MethodProxy;
-import com.google.gson.Gson;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 基于CGLib库实现的动态代理拦截器，拦截被代理方法的参数，在被代理方法之前和之后进行增强
@@ -203,6 +204,9 @@ public class MethodInterceptorImpl implements MethodInterceptor {
     }
 
     private void convertGetContextIDBeforeInvoke(Object object) throws CSErrorException {
+        if (null == object) {
+            return;
+        }
         for (Method innerMethod : object.getClass().getMethods()) {
             if (innerMethod.getName().toLowerCase().contains(GETCONTEXTID)) {
                 try {
@@ -223,16 +227,20 @@ public class MethodInterceptorImpl implements MethodInterceptor {
     }
 
     private void convertGetContextIDAfterInvoke(Object object) throws CSErrorException {
+        if (null == object) {
+            return;
+        }
         for (Method innerMethod : object.getClass().getMethods()) {
-            convertGetContextIDAfterInvokeMethod(innerMethod);
+            convertGetContextIDAfterInvokeMethod(innerMethod, object);
         }
     }
 
-    private void convertGetContextIDAfterInvokeMethod(Method method) throws CSErrorException {
+    private void convertGetContextIDAfterInvokeMethod(Method method, Object methodObject)
+            throws CSErrorException {
         if (method.getName().toLowerCase().contains(GETCONTEXTID)) {
             Object result = null;
             try {
-                result = method.invoke(object);
+                result = method.invoke(methodObject);
             } catch (Exception e) {
                 logger.warn("Invoke method : {} error. ", method.getName(), e);
             }

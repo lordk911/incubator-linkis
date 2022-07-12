@@ -17,12 +17,11 @@
  
 package org.apache.linkis.governance.common.protocol.job
 
-import java.util
-
 import org.apache.linkis.governance.common.entity.job.JobRequest
 import org.apache.linkis.protocol.message.RequestProtocol
-import java.util.Date
 
+import java.util
+import java.util.Date
 import scala.beans.BeanProperty
 
 

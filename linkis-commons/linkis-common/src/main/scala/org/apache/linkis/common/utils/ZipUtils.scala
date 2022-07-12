@@ -17,12 +17,11 @@
  
 package org.apache.linkis.common.utils
 
+import org.apache.commons.io.IOUtils
+import org.apache.linkis.common.io.{Fs, FsPath}
+
 import java.io._
 import java.util.zip.{ZipEntry, ZipInputStream, ZipOutputStream}
-
-import org.apache.linkis.common.io.{Fs, FsPath}
-import org.apache.commons.io.IOUtils
-
 import scala.collection.JavaConversions._
 
 

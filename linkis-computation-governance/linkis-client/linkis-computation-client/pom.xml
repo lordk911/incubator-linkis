@@ -24,7 +24,7 @@
     <parent>
         <artifactId>linkis</artifactId>
         <groupId>org.apache.linkis</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
     </parent>
 
     <artifactId>linkis-computation-client</artifactId>
@@ -62,6 +62,20 @@
             <groupId>org.apache.linkis</groupId>
             <artifactId>linkis-bml-client</artifactId>
             <version>${linkis.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.linkis</groupId>
+                    <artifactId>linkis-storage</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.linkis</groupId>
+                    <artifactId>linkis-hadoop-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.json4s</groupId>
+                    <artifactId>json4s-jackson_${scala.binary.version}</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

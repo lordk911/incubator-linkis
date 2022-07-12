@@ -17,8 +17,7 @@
  
 package org.apache.linkis.resourcemanager.service.impl
 
-import org.apache.linkis.manager.common.entity.resource.{NodeResource, ResourceSerializer, ResourceType}
-import org.apache.linkis.resourcemanager.domain.RMLabelContainer
+import org.apache.linkis.manager.common.entity.resource.{ResourceSerializer, ResourceType}
 import org.apache.linkis.resourcemanager.service.{LabelResourceService, RequestResourceService}
 import org.json4s.DefaultFormats
 

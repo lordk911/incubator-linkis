@@ -17,10 +17,9 @@
  
 package org.apache.linkis.httpclient.request
 
-import java.util
-
 import org.apache.http.entity.ContentType
 
+import java.util
 import scala.tools.nsc.interpreter.InputStream
 
 

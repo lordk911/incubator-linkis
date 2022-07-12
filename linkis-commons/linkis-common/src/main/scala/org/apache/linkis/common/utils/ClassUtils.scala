@@ -17,10 +17,10 @@
  
 package org.apache.linkis.common.utils
 
-import java.lang.reflect.Modifier
-
 import org.apache.linkis.common.conf.Configuration
 import org.reflections.Reflections
+
+import java.lang.reflect.Modifier
 
 object ClassUtils {
   lazy val reflections = new Reflections(Configuration.REFLECT_SCAN_PACKAGE, this.getClass.getClassLoader)

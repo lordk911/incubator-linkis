@@ -27,11 +27,7 @@ import org.apache.linkis.engineconnplugin.flink.context.FlinkEngineConnContext;
 import org.apache.linkis.engineconnplugin.flink.exception.SqlExecutionException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.flink.table.api.DataTypes;
-import org.apache.flink.table.api.TableColumn;
-import org.apache.flink.table.api.TableEnvironment;
-import org.apache.flink.table.api.TableSchema;
-import org.apache.flink.table.api.WatermarkSpec;
+import org.apache.flink.table.api.*;
 import org.apache.flink.table.types.logical.BooleanType;
 import org.apache.flink.table.types.logical.LogicalType;
 import org.apache.flink.types.Row;

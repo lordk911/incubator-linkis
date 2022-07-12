@@ -17,10 +17,11 @@
  
 package org.apache.linkis.ecm.core.launch
 
-import java.io.OutputStream
-
-import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants
 import org.apache.commons.io.IOUtils
+import org.apache.linkis.ecm.core.conf.ECPCoreConf
+import org.apache.linkis.manager.engineplugin.common.launch.process.LaunchConstants
+
+import java.io.OutputStream
 
 
 trait ProcessEngineCommandBuilder {
@@ -65,11 +66,15 @@ class UnixProcessEngineCommandBuilder extends ShellProcessEngineCommandBuilder {
 
   newLine("#!/bin/bash")
 
+  if (ECPCoreConf.CORE_DUMP_DISABLE) {
+    newLine("ulimit -c 0")
+  }
+
   private def addErrorCheck(): Unit = {
     newLine("linkis_engineconn_errorcode=$?")
     newLine("if [ $linkis_engineconn_errorcode -ne 0 ]")
     newLine("then")
-    newLine("  cat ${LOG_DIRS}/stderr")
+    newLine("  tail -1000 ${LOG_DIRS}/stderr")
     newLine("  exit $linkis_engineconn_errorcode")
     newLine("fi")
   }

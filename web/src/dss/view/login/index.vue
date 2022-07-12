@@ -29,7 +29,7 @@
           <span class="login-title">{{$t('message.common.login.loginTitle')}}</span>
         </FormItem>
         <FormItem prop="user">
-          <div class="label">用户名</div>
+          <div class="label">{{$t('message.linkis.userName')}}</div>
           <Input
             v-model="loginForm.user"
             type="text"
@@ -37,11 +37,11 @@
             size="large"/>
         </FormItem>
         <FormItem prop="password">
-          <div class="label">密码</div>
+          <div class="label">{{$t('message.linkis.password')}}</div>
           <Input
             v-model="loginForm.password"
             type="password"
-            placeholder="请输入密码"
+            :placeholder="$t('message.common.login.passwordHint')"
             size="large" />
           <Checkbox
             v-model="rememberUserNameAndPass"
@@ -66,7 +66,6 @@ import storage from '@/common/helper/storage';
 import { db } from '@/common/service/db/index.js';
 import { config } from '@/common/config/db.js';
 import { RSA } from '@/common/util/ras.js';
-import util from '@/common/util/';
 import tab from '@/apps/scriptis/service/db/tab.js';
 export default {
   data() {
@@ -102,17 +101,6 @@ export default {
   mounted() {
   },
   methods: {
-    // 获取登录后的url调转
-    getPageHomeUrl() {
-      const currentModules = util.currentModules();
-      return api.fetch(`${this.$API_PATH.WORKSPACE_PATH}getWorkspaceHomePage`, {
-        micro_module: currentModules.microModule || 'dss'
-      }, 'get').then((res) => {
-        return res.workspaceHomePage.homePageUrl;
-      }).catch(() => {
-        return '/'
-      });
-    },
     // 获取公钥接口
     getPublicKey() {
       api.fetch('/user/publicKey', 'get').then((res) => {
@@ -159,6 +147,7 @@ export default {
             .then((rst) => {
               this.loading = false;
               storage.set('userName',rst.userName,'session')
+              storage.set('enableWatermark',rst.enableWatermark ? true : false,'session')
               // 保存用户名
               if (this.rememberUserNameAndPass) {
                 storage.set('saveUserNameAndPass', `${this.loginForm.user}&${this.loginForm.password}`, 'local');
@@ -174,8 +163,8 @@ export default {
                 storage.set('saveUserNameAndPass', `${this.loginForm.user}&${this.loginForm.password}`, 'local');
               }
               if (err.message.indexOf('已经登录，请先退出再进行登录') !== -1) {
-                this.getPageHomeUrl().then((res) => {
-                  this.$router.push({path: res});
+                this.getPageHomeUrl().then(() => {
+                  this.$router.push({path: '/'});
                 })
               }
               this.loading = false;

@@ -17,7 +17,7 @@
  
 package org.apache.linkis.orchestrator.code.plans.logical
 
-import org.apache.linkis.orchestrator.plans.ast.{ASTOrchestration, Job}
+import org.apache.linkis.orchestrator.plans.ast.Job
 import org.apache.linkis.orchestrator.plans.logical.{Origin, TaskDesc}
 
 

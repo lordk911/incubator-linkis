@@ -28,10 +28,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet.FIELD_NAME_CHANGE_FLAGS;
-import static org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet.FIELD_NAME_COLUMNS;
-import static org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet.FIELD_NAME_DATA;
-import static org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet.FIELD_NAME_RESULT_KIND;
+import static org.apache.linkis.engineconnplugin.flink.client.sql.operation.result.ResultSet.*;
 
 /** Json serializer for {@link ResultSet}. */
 public class ResultSetJsonSerializer extends StdSerializer<ResultSet> {

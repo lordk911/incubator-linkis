@@ -17,12 +17,12 @@
  
 package org.apache.linkis.orchestrator.execution
 
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.exception.FatalException
 import org.apache.linkis.common.utils.{ClassUtils, Logging}
 import org.apache.linkis.orchestrator.conf.OrchestratorConfiguration
 import org.apache.linkis.orchestrator.core.SessionState
 import org.apache.linkis.orchestrator.exception.OrchestratorErrorCodeSummary
-import org.apache.commons.lang.StringUtils
 
 /**
   *

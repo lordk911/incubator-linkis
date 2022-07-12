@@ -25,18 +25,14 @@ import org.apache.linkis.metadatamanager.common.exception.MetaRuntimeException;
 import org.apache.linkis.metadatamanager.common.service.AbstractMetaService;
 import org.apache.linkis.metadatamanager.common.service.MetadataConnection;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -45,22 +41,24 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Component
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class KafkaMetaService extends AbstractMetaService<KafkaConnection> {
 
     private static final Logger LOG = LoggerFactory.getLogger(KafkaMetaService.class);
     private static final CommonVars<String> TMP_FILE_STORE_LOCATION =
-            CommonVars.apply("wds.linkis.server.mdm.service.temp.location", "classpath:/tmp");
+            CommonVars.apply("wds.linkis.server.mdm.service.temp.location", "/tmp/keytab");
     private BmlClient client;
 
-    @PostConstruct
-    public void buildClient() {
+    public KafkaMetaService() {
         client = BmlClientFactory.createBmlClient();
     }
 
     @Override
     public MetadataConnection<KafkaConnection> getConnection(
             String operator, Map<String, Object> params) throws Exception {
+        FileUtils.forceMkdir(new File(TMP_FILE_STORE_LOCATION.getValue()));
         Resource resource =
                 new PathMatchingResourcePatternResolver()
                         .getResource(TMP_FILE_STORE_LOCATION.getValue());
@@ -85,9 +83,10 @@ public class KafkaMetaService extends AbstractMetaService<KafkaConnection> {
             if (StringUtils.isNotBlank(keytabResourceId)) {
                 LOG.info("Start to download resource id:[" + keytabResourceId + "]");
                 String keytabFilePath =
-                        resource.getFile().getAbsolutePath()
+                        TMP_FILE_STORE_LOCATION.getValue()
                                 + "/"
-                                + UUID.randomUUID().toString().replace("-", "");
+                                + UUID.randomUUID().toString().replace("-", "")
+                                + ".keytab";
                 if (!downloadResource(keytabResourceId, operator, keytabFilePath)) {
                     throw new MetaRuntimeException(
                             "Fail to download resource i:[" + keytabResourceId + "]", null);
@@ -125,6 +124,14 @@ public class KafkaMetaService extends AbstractMetaService<KafkaConnection> {
 
     private boolean downloadResource(String resourceId, String user, String absolutePath)
             throws IOException {
+        LOG.info(
+                "Try to download resource resourceId:["
+                        + resourceId
+                        + "]"
+                        + ",user=["
+                        + user
+                        + "], will store in path:"
+                        + absolutePath);
         BmlDownloadResponse downloadResponse =
                 client.downloadResource(user, resourceId, absolutePath);
         if (downloadResponse.isSuccess()) {

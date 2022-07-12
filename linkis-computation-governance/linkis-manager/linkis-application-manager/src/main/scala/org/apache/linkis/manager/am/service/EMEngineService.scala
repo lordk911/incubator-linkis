@@ -17,12 +17,12 @@
  
 package org.apache.linkis.manager.am.service
 
-import java.util
-
 import org.apache.linkis.manager.common.entity.node.{EMNode, EngineNode, ScoreServiceInstance}
 import org.apache.linkis.manager.common.protocol.em._
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnBuildRequest
 import org.apache.linkis.manager.label.entity.Label
+
+import java.util
 
 
 trait EMEngineService {

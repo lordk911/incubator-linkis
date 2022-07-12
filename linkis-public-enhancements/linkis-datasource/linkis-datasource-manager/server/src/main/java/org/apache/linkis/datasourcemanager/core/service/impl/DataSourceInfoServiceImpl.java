@@ -24,10 +24,14 @@ import org.apache.linkis.datasourcemanager.common.domain.DataSourceParamKeyDefin
 import org.apache.linkis.datasourcemanager.common.domain.DatasourceVersion;
 import org.apache.linkis.datasourcemanager.common.exception.JsonErrorException;
 import org.apache.linkis.datasourcemanager.common.util.json.Json;
-import org.apache.linkis.datasourcemanager.core.dao.*;
+import org.apache.linkis.datasourcemanager.core.dao.DataSourceDao;
+import org.apache.linkis.datasourcemanager.core.dao.DataSourceEnvDao;
+import org.apache.linkis.datasourcemanager.core.dao.DataSourceParamKeyDao;
+import org.apache.linkis.datasourcemanager.core.dao.DataSourceVersionDao;
 import org.apache.linkis.datasourcemanager.core.formdata.FormStreamContent;
 import org.apache.linkis.datasourcemanager.core.service.BmlAppService;
 import org.apache.linkis.datasourcemanager.core.service.DataSourceInfoService;
+import org.apache.linkis.datasourcemanager.core.service.hooks.DataSourceParamsHook;
 import org.apache.linkis.datasourcemanager.core.vo.DataSourceEnvVo;
 import org.apache.linkis.datasourcemanager.core.vo.DataSourceVo;
 
@@ -37,23 +41,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class DataSourceInfoServiceImpl implements DataSourceInfoService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataSourceInfoService.class);
     @Autowired private BmlAppService bmlAppService;
-
-    @Autowired private DataSourceTypeEnvDao dataSourceTypeEnvDao;
 
     @Autowired private DataSourceDao dataSourceDao;
 
@@ -62,6 +64,8 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
     @Autowired private DataSourceParamKeyDao dataSourceParamKeyDao;
 
     @Autowired private DataSourceVersionDao dataSourceVersionDao;
+
+    @Autowired private List<DataSourceParamsHook> dataSourceParamsHooks = new ArrayList<>();
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -253,9 +257,6 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
                     dataSourceEnv.setParameter(parameter);
                     // Save environment into database
                     dataSourceEnvDao.insertOne(dataSourceEnv);
-                    // Store relation
-                    dataSourceTypeEnvDao.insertRelation(
-                            dataSourceEnv.getDataSourceTypeId(), dataSourceEnv.getId());
                 });
     }
 
@@ -277,8 +278,6 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
             // First to delete record in db
             int affect = dataSourceEnvDao.removeOne(envId);
             if (affect > 0) {
-                // Remove relations
-                dataSourceTypeEnvDao.removeRelationsByEnvId(envId);
                 // Remove resource
                 Map<String, Object> connectParams = dataSourceEnv.getConnectParams();
                 List<DataSourceParamKeyDefinition> keyDefinitions =
@@ -322,12 +321,6 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
                     updatedOne.setParameter(parameter);
                     // Update environment into database
                     dataSourceEnvDao.updateOne(updatedOne);
-                    if (!updatedOne.getDataSourceTypeId().equals(storedOne.getDataSourceTypeId())) {
-                        // Remove old relation and add new relation
-                        dataSourceTypeEnvDao.removeRelationsByEnvId(updatedOne.getId());
-                        dataSourceTypeEnvDao.insertRelation(
-                                updatedOne.getDataSourceTypeId(), updatedOne.getId());
-                    }
                 });
     }
 
@@ -412,7 +405,13 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
                 keyDefinitionList.stream()
                         .map(DataSourceParamKeyDefinition::getKey)
                         .collect(Collectors.toList());
-        connectParams.entrySet().removeIf(entry -> !definedKeyNames.contains(entry.getKey()));
+        // Accept the other parameters
+        //        connectParams.entrySet().removeIf(entry ->
+        // !definedKeyNames.contains(entry.getKey()));
+        // 2.1 Invoke the hooks
+        for (DataSourceParamsHook hook : dataSourceParamsHooks) {
+            hook.beforePersist(connectParams, keyDefinitionList);
+        }
         datasourceVersion.setParameter(Json.toJson(connectParams, null));
 
         // 3. insert to dataSourceVersionDao
@@ -501,6 +500,9 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
                                     String.valueOf(storedParams.get(definedKey.getKey())));
                         }
                     });
+            for (DataSourceParamsHook hook : dataSourceParamsHooks) {
+                hook.beforePersist(updatedParams, keyDefinitionList);
+            }
             parameterCallback.accept(Json.toJson(updatedParams, null));
             deleteResources(userName, duplicateResources);
         } catch (Exception e) {
@@ -552,6 +554,9 @@ public class DataSourceInfoServiceImpl implements DataSourceInfoService {
                                 }
                                 return false;
                             });
+            for (DataSourceParamsHook hook : dataSourceParamsHooks) {
+                hook.beforePersist(connectParams, keyDefinitionList);
+            }
             parameterCallback.accept(Json.toJson(connectParams, null));
         } catch (Exception e) {
             deleteResources(userName, uploadedResources);

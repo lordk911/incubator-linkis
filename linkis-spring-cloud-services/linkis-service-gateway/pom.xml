@@ -22,7 +22,7 @@
     <parent>
         <artifactId>linkis</artifactId>
         <groupId>org.apache.linkis</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -36,6 +36,7 @@
         <module>linkis-gateway-httpclient-support</module>
         <module>linkis-spring-cloud-gateway</module>
         <module>linkis-gateway-server-support</module>
+        <module>linkis-gateway-authentication</module>
 
     </modules>
 

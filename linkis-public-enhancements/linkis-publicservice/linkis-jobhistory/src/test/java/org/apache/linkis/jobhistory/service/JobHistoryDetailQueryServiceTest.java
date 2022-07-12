@@ -23,6 +23,11 @@ import org.apache.linkis.governance.common.entity.job.SubJobInfo;
 import org.apache.linkis.governance.common.protocol.job.*;
 import org.apache.linkis.jobhistory.dao.JobDetailMapper;
 import org.apache.linkis.jobhistory.service.impl.JobHistoryDetailQueryServiceImpl;
+import org.apache.linkis.manager.label.entity.engine.UserCreatorLabel;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.function.Predicate;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -32,12 +37,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.function.Predicate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class JobHistoryDetailQueryServiceTest {
@@ -140,5 +140,21 @@ class JobHistoryDetailQueryServiceTest {
         JobDetailReqQuery jobDetailReqQuery = new JobDetailReqQuery(subJobDetail);
         JobRespProtocol jobRespProtocol = service.query(jobDetailReqQuery);
         assertEquals(jobRespProtocol.getStatus(), 0);
+    }
+
+    @Test
+    void testUserCreatorLabel() {
+        UserCreatorLabel fakeLabel = new UserCreatorLabel();
+        fakeLabel.setUser("user");
+        fakeLabel.setCreator("creator");
+        String userCreator = fakeLabel.getStringValue();
+        assertEquals(userCreator, "user-creator");
+        assertEquals(fakeLabel.getLabelKey(), "userCreator");
+        try {
+            assertDoesNotThrow(() -> fakeLabel.valueCheck(fakeLabel.getStringValue()));
+            assertThrows(Exception.class, () -> fakeLabel.valueCheck("fake-label-error"));
+        } catch (Exception e) {
+
+        }
     }
 }

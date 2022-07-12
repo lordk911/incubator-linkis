@@ -17,9 +17,6 @@
  
 package org.apache.linkis.ujes.client
 
-import java.io.Closeable
-import java.util.concurrent.TimeUnit
-
 import org.apache.linkis.httpclient.authentication.AuthenticationStrategy
 import org.apache.linkis.httpclient.dws.authentication.StaticAuthenticationStrategy
 import org.apache.linkis.httpclient.dws.config.{DWSClientConfig, DWSClientConfigBuilder}
@@ -27,6 +24,9 @@ import org.apache.linkis.httpclient.response.Result
 import org.apache.linkis.ujes.client.request.JobExecIdAction.JobServiceType
 import org.apache.linkis.ujes.client.request._
 import org.apache.linkis.ujes.client.response._
+
+import java.io.Closeable
+import java.util.concurrent.TimeUnit
 
 abstract class UJESClient extends Closeable {
 
@@ -89,6 +89,18 @@ abstract class UJESClient extends Closeable {
 
   def getColumns(getColumnsAction: GetColumnsAction): GetColumnsResult = {
     executeUJESJob(getColumnsAction).asInstanceOf[GetColumnsResult]
+  }
+
+  def getTableStatisticInfo(getTableStatisticInfoAction: GetTableStatisticInfoAction): GetTableStatisticInfoResult = {
+    executeUJESJob(getTableStatisticInfoAction).asInstanceOf[GetTableStatisticInfoResult]
+  }
+
+  def getTableBaseInfo(getTableBaseInfoAction: GetTableBaseInfoAction): GetTableBaseInfoResult = {
+    executeUJESJob(getTableBaseInfoAction).asInstanceOf[GetTableBaseInfoResult]
+  }
+
+  def getPartitionStatisticInfo(getPartitionStatisticInfoAction: GetPartitionStatisticInfoAction): GetPartitionStatisticInfoResult = {
+    executeUJESJob(getPartitionStatisticInfoAction).asInstanceOf[GetPartitionStatisticInfoResult]
   }
 
 }

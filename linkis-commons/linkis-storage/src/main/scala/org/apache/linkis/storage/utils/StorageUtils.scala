@@ -17,17 +17,17 @@
  
 package org.apache.linkis.storage.utils
 
-import java.io.{Closeable, File, InputStream, OutputStream}
-import java.lang.reflect.Method
-import java.text.NumberFormat
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.io.{Fs, FsPath}
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.hadoop.common.conf.HadoopConf
 import org.apache.linkis.storage.exception.StorageFatalException
 import org.apache.linkis.storage.resultset.{ResultSetFactory, ResultSetReader, ResultSetWriter}
 import org.apache.linkis.storage.{LineMetaData, LineRecord}
-import org.apache.commons.lang.StringUtils
 
+import java.io.{Closeable, File, InputStream, OutputStream}
+import java.lang.reflect.Method
+import java.text.NumberFormat
 import scala.collection.mutable
 
 object StorageUtils extends Logging{

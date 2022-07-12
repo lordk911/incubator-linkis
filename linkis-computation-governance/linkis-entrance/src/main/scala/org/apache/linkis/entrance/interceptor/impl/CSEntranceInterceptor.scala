@@ -17,13 +17,12 @@
  
 package org.apache.linkis.entrance.interceptor.impl
 
-import java.lang
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.entrance.cs.CSEntranceHelper
 import org.apache.linkis.entrance.interceptor.EntranceInterceptor
 import org.apache.linkis.governance.common.entity.job.JobRequest
-import org.apache.linkis.governance.common.entity.task.RequestPersistTask
-import org.apache.linkis.protocol.task.Task
+
+import java.lang
 
 
 class CSEntranceInterceptor extends EntranceInterceptor with Logging {
@@ -31,7 +30,7 @@ class CSEntranceInterceptor extends EntranceInterceptor with Logging {
   override def apply(task: JobRequest, logAppender: lang.StringBuilder): JobRequest = {
     logger.debug("Start to execute CSEntranceInterceptor")
     Utils.tryAndWarn(CSEntranceHelper.addCSVariable(task))
-    Utils.tryAndWarn(CSEntranceHelper.resetCreator(task))
+    //Utils.tryAndWarn(CSEntranceHelper.resetCreator(task))
     Utils.tryAndWarn(CSEntranceHelper.initNodeCSInfo(task))
     logger.debug("Finished to execute CSEntranceInterceptor")
     task

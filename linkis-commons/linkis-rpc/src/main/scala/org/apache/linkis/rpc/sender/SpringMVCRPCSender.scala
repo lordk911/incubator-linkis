@@ -17,22 +17,24 @@
  
 package org.apache.linkis.rpc.sender
 
-import java.lang.reflect.Field
-
 import com.netflix.client.ClientRequest
 import com.netflix.client.config.IClientConfig
 import com.netflix.loadbalancer.reactive.LoadBalancerCommand
+import feign._
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.common.conf.{Configuration => DWCConfiguration}
 import org.apache.linkis.protocol.Protocol
+import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.rpc.interceptor.{RPCInterceptor, RPCLoadBalancer, ServiceInstanceRPCInterceptorChain}
+import org.apache.linkis.rpc.message.utils.LoadBalancerOptionsUtils
 import org.apache.linkis.rpc.transform.RPCConsumer
 import org.apache.linkis.rpc.{BaseRPCSender, RPCMessageEvent, RPCSpringBeanCache}
 import org.apache.linkis.server.{BDPJettyServerHelper, Message}
-import feign._
-import org.apache.commons.lang.StringUtils
 import org.springframework.cloud.netflix.ribbon.ServerIntrospector
 import org.springframework.cloud.openfeign.ribbon.{CachingSpringLoadBalancerFactory, FeignLoadBalancer, LoadBalancerFeignClient}
+
+import java.lang.reflect.Field
 
 
 private[rpc] class SpringMVCRPCSender private[rpc](private[rpc] val serviceInstance: ServiceInstance)
@@ -78,6 +80,9 @@ private[rpc] class SpringMVCRPCSender private[rpc](private[rpc] val serviceInsta
         }
       }
     }, getClientFactory)
+    if (RPCConfiguration.ENABLE_SPRING_PARAMS) {
+      builder.options(LoadBalancerOptionsUtils.getDefaultOptions)
+    }
     super.doBuilder(builder)
     builder.contract(getContract)
       .encoder(getEncoder).decoder(getDecoder)

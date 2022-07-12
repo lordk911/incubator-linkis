@@ -17,15 +17,16 @@
  
 package org.apache.linkis.ecm.core.engineconn
 
-import java.io.Closeable
-import java.util
-
 import org.apache.linkis.common.ServiceInstance
+import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.ecm.core.launch.{EngineConnLaunchRunner, EngineConnManagerEnv}
 import org.apache.linkis.manager.common.entity.enumeration.NodeStatus
 import org.apache.linkis.manager.common.entity.resource.NodeResource
 import org.apache.linkis.manager.engineplugin.common.launch.entity.EngineConnCreationDesc
 import org.apache.linkis.manager.label.entity.Label
+
+import java.io.Closeable
+import java.util
 
 
 trait EngineConn extends Closeable {
@@ -70,5 +71,9 @@ trait EngineConn extends Closeable {
 
   def getPid: String
 
-  override def close(): Unit = {}
+  override def close(): Unit = {
+    if (null != getEngineConnLaunchRunner) {
+      Utils.tryQuietly(getEngineConnLaunchRunner.stop())
+    }
+  }
 }

@@ -17,18 +17,18 @@
  
 package org.apache.linkis.server.security
 
-import java.text.DateFormat
-import java.util.{Date, Locale}
-
+import org.apache.commons.lang.StringUtils
 import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, RSAUtils, Utils}
 import org.apache.linkis.server.conf.ServerConfiguration
 import org.apache.linkis.server.exception.{IllegalUserTicketException, LoginExpireException, NonLoginException}
 import org.apache.linkis.server.security.SSOUtils.sslEnable
 import org.apache.linkis.server.{Message, _}
+
+import java.text.DateFormat
+import java.util.{Date, Locale}
 import javax.servlet._
 import javax.servlet.http.{Cookie, HttpServletRequest, HttpServletResponse}
-import org.apache.commons.lang.StringUtils
 
 
 class SecurityFilter extends Filter {
@@ -106,10 +106,10 @@ class SecurityFilter extends Filter {
   }
 
   protected def addAccessHeaders(response: HttpServletResponse) {
-    response.setHeader("Access-Control-Allow-Origin", "*")
+    response.setHeader("Access-Control-Allow-Origin", ServerConfiguration.BDP_SERVER_WEB_ALLOW_ORIGIN.getValue)
     response.setHeader("Access-Control-Allow-Credentials", "true")
     response.setHeader("Access-Control-Allow-Headers", "authorization,Content-Type")
-    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, HEAD, DELETE")
+    response.setHeader("Access-Control-Allow-Methods", ServerConfiguration.BDP_SERVER_WEB_ALLOW_METHOD.getValue)
     val fullDateFormatEN = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, new Locale("EN", "en"))
     response.setHeader("Date", fullDateFormatEN.format(new Date))
   }

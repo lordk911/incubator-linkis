@@ -17,13 +17,13 @@
  
 package org.apache.linkis.engineplugin.hive.common
 
-import java.nio.file.Paths
-
-import org.apache.linkis.manager.engineplugin.common.conf.EnvConfiguration
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.hadoop.hive.ql.Driver
+import org.apache.linkis.manager.engineplugin.common.conf.EnvConfiguration
+
+import java.nio.file.Paths
 
 object HiveUtils {
 

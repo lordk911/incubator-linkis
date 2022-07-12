@@ -17,17 +17,14 @@
  
 package org.apache.linkis.orchestrator.computation.operation.progress
 
-import java.io.Closeable
-
+import org.apache.linkis.manager.common.protocol.resource.ResourceWithStatus
 import org.apache.linkis.orchestrator.Orchestration
-import org.apache.linkis.orchestrator.computation.operation
 import org.apache.linkis.protocol.engine.JobProgressInfo
 
+import java.io.Closeable
+import java.util
 import scala.collection.mutable.ArrayBuffer
 
-/**
- *
- */
 class ProgressProcessor(rootExecTaskId: String,
                         orchestration: Orchestration, progressObtainOperation: AbstractProgressOperation) extends Closeable{
 
@@ -41,12 +38,13 @@ class ProgressProcessor(rootExecTaskId: String,
     listeners += notify
   }
 
-  def onProgress(progress: Float, progressInfo: Array[JobProgressInfo]): Unit = {
-     val progressInfoEvent = operation.progress.ProgressInfoEvent(orchestration, progress, progressInfo)
-     listeners.foreach(_(progressInfoEvent))
+  def onProgress(progress: Float, progressInfo: Array[JobProgressInfo], resourceMap: util.HashMap[String, ResourceWithStatus], infoMap: util.HashMap[String, Object]): Unit = {
+     val progressInfoWithResourceEvent = ProgressInfoEvent(orchestration, progress, progressInfo, resourceMap, infoMap)
+     listeners.foreach(_(progressInfoWithResourceEvent))
   }
 
   override def close(): Unit = {
-    this.progressObtainOperation
+    progressObtainOperation.removeLogProcessor(rootExecTaskId)
+    listeners.clear()
   }
 }
